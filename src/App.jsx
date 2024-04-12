@@ -15,6 +15,8 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import Forgot from './pages/Authentication/Forgot';
+import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -132,15 +134,35 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/auth/signup"
+          <Route
+          path="/auth/forgot"
           element={
             <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
+               
+              <Forgot />
             </>
           }
         />
+          <Route
+          path="/auth/sign_in_with_mobile"
+          element={
+            <>
+               
+              <Sign_in_mobile />
+            </>
+          }
+        />
+
+
+        {/* <Route
+          path="/auth/signup"
+          element={
+            <>
+               
+              <SignUp />
+            </>
+          }
+        /> */}
       </Routes>
     </>
   );

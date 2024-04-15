@@ -16,7 +16,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-
+  let users = [];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,6 +40,7 @@ const SignIn = () => {
     const errorMessage = responseData.message;
     const errorStatus = responseData.status;
 
+
     if (errorMessage && errorStatus) {
       errors.push(` ${errorStatus}:${errorMessage}`);
     } else {
@@ -47,10 +48,15 @@ const SignIn = () => {
     }
       } else {
         const data = await response.json();
-        const accessToken = data.access_token;
-  
+        const accessToken = data.accessToken;
+        // Store response data in local storage
+        localStorage.setItem("userData", JSON.stringify(data.vosoVyaparUser));
+        users.push(JSON.stringify(data.vosoVyaparUser));
+        // Store access token
         localStorage.setItem("accessToken", accessToken);
         setLoggedIn(true);
+        window.location.href = '/';
+    
       }
     } catch (error) {
       console.error("Error:", error);

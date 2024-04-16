@@ -8,8 +8,7 @@ import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
 
-import SignIn_Layout from '../../layout/Sign_in_Layout';
-import Sidebar from '../../components/Sidebar';
+
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -96,7 +95,7 @@ const SignIn = () => {
               </p>
 
               <span className="mt-15 inline-block">
-                <svg
+              <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"

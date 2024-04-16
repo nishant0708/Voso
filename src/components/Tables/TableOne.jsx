@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {   useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-import { fetchTodos } from '../../Redux/slicer/slicer';
-import { data } from 'autoprefixer';
+import { fetchTopUsers } from '../../Redux/slicer/slicer';
 
 const TableOne = () => {
-const[api,setapi]=useState();
-
+ 
 const dispatch = useDispatch();
-const todos = useSelector((state) => state.todos.todos); // Accessing todos from Redux state
-
+const limit =10
+const page =1;
 useEffect(() => {
-  // Dispatch the fetchTodos action when the component mounts
-  dispatch(fetchTodos());
-}, [dispatch]);
+  // Dispatch the fetchTopUsers action when the component mounts
+  dispatch(fetchTopUsers(limit, page));
+}, []);
 
-console.log(todos);
+
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

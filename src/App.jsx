@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -15,13 +15,24 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import Forgot from './pages/Authentication/Forgot';
+import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [hasToken, setHasToken] = useState(false); // Assuming initial state is no token
   const { pathname } = useLocation();
+
+  // Mock function to check if the user has an access token
+  const checkAccessToken = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    return accessToken !== undefined && accessToken !== null;
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const hasAccessToken = checkAccessToken();
+    setHasToken(hasAccessToken);
   }, [pathname]);
 
   useEffect(() => {
@@ -38,7 +49,7 @@ function App() {
           element={
             <>
               <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <ECommerce />
+              {hasToken ? <ECommerce /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -47,7 +58,7 @@ function App() {
           element={
             <>
               <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Calendar />
+              {hasToken ? <Calendar /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -56,7 +67,7 @@ function App() {
           element={
             <>
               <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Profile />
+              {hasToken ? <Profile /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -65,7 +76,7 @@ function App() {
           element={
             <>
               <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
+              {hasToken ? <FormElements /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -74,7 +85,7 @@ function App() {
           element={
             <>
               <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormLayout />
+              {hasToken ? <FormLayout /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -83,7 +94,7 @@ function App() {
           element={
             <>
               <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Tables />
+              {hasToken ? <Tables /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -92,7 +103,7 @@ function App() {
           element={
             <>
               <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Settings />
+              {hasToken ? <Settings /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -101,7 +112,7 @@ function App() {
           element={
             <>
               <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
+              {hasToken ? <Chart /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -110,7 +121,7 @@ function App() {
           element={
             <>
               <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
+              {hasToken ? <Alerts /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -119,28 +130,50 @@ function App() {
           element={
             <>
               <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
+              {hasToken ? <Buttons /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
         <Route
           path="/auth/signin"
           element={
-            <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignIn />
-            </>
+            hasToken ? <Navigate to="/" /> : (
+              
+              <>
+                <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <SignIn />
+              </>
+            )
           }
         />
         <Route
+          path="/auth/forgot"
+          element={
+            hasToken ? <Navigate to="/" /> : (
+            <>
+             <Forgot />
+            </>)
+          }
+        />
+        <Route
+          path="/auth/sign_in_with_mobile"
+          element={
+            hasToken ? <Navigate to="/" /> : (
+            <>
+              <Sign_in_mobile />
+            </>
+            )
+          }
+        />
+        {/* <Route
           path="/auth/signup"
           element={
             <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignUp />
             </>
           }
-        />
+        /> */}
+        {!hasToken && <Route path="*" element={<Navigate to="/auth/signin" />} />}
       </Routes>
     </>
   );

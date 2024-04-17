@@ -1,98 +1,47 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginViaPassword } from '../../Redux/slicer/authSlicer';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
-
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
 
-
-
 const SignIn = () => {
   const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
-  let users = [];
-
-  const handleSubmit = async (event) => {
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const error = useSelector((state) => state.auth.error);
+  const isLoggedIn=useSelector((state)=>state.auth.isLoggedIn)
+  const navigate = useNavigate();
+  const handleSubmit = (event) => {
     event.preventDefault();
-    let errors = [];
-  
-    if (!email || !password) {
-      errors.push('Please provide both email and password.');
-    }
-  
-    try {
-      const response = await fetch("https://api.vosovyapar.com/api/u1/user/loginViaPassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (!response.ok) {
-        const responseData = await response.json();
-    const errorMessage = responseData.message;
-    const errorStatus = responseData.status;
-
-
-    if (errorMessage && errorStatus) {
-      errors.push(` ${errorStatus}:${errorMessage}`);
-    } else {
-      errors.push('Sign-in failed');
-    }
-      } else {
-        const data = await response.json();
-        const accessToken = data.accessToken;
-        // Store response data in local storage
-        localStorage.setItem("userData", JSON.stringify(data.vosoVyaparUser));
-        users.push(JSON.stringify(data.vosoVyaparUser));
-        // Store access token
-        localStorage.setItem("accessToken", accessToken);
-        setLoggedIn(true);
-        window.location.href = '/';
-    
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      errors.push('An error occurred while signing in. Please try again later.');
-    }
-  
-    if (errors.length > 0) {
-      alert(errors.join('\n')); // Join the errors with newline characters
-    }
+    dispatch(loginViaPassword({ email, password }));
   };
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/'); // Navigate to the home page if the user is logged in
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="overflow-hidden">
-      <div className=" h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className=" flex flex-wrap items-center translate-y-[5%]">
+      <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img
-                  className="w-96  hidden dark:block"
-                  src={voso_logo}
-                  alt="Logo"
-                ></img>
+                <img className="w-96 hidden dark:block" src={voso_logo} alt="Logo"></img>
                 <span className="flex justify-center items-center gap-1.5 ">
-                  <img
-                    className="w-20 dark:hidden"
-                    src={voso_logo}
-                    alt="Logo"
-                  />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
-                    Voso Vyapar
-                  </p>
+                  <img className="w-20 dark:hidden" src={voso_logo} alt="Logo" />
+                  <p className="font-bold text-black text-[54px] translate-y-[10px]">Voso Vyapar</p>
                 </span>
               </Link>
 
-              <p className="2xl:px-20 text-[22px]">
-                Welcome! Log in to your account.
-              </p>
+              <p className="2xl:px-20 text-[22px]">Welcome! Log in to your account.</p>
 
               <span className="mt-15 inline-block">
               <svg
@@ -228,9 +177,7 @@ const SignIn = () => {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
-                  </label>
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">Email</label>
                   <div className="relative">
                     <input
                       type="email"
@@ -239,7 +186,7 @@ const SignIn = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       required
-                      />
+                    />
 
                     <span className="absolute right-4 top-4">
                       <svg
@@ -262,16 +209,14 @@ const SignIn = () => {
                 </div>
 
                 <div className="">
-                  <label className=" block font-medium text-black dark:text-white">
-                    Password
-                  </label>
+                  <label className=" block font-medium text-black dark:text-white">Password</label>
                   <div className="relative">
                     <input
                       type="password"
                       placeholder="Enter your Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -317,27 +262,12 @@ const SignIn = () => {
                 <Link to="/auth/sign_in_with_mobile">
                   <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                     <span className="flex justify-center items-center gap-1">
-                      <img
-                        className="hidden dark:block w-8"
-                        src={mobile_logo_dark}
-                      />
-                      <img
-                        className="dark:hidden w-8"
-                        src={mobile_logo_light}
-                      />
+                      <img className="hidden dark:block w-8" src={mobile_logo_dark} />
+                      <img className="dark:hidden w-8" src={mobile_logo_light} />
                       Sign in with Mobile
                     </span>
                   </button>
                 </Link>
-
-                {/* <div className="mt-6 text-center">
-                  <p>
-                    Don’t have any account?{' '}
-                    <Link to="/auth/signup" className="text-primary">
-                      Sign Up
-                    </Link>
-                  </p>
-                </div> */}
               </form>
             </div>
           </div>

@@ -45,7 +45,7 @@ const Profile = () => {
                   />
                 </svg>
               </span>
-              <span>Edit me</span>
+              <span>Edit</span>
             </label>
           </div>
         </div>

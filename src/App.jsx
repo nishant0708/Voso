@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
-
+import { Route, Routes, useLocation, Navigate, Outlet } from 'react-router-dom';
+import "./App.css";
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
@@ -17,6 +17,9 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Forgot from './pages/Authentication/Forgot';
 import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
+import UserEdit from './components/UserLists/UserEdit';
+import UserPlan from './components/UserLists/UserPlan';
+import UserSocial from './components/UserLists/UserSocial';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -98,6 +101,13 @@ function App() {
             </>
           }
         />
+
+        <Route path="/tables/user/edit/:userId" element={<UserEdit />} />
+
+        <Route path="/tables/user/plan-subscribe/:userId" element={<UserPlan />} />
+
+        <Route path="/tables/user/social-edit/:userId" element={<UserSocial />} />
+
         <Route
           path="/settings"
           element={
@@ -107,6 +117,7 @@ function App() {
             </>
           }
         />
+
         <Route
           path="/chart"
           element={
@@ -137,8 +148,9 @@ function App() {
         <Route
           path="/auth/signin"
           element={
-            hasToken ? <Navigate to="/" /> : (
-              
+            hasToken ? (
+              <Navigate to="/" />
+            ) : (
               <>
                 <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <SignIn />
@@ -149,19 +161,24 @@ function App() {
         <Route
           path="/auth/forgot"
           element={
-            hasToken ? <Navigate to="/" /> : (
-            <>
-             <Forgot />
-            </>)
+            hasToken ? (
+              <Navigate to="/" />
+            ) : (
+              <>
+                <Forgot />
+              </>
+            )
           }
         />
         <Route
           path="/auth/sign_in_with_mobile"
           element={
-            hasToken ? <Navigate to="/" /> : (
-            <>
-              <Sign_in_mobile />
-            </>
+            hasToken ? (
+              <Navigate to="/" />
+            ) : (
+              <>
+                <Sign_in_mobile />
+              </>
             )
           }
         />
@@ -173,7 +190,9 @@ function App() {
             </>
           }
         /> */}
-        {!hasToken && <Route path="*" element={<Navigate to="/auth/signin" />} />}
+        {!hasToken && (
+          <Route path="*" element={<Navigate to="/auth/signin" />} />
+        )}
       </Routes>
     </>
   );

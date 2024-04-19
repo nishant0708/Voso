@@ -28,13 +28,13 @@ const formatDate = (dateString) => {
   return formattedDate;
 };
   return (
-    <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+    <div className="w-full rounded-sm border border-stroke-black bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
       Latest Top 10 Users
 
       </h4>
 
-      <div className="flex flex-col">
+      <div className="overflow-auto flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
           <div className="p-2.5 xl:p-5">
             <h5 className="text-sm  text-center font-medium uppercase xsm:text-base">
@@ -72,14 +72,14 @@ const formatDate = (dateString) => {
             {topUsers.map((user, index) => (
               <div
                 key={user._id}
-                className={`grid grid-cols-3 sm:grid-cols-5 ${
+                className={` grid grid-cols-3 sm:grid-cols-5 ${
                   index === topUsers.length - 1
                     ? ''
                     : 'border-b border-stroke dark:border-strokedark'
                 }`}
               >
                 {/* Render user information */}
-                <div className="flex justify-center items-center p-2.5 xl:p-5">
+                <div className="flex gap-10 justify-center items-center p-2.5 xl:p-5">
                   <img
                     src={userimg} // Assuming there's a profile image URL in user data
                     alt="Profile"
@@ -92,8 +92,8 @@ const formatDate = (dateString) => {
                   <p className="text-black dark:text-white">{user.mobile}</p>
                 </div>
 
-                <div className="flex items-center justify-center p-2.5 xl:p-5">
-                  <p className="text-meta-3">{user.email}</p>
+                <div className="flex  items-center justify-center p-2.5 xl:p-5">
+                  <p className="text-meta-5">{user.email}</p>
                 </div>
 
                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

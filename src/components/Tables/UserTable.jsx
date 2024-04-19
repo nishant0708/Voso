@@ -54,11 +54,15 @@ const UserTable = () => {
   };
 
   const calculateDays = (user) => {
-    const days = Math.ceil(
-      (new Date(user.subscription.endDate) - new Date()) /
-        (1000 * 60 * 60 * 24),
-    );
-    return days;
+    if (user.subscription && user.subscription.endDate) {
+      const days = Math.ceil(
+        (new Date(user.subscription.endDate) - new Date()) /
+          (1000 * 60 * 60 * 24),
+      );
+      return days;
+    } else {
+      return 0;
+    }
   };
 
   const [active, setActive] = useState(Array(users.length).fill(false));
@@ -94,7 +98,10 @@ const UserTable = () => {
             <IoIosAddCircle />
             Create
           </button>
-          <button onClick={()=>navigate(-1)} className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
@@ -192,9 +199,7 @@ const UserTable = () => {
 
                 <div className="flex items-center justify-center p-2.5 xl:p-3">
                   <p className="text-center text-meta-3">
-                    {user.subscription.hasOwnProperty('currentPlan')
-                      ? user.subscription.currentPlan
-                      : 'NA'}
+                    {user?.subscription?.currentPlan }
                   </p>
                 </div>
 
@@ -225,7 +230,7 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaCircleUser className='text-sm sm:text-md' />
+                        <FaCircleUser className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">User Edit</span>
                       </div>
                       <div
@@ -234,14 +239,16 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaRupeeSign className='text-sm sm:text-md' />
-                        <span className="text-xs sm:text-sm">Plan Purchase</span>
+                        <FaRupeeSign className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          Plan Purchase
+                        </span>
                       </div>
                       <div
                         onClick={() => navigate(`/tables/user/seo/${user._id}`)}
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <HiSpeakerphone className='text-sm sm:text-md' />
+                        <HiSpeakerphone className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">SEO Edit</span>
                       </div>
                       <div
@@ -250,8 +257,10 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <PiToolboxFill className='text-sm sm:text-md' />
-                        <span className="text-xs sm:text-sm">Business Edit</span>
+                        <PiToolboxFill className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          Business Edit
+                        </span>
                       </div>
                       <div
                         onClick={() =>
@@ -259,7 +268,7 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaShareSquare className='text-sm sm:text-md' />
+                        <FaShareSquare className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">Social Edit</span>
                       </div>
                       <div
@@ -268,7 +277,7 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaFileAlt className='text-sm sm:text-md' />
+                        <FaFileAlt className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">Pages Edit</span>
                       </div>
                       <div
@@ -277,7 +286,7 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaEye className='text-sm sm:text-md' />
+                        <FaEye className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">User View</span>
                       </div>
                       <div
@@ -286,8 +295,10 @@ const UserTable = () => {
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
-                        <BsFillQuestionCircleFill className='text-sm sm:text-md' />
-                        <span className="text-xs sm:text-sm">User Enquiries</span>
+                        <BsFillQuestionCircleFill className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          User Enquiries
+                        </span>
                       </div>
                     </div>
                   )}

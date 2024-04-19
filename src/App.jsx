@@ -22,6 +22,7 @@ import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
 import UserView from './components/UserLists/UserView';
 import UserPageEdit from './components/UserLists/UserPageEdit';
+import UserEnquiries from './components/UserLists/UserEnquiries';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -113,6 +114,8 @@ function App() {
         <Route path="/tables/user/view/:userId" element={<UserView />} />
 
         <Route path="/tables/user/pages-edit/:userId" element={<UserPageEdit />} />
+
+        <Route path="/tables/user/contact-us/:userId" element={<UserEnquiries />} />
 
         <Route
           path="/settings"

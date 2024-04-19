@@ -20,9 +20,9 @@ const UserPageEdit = () => {
           </button>
         </div>
         <div className="p-5.5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div>
-            <p className='text-base text-[#f36]'>Content to render when user have data.</p>
-          </div>
+          <p className="text-base text-center text-[#f36]">
+            Content to render when user have data.
+          </p>
         </div>
       </div>
     </DefaultLayout>

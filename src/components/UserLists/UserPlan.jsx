@@ -15,7 +15,6 @@ const UserPlan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('dfata: ', formData);
   };
 
   const resetForm = () => {

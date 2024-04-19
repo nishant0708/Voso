@@ -24,7 +24,6 @@ const UserEdit = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const handleOnChange = (e) => {
-    console.log(e.target.name, ' ', e.target.value);
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
@@ -33,7 +32,6 @@ const UserEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('dfata: ', formData);
   };
 
   const resetForm = () => {

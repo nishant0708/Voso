@@ -20,6 +20,8 @@ import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
+import UserView from './components/UserLists/UserView';
+import UserPageEdit from './components/UserLists/UserPageEdit';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -107,6 +109,10 @@ function App() {
         <Route path="/tables/user/plan-subscribe/:userId" element={<UserPlan />} />
 
         <Route path="/tables/user/social-edit/:userId" element={<UserSocial />} />
+
+        <Route path="/tables/user/view/:userId" element={<UserView />} />
+
+        <Route path="/tables/user/pages-edit/:userId" element={<UserPageEdit />} />
 
         <Route
           path="/settings"

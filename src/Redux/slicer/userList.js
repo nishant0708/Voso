@@ -17,7 +17,7 @@ export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
           page:page,
         }  
       });
-      console.log('USER API Response:', response.data);
+      // console.log('USER API Response:', response.data);
       return response.data;
   } catch (error) {
       console.error('Error fetching in USER API:', error);

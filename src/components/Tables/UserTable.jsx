@@ -218,76 +218,76 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div className="lg:w-[180px] flex flex-col gap-4 absolute top-4 right-22 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
+                    <div className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 bg-white">
                       <div
                         onClick={() =>
                           navigate(`/tables/user/edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaCircleUser />
-                        <span className="text-sm">User Edit</span>
+                        <FaCircleUser className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">User Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/plan-subscribe/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaRupeeSign />
-                        <span className="text-sm">Plan Purchase</span>
+                        <FaRupeeSign className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">Plan Purchase</span>
                       </div>
                       <div
                         onClick={() => navigate(`/tables/user/seo/${user._id}`)}
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <HiSpeakerphone />
-                        <span className="text-sm">SEO Edit</span>
+                        <HiSpeakerphone className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">SEO Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/business-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <PiToolboxFill />
-                        <span className="text-sm">Business Edit</span>
+                        <PiToolboxFill className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">Business Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/social-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaShareSquare />
-                        <span className="text-sm">Social Edit</span>
+                        <FaShareSquare className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">Social Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/pages-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaFileAlt />
-                        <span className="text-sm">Pages Edit</span>
+                        <FaFileAlt className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">Pages Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/view/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaEye />
-                        <span className="text-sm">User View</span>
+                        <FaEye className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">User View</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/contact-us/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <BsFillQuestionCircleFill />
-                        <span className="text-sm">User Enquiries</span>
+                        <BsFillQuestionCircleFill className='text-sm sm:text-md' />
+                        <span className="text-xs sm:text-sm">User Enquiries</span>
                       </div>
                     </div>
                   )}

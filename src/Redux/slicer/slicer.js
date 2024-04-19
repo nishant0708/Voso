@@ -18,7 +18,7 @@ export const fetchTopUsers = createAsyncThunk('topUsers', async ({limit, page}) 
           page:page,
         }  
       });
-      console.log('API Response:', response.data);
+      // console.log('API Response:', response.data);
       return response.data.data;
   } catch (error) {
       console.error('Error fetching todos:', error);

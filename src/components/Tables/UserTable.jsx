@@ -34,7 +34,6 @@ const UserTable = () => {
     // Dispatch the fetchUsers action when the component mounts
     callFetchUsers(limit, page);
   }, [limit, page]);
-  console.log('xx', users);
 
   const formatDate = (dateString) => {
     const options = {
@@ -95,7 +94,7 @@ const UserTable = () => {
             <IoIosAddCircle />
             Create
           </button>
-          <button className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+          <button onClick={()=>navigate(-1)} className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
             <FaCircleArrowLeft size={14} />
             Back
           </button>
@@ -219,7 +218,7 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div className="lg:w-[180px] flex flex-col gap-4 absolute top-4 right-22 border rounded-lg p-7 bg-white text-xl">
+                    <div className="lg:w-[180px] flex flex-col gap-4 absolute top-4 right-22 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
                       <div
                         onClick={() =>
                           navigate(`/tables/user/edit/${user._id}`)

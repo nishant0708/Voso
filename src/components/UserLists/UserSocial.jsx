@@ -5,19 +5,32 @@ import { FaListUl } from 'react-icons/fa';
 
 const UserSocial = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState('');
+
+  const initialFormData = {
+    facebook: '',
+    twitter: '',
+    instagram: '',
+    linkedin: '',
+    youtube: '',
+    whatsapp: '',
+    amazon: '',
+    flipkart: '',
+    swiggy: '',
+    zomato: '',
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleOnChange = (e) => {
-    setFormData(e.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('dfata: ', formData);
-  };
-
-  const resetForm = () => {
-    setFormData('');
   };
 
   return (
@@ -36,21 +49,20 @@ const UserSocial = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5 flex flex-col gap-9">
-              <div className='flex justify-between gap-10'>
+              <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
                     width={35}
                     src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/facebook_circle_color-1024.png"
-                    alt=""
+                    alt="facebook"
                   />
                   <input
                     type="text"
-                    name="firstName"
-                    id="firstName"
-                    value={formData.firstName}
+                    name="facebook"
+                    id="facebook"
+                    value={formData.facebook}
                     onChange={handleOnChange}
                     placeholder="Enter Facebook URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -58,21 +70,20 @@ const UserSocial = () => {
                   <img
                     width={35}
                     src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Twitter2_colored_svg-512.png"
-                    alt=""
+                    alt="twitter"
                   />
                   <input
                     type="text"
-                    name="firstName"
+                    name="twitter"
                     id="firstName"
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Twitter URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className='flex justify-between gap-10'>
+              <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
                     width={35}
@@ -86,7 +97,6 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Instagram URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -103,12 +113,11 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Linkedin URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className='flex justify-between gap-10'>
+              <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
                     width={35}
@@ -122,7 +131,6 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Youtube URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -139,12 +147,11 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Whatsapp URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className='flex justify-between gap-10'>
+              <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
                     width={35}
@@ -158,7 +165,6 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Amazon URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -175,12 +181,11 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Flipkart URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className='flex justify-between gap-10'>
+              <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
                     width={35}
@@ -194,7 +199,6 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Swiggy URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -211,7 +215,6 @@ const UserSocial = () => {
                     value={formData.firstName}
                     onChange={handleOnChange}
                     placeholder="Enter Zomato URL"
-                    required={true}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -219,7 +222,7 @@ const UserSocial = () => {
 
               <div className="flex justify-center items-center gap-5">
                 <button
-                  type="button"
+                  type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-primary py-1 px-5 font-medium text-gray hover:bg-opacity-90"
                 >
                   Save

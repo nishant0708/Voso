@@ -25,7 +25,7 @@ const UserPlan = () => {
     <DefaultLayout>
       <div className="flex flex-col gap-7">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold ">
+          <h1 className="text-2xl font-semibold text-black dark:text-white">
             User Plan Purchase - shanu@quintustech.co.in
           </h1>
           <button

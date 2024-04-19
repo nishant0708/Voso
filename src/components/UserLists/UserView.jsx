@@ -37,7 +37,7 @@ const UserView = () => {
     <DefaultLayout>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold ">User View</h1>
+          <h1 className="text-2xl font-semibold text-black dark:text-white">User View</h1>
           <button
             onClick={() => navigate(-1)}
             className="flex gap-2 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"

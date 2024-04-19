@@ -45,7 +45,7 @@ const UserEnquiries = () => {
     <DefaultLayout>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
-          <h4 className="mb-6 text-3xl font-medium text-black dark:text-white">
+          <h4 className="text-2xl font-semibold text-black dark:text-white">
             Enquiries List
           </h4>
           <button

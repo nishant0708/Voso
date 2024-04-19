@@ -36,7 +36,7 @@ const UserSocial = () => {
     <DefaultLayout>
       <div className="flex flex-col gap-7">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold ">Social Media Information</h1>
+          <h1 className="text-2xl font-semibold text-black dark:text-white">Social Media Information</h1>
           <button
             onClick={() => navigate(-1)}
             className="flex gap-2 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
@@ -47,7 +47,7 @@ const UserSocial = () => {
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>
-            <div className="p-5.5 pb-5 flex flex-col gap-9">
+            <div className="p-5.5 pb-5 flex flex-col gap-8">
               <div className="flex justify-between gap-10">
                 <div className="w-full xl:w-[48%] flex gap-2">
                   <img
@@ -219,7 +219,7 @@ const UserSocial = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center gap-5">
+              <div className="flex justify-center">
                 <button
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-primary py-1 px-5 font-medium text-gray hover:bg-opacity-90"

@@ -3,7 +3,7 @@ import topUsersSlice from '../slicer/slicer';
 import month from "../slicer/Monthlyslicer"
 import authSlicer from '../slicer/authSlicer';
 import login_mobileReducer from '../slicer/login_mobileSlicer';
-
+import productSlice from '../slicer/productSlice';
 import usersSlice from "../slicer/userList";
 
 const store = configureStore({
@@ -13,6 +13,8 @@ const store = configureStore({
     auth:authSlicer,
     login_mobile: login_mobileReducer,
     usersList: usersSlice,
+    Product:productSlice,
+   
   },
   // Other store configurations can go here, such as middleware setup
 });

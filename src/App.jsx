@@ -20,6 +20,8 @@ import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
+import Products from './pages/Products/products';
+import Product_table from './components/product_table/Product_table';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -107,6 +109,26 @@ function App() {
         <Route path="/tables/user/plan-subscribe/:userId" element={<UserPlan />} />
 
         <Route path="/tables/user/social-edit/:userId" element={<UserSocial />} />
+
+        <Route
+          path="/products"
+          element={
+            <>
+              <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Products/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
+         <Route
+          path="/products/product_list/:userId"
+          element={
+            <>
+              <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Product_table/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
 
         <Route
           path="/settings"

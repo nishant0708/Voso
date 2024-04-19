@@ -7,7 +7,7 @@ import { FaStopCircle } from 'react-icons/fa';
 
 const UserPlan = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState("");
+  const [formData, setFormData] = useState('');
 
   const handleOnChange = (e) => {
     setFormData(e.target.value);
@@ -19,7 +19,7 @@ const UserPlan = () => {
   };
 
   const resetForm = () => {
-    setFormData("");
+    setFormData('');
   };
 
   return (
@@ -56,7 +56,7 @@ const UserPlan = () => {
                     id="activePlan"
                     onChange={handleOnChange}
                     required={true}
-                    className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    className="relative z-20 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
                     <option
                       value=""

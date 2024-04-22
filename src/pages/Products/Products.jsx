@@ -245,7 +245,7 @@ const Products = () => {
                       <div className="lg:w-[180px] flex flex-col gap-4 top-[80%] right-[55%] absolute z-5 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
                         <div
                           onClick={() => navigate(`/products/product_list/${user._id}`)}//to be added
-                          className="flex gap-3 w-30 inline text-sm cursor-pointer"
+                          className="flex gap-3 w-30 text-sm cursor-pointer"
                           
                         >
                           <svg

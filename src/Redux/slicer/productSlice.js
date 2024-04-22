@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
 
 const initialState = {
-  users: [],
-  pageData:{},
+  products: [],
+ 
   status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchProducts = createAsyncThunk('users', async ({userId}) => {
+export const fetchProducts = createAsyncThunk('products', async ({userId}) => {
   try {
       const response = await AxiosInstance.post(`product/getProduct/`, {
         params:{
@@ -38,7 +38,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.users = action.payload.data; // Set fetched data to state.todos
+        state.products = action.payload.data; // Set fetched data to state.todos
         state.pageData = action.payload.meta;
       })
       .addCase(fetchProducts.rejected, (state, action) => {

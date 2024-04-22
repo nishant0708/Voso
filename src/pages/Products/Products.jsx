@@ -168,7 +168,7 @@ const Products = () => {
         </div>
 
         <div className="flex flex-col overflow-x-scroll">
-          <div className="grid place-items-center grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+          <div className="grid place-items-center grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4 md:grid-cols-5">
             <div className="p-2.5 xl:p-3">
               <h5 className="text-sm text-center font-semibold uppercase">#</h5>
             </div>

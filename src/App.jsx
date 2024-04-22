@@ -27,6 +27,7 @@ import UserPageEdit from './components/UserLists/UserPageEdit';
 import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
 import UserBusiness from './components/UserLists/UserBusiness';
+import Gallery_table from './components/Gallery_table/Gallery_table';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -144,6 +145,17 @@ function App() {
         <Route path="/tables/user/pages-edit/:userId" element={<UserPageEdit />} />
 
         <Route path="/tables/user/contact-us/:userId" element={<UserEnquiries />} />
+
+<Route
+          path="/products/Gallery/:userId"
+          element={
+            <>
+              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Gallery_table/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
 
         <Route
           path="/settings"

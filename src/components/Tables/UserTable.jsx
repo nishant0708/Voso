@@ -199,7 +199,7 @@ const UserTable = () => {
 
                 <div className="flex items-center justify-center p-2.5 xl:p-3">
                   <p className="text-center text-meta-3">
-                    {user?.subscription?.currentPlan }
+                    {user?.subscription?.currentPlan ? user?.subscription?.currentPlan : "NA"}
                   </p>
                 </div>
 

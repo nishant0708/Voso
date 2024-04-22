@@ -11,7 +11,6 @@ const TableOne = () => {
     // Dispatch the fetchTopUsers action when the component mounts
     dispatch(fetchTopUsers({ limit, page }));
   }, [dispatch, limit, page]);
-console.log("xx",topUsers);
 
 const formatDate = (dateString) => {
   const options = {

@@ -22,6 +22,11 @@ import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
 import Products from './pages/Products/products';
 import Product_table from './components/product_table/Product_table';
+import UserView from './components/UserLists/UserView';
+import UserPageEdit from './components/UserLists/UserPageEdit';
+import UserEnquiries from './components/UserLists/UserEnquiries';
+import UserSEO from './components/UserLists/UserSEO';
+import UserBusiness from './components/UserLists/UserBusiness';
 import Gallery_table from './components/Gallery_table/Gallery_table';
 
 function App() {
@@ -111,6 +116,10 @@ function App() {
 
         <Route path="/tables/user/social-edit/:userId" element={<UserSocial />} />
 
+        <Route path="/tables/user/seo/:userId" element={<UserSEO />} />
+
+        <Route path="/tables/user/business-edit/:userId" element={<UserBusiness />} />
+
         <Route
           path="/products"
           element={
@@ -130,6 +139,12 @@ function App() {
             </>
           }
         />
+
+        <Route path="/tables/user/view/:userId" element={<UserView />} />
+
+        <Route path="/tables/user/pages-edit/:userId" element={<UserPageEdit />} />
+
+        <Route path="/tables/user/contact-us/:userId" element={<UserEnquiries />} />
 
 <Route
           path="/products/Gallery/:userId"

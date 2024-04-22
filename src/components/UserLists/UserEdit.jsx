@@ -24,7 +24,6 @@ const UserEdit = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const handleOnChange = (e) => {
-    console.log(e.target.name, ' ', e.target.value);
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
@@ -33,7 +32,6 @@ const UserEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('dfata: ', formData);
   };
 
   const resetForm = () => {
@@ -42,9 +40,9 @@ const UserEdit = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold ">User Update</h1>
+          <h1 className="text-2xl font-semibold text-black dark:text-white">User Update</h1>
           <button
             onClick={() => navigate(-1)}
             className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
@@ -57,8 +55,8 @@ const UserEdit = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
-              <div className="mb-4 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="firstName"
                     className="mb-2.5 block text-black dark:text-white"
@@ -77,7 +75,7 @@ const UserEdit = () => {
                   />
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="lastName"
                     className="mb-2.5 block text-black dark:text-white"
@@ -96,8 +94,8 @@ const UserEdit = () => {
                   />
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="gender"
                     className="mb-2.5 block text-black dark:text-white"
@@ -164,7 +162,7 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="dateOfBirth"
                     className="mb-2.5 block text-black dark:text-white"
@@ -200,8 +198,8 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="email"
                     className="mb-2.5 block text-black dark:text-white"
@@ -220,7 +218,7 @@ const UserEdit = () => {
                   />
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="mobile"
                     className="mb-2.5 block text-black dark:text-white"
@@ -239,8 +237,8 @@ const UserEdit = () => {
                   />
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="isApproved"
                     className="mb-2.5 block text-black dark:text-white"
@@ -300,7 +298,7 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="isEmail"
                     className="mb-2.5 block text-black dark:text-white"
@@ -360,8 +358,8 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="isMobile"
                     className="mb-2.5 block text-black dark:text-white"
@@ -421,7 +419,7 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full xl:w-1/2">
+                <div className="w-full lg:w-1/2">
                   <label
                     htmlFor="isUnactive"
                     className="mb-2.5 block text-black dark:text-white"
@@ -481,7 +479,7 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-5 flex justify-center items-center gap-5">
+              <div className="mt-7 flex justify-center items-center gap-5">
                 <button
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-success py-1 px-3 font-medium text-gray hover:bg-opacity-90"

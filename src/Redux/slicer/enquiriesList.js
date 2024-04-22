@@ -9,15 +9,16 @@ const initialState = {
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
+export const fetchEnquiriesList = createAsyncThunk('users', async ({userId, limit, page}) => {
   try {
-      const response = await AxiosInstance.post(`user/getUsers/`, {
+      const response = await AxiosInstance.post(`enquiry/getList/`, {
         params:{
+          id:userId,
           limit:limit,
           page:page,
         }  
       });
-      // console.log('USER API Response:', response.data);
+      // console.log('USER ENQUIRIES LIST API Response:', response.data);
       return response.data;
   } catch (error) {
       console.error('Error fetching in USER API:', error);
@@ -25,8 +26,8 @@ export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
   }
 });
 
-const usersSlice = createSlice({
-  name: 'usersList',
+const enquiriesListSlice = createSlice({
+  name: 'enquiriesList',
   initialState,
   reducers: {
     // Additional reducers can go here for synchronous actions
@@ -34,15 +35,15 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for handling async actions' lifecycle
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchEnquiriesList.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchEnquiriesList.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.users = action.payload.data; // Set fetched data to state.todos
+        state.users = action.payload.data;
         state.pageData = action.payload.meta;
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(fetchEnquiriesList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -50,4 +51,4 @@ const usersSlice = createSlice({
 });
 
  
-export default usersSlice.reducer;
+export default enquiriesListSlice.reducer;

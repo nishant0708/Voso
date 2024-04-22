@@ -5,6 +5,7 @@ import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
+  const user = JSON.parse(localStorage.getItem("userData"));
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
@@ -88,8 +89,8 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-4">
-            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              Danish Heilium
+            <h3 className="mb-1.5 text-2xl font-semibold capitalize text-black dark:text-white">
+              {user.first_name + " " + user.last_name}
             </h3>
             <p className="font-medium">Ui/Ux Designer</p>
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">

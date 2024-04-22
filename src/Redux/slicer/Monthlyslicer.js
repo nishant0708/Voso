@@ -13,7 +13,7 @@ const initialState = {
 export const fetchMonth = createAsyncThunk('Month', async (e) => {
   try {
       const response = await AxiosInstance.post(`user/eachMonthUsersCount`, e);
-      console.log('API Response:', response.data.data);
+      // console.log('API Response:', response.data.data);
       return response.data.data;
   } catch (error) {
       console.error('Error fetching todos:', error);

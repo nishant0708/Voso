@@ -5,6 +5,8 @@ import authSlicer from '../slicer/authSlicer';
 import login_mobileReducer from '../slicer/login_mobileSlicer';
 import productSlice from '../slicer/productSlice';
 import usersSlice from "../slicer/userList";
+import userDetailsSlice from '../slicer/userDetails';
+import enquiriesListSlice from '../slicer/enquiriesList';
 import gallerySlicer from '../slicer/gallerySlicer';
 
 const store = configureStore({
@@ -14,6 +16,8 @@ const store = configureStore({
     auth:authSlicer,
     login_mobile: login_mobileReducer,
     usersList: usersSlice,
+    userDetails: userDetailsSlice,
+    enquiriesList: enquiriesListSlice,
     Product:productSlice,
     Gallery:gallerySlicer,
   },

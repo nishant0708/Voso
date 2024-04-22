@@ -53,6 +53,24 @@ const Gallery_table = () => {
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
+  if (gallery.length === 0) {
+    return (
+      <DefaultLayout>
+          <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="flex justify-between items-center">
+          <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+            Products {gallery.length}
+          </h1>
+          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+            <FaCircleArrowLeft size={14} />
+            Back
+          </button>
+        </div>
+        <p style={{ color: 'red', fontSize:"18px" }}>No Product</p>
+        </div>
+      </DefaultLayout>
+    );
+  }
 
   return (
     <DefaultLayout>

@@ -19,11 +19,10 @@ import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 const UserTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { users, loading, error, pageData } = useSelector(
-    (state) => state.usersList,
-  );
+  const { users, loading, error, pageData } = useSelector((state) => state.usersList);
+  
   const limit = 20;
-  const page = 1;
+  const [page, setPage] = useState(1);
 
   const callFetchUsers = (limit, page) => {
     dispatch(fetchUsers({ limit, page }));
@@ -54,11 +53,15 @@ const UserTable = () => {
   };
 
   const calculateDays = (user) => {
-    const days = Math.ceil(
-      (new Date(user.subscription.endDate) - new Date()) /
-        (1000 * 60 * 60 * 24),
-    );
-    return days;
+    if (user.subscription && user.subscription.endDate) {
+      const days = Math.ceil(
+        (new Date(user.subscription.endDate) - new Date()) /
+          (1000 * 60 * 60 * 24),
+      );
+      return days;
+    } else {
+      return 0;
+    }
   };
 
   const [active, setActive] = useState(Array(users.length).fill(false));
@@ -69,18 +72,96 @@ const UserTable = () => {
     setActive(newArray);
   };
 
+  const totalPages = Math.ceil(pageData.total / limit);
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
   const handlePrev = () => {
-    if (pageData.current_page === pageData.from) {
+    if (page === 1) {
       return;
     }
-    callFetchUsers(limit, pageData.current_page - 1);
+    setPage(page - 1);
   };
 
   const handleNext = () => {
-    if (pageData.current_page === pageData.to) {
+    if (page === totalPages) {
       return;
     }
-    callFetchUsers(limit, pageData.current_page + 1);
+    setPage(page + 1);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5; // Define the maximum visible page numbers
+    const startIndex = (page - 1) * limit + 1; // Calculate the starting index for the current page
+
+    if (totalPages <= maxVisiblePages) {
+      // If total pages are less than or equal to the maximum visible pages
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(
+          <span
+            key={i}
+            className={`cursor-pointer ${
+              page === i ? 'text-primary bg-primary font-bold' : ''
+            }`}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </span>,
+        );
+      }
+    } else {
+      // If total pages are greater than maximum visible pages
+      const leftBoundary = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+      const rightBoundary = Math.min(
+        totalPages,
+        leftBoundary + maxVisiblePages - 1,
+      );
+
+      if (leftBoundary > 1) {
+        pageNumbers.push(
+          <span
+            key={1}
+            className="cursor-pointer"
+            onClick={() => handlePageChange(1)}
+          >
+            1
+          </span>,
+        );
+        pageNumbers.push(<span key="leftDots">...</span>);
+      }
+
+      for (let i = leftBoundary; i <= rightBoundary; i++) {
+        pageNumbers.push(
+          <span
+            key={i}
+            className={`cursor-pointer ${
+              page === i ? 'text-primary text-center font-bold' : ''
+            }`}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </span>,
+        );
+      }
+
+      if (rightBoundary < totalPages) {
+        pageNumbers.push(<span key="rightDots">...</span>);
+        pageNumbers.push(
+          <span
+            key={totalPages}
+            className="cursor-pointer"
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </span>,
+        );
+      }
+    }
+
+    return pageNumbers;
   };
 
   return (
@@ -94,7 +175,10 @@ const UserTable = () => {
             <IoIosAddCircle />
             Create
           </button>
-          <button onClick={()=>navigate(-1)} className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
@@ -105,15 +189,7 @@ const UserTable = () => {
         <button onClick={handlePrev}>
           <MdOutlineKeyboardDoubleArrowLeft />
         </button>
-        <div className="flex gap-5">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-          <span>...</span>
-          <span>30</span>
-        </div>
+        <div className="flex gap-5">{renderPageNumbers()}</div>
         <button onClick={handleNext}>
           <MdOutlineKeyboardDoubleArrowRight />
         </button>
@@ -192,8 +268,8 @@ const UserTable = () => {
 
                 <div className="flex items-center justify-center p-2.5 xl:p-3">
                   <p className="text-center text-meta-3">
-                    {user.subscription.hasOwnProperty('currentPlan')
-                      ? user.subscription.currentPlan
+                    {user?.subscription?.currentPlan
+                      ? user?.subscription?.currentPlan
                       : 'NA'}
                   </p>
                 </div>
@@ -218,76 +294,82 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div className="lg:w-[180px] flex flex-col gap-4 absolute top-4 right-22 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
+                    <div className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 bg-white">
                       <div
                         onClick={() =>
                           navigate(`/tables/user/edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaCircleUser />
-                        <span className="text-sm">User Edit</span>
+                        <FaCircleUser className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">User Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/plan-subscribe/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaRupeeSign />
-                        <span className="text-sm">Plan Purchase</span>
+                        <FaRupeeSign className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          Plan Purchase
+                        </span>
                       </div>
                       <div
                         onClick={() => navigate(`/tables/user/seo/${user._id}`)}
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <HiSpeakerphone />
-                        <span className="text-sm">SEO Edit</span>
+                        <HiSpeakerphone className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">SEO Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/business-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <PiToolboxFill />
-                        <span className="text-sm">Business Edit</span>
+                        <PiToolboxFill className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          Business Edit
+                        </span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/social-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaShareSquare />
-                        <span className="text-sm">Social Edit</span>
+                        <FaShareSquare className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">Social Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/pages-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaFileAlt />
-                        <span className="text-sm">Pages Edit</span>
+                        <FaFileAlt className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">Pages Edit</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/view/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <FaEye />
-                        <span className="text-sm">User View</span>
+                        <FaEye className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">User View</span>
                       </div>
                       <div
                         onClick={() =>
                           navigate(`/tables/user/contact-us/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer"
+                        className="flex gap-3 cursor-pointer items-center"
                       >
-                        <BsFillQuestionCircleFill />
-                        <span className="text-sm">User Enquiries</span>
+                        <BsFillQuestionCircleFill className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          User Enquiries
+                        </span>
                       </div>
                     </div>
                   )}

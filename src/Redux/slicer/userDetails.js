@@ -2,31 +2,29 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
 
 const initialState = {
-  users: [],
-  pageData:{},
+  user: {},
   status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
+export const fetchUserDetails = createAsyncThunk('user', async ({userId}) => {
   try {
-      const response = await AxiosInstance.post(`user/getUsers/`, {
+      const response = await AxiosInstance.post(`user/getDataById/`, {
         params:{
-          limit:limit,
-          page:page,
+          id:userId,
         }  
       });
-      // console.log('USER API Response:', response.data);
-      return response.data;
+      console.log('USER DETAILS API Response:', response.data);
+      return response.data.data;
   } catch (error) {
       console.error('Error fetching in USER API:', error);
       throw error;
   }
 });
 
-const usersSlice = createSlice({
-  name: 'usersList',
+const userDetailsSlice = createSlice({
+  name: 'userDetails',
   initialState,
   reducers: {
     // Additional reducers can go here for synchronous actions
@@ -34,15 +32,14 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for handling async actions' lifecycle
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchUserDetails.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchUserDetails.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.users = action.payload.data; // Set fetched data to state.todos
-        state.pageData = action.payload.meta;
+        state.user = action.payload; // Set fetched data to state.todos
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(fetchUserDetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -50,4 +47,4 @@ const usersSlice = createSlice({
 });
 
  
-export default usersSlice.reducer;
+export default userDetailsSlice.reducer;

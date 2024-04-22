@@ -25,7 +25,6 @@ const UserBusiness = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const handleOnChange = (e) => {
-    console.log("on: ", e.target.name , " ", e.target.value);
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
@@ -72,6 +71,31 @@ const UserBusiness = () => {
                     placeholder="Domain name"
                     className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
+                </div>
+              </div>
+
+              <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="businessName"
+                    className="text-sm text-black dark:text-white"
+                  >
+                    Profile Image (200x200 px)
+                  </label>
+                  <div className="h-[150px] ">
+                    <img src="" alt="profileImg" />
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="businessSegment"
+                    className="text-sm text-black dark:text-white"
+                  >
+                    Cover Image (576x200 px)
+                  </label>
+                  <div className='h-[150px]'>
+                    <img src="" alt="coverImg" />
+                  </div>
                 </div>
               </div>
 

@@ -270,7 +270,7 @@ const Products = () => {
                         </div>
                         <div
                           onClick={() =>
-                            navigate(``)//to be added
+                            navigate(`/products/Gallery/${user._id}`)//to be added
                           }
                           className="flex gap-3 cursor-pointer"
                         >

@@ -1,9 +1,9 @@
 
 import axios from 'axios';
-
+import { BACKEND_URL } from '../url/url';
 // Create an instance of axios with default configuration
 const AxiosInstance = axios.create({
-  baseURL: 'https://api.vosovyapar.com/api/a1/',
+  baseURL:BACKEND_URL ,
 });
 
 // Add a request interceptor

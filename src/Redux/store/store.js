@@ -5,6 +5,7 @@ import authSlicer from '../slicer/authSlicer';
 import login_mobileReducer from '../slicer/login_mobileSlicer';
 import productSlice from '../slicer/productSlice';
 import usersSlice from "../slicer/userList";
+import gallerySlicer from '../slicer/gallerySlicer';
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
     login_mobile: login_mobileReducer,
     usersList: usersSlice,
     Product:productSlice,
-   
+    Gallery:gallerySlicer,
   },
   // Other store configurations can go here, such as middleware setup
 });

@@ -22,6 +22,7 @@ import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
 import Products from './pages/Products/products';
 import Product_table from './components/product_table/Product_table';
+import Gallery_table from './components/Gallery_table/Gallery_table';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -129,6 +130,17 @@ function App() {
             </>
           }
         />
+
+<Route
+          path="/products/Gallery/:userId"
+          element={
+            <>
+              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Gallery_table/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
 
         <Route
           path="/settings"

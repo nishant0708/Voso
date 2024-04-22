@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { fetchProducts } from '../../Redux/slicer/productSlice';
+import { fetchgallery } from '../../Redux/slicer/gallerySlicer';
 import DefaultLayout from '../../layout/DefaultLayout';
-import "./toggle.css"
+import "../product_table/toggle.css"
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
 
-const ProductTable = () => {
+const Gallery_table = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
 
@@ -41,10 +41,10 @@ const ProductTable = () => {
 
 
   useEffect(() => {
-    dispatch(fetchProducts({ userId }));
+    dispatch(fetchgallery({ userId }));
   }, [dispatch, userId]);
 
-  const { products, status, error } = useSelector((state) => state.Product);
+  const { gallery, status, error } = useSelector((state) => state.Gallery);
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -59,7 +59,7 @@ const ProductTable = () => {
       <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-between items-center">
           <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-            Products {products.length}
+            Products {gallery.length}
           </h1>
           <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
   <FaCircleArrowLeft size={14} />
@@ -75,10 +75,10 @@ const ProductTable = () => {
           }}
         >
           <colgroup>
-            <col style={{ width: '400px' }} />{' '}
+            <col style={{ width: '200px' }} />{' '}
             {/* Adjust width for each column */}
             <col style={{ width: '200px' }} />
-            <col style={{ width: '150px' }} />
+     
             <col style={{ width: '150px' }} />
             <col style={{ width: '300px' }} />
             <col style={{ width: '100px' }} />
@@ -88,24 +88,14 @@ const ProductTable = () => {
               <th
                 style={{
                   fontSize: '14px',
-                  width: '400px',
+                  width: '200px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
               >
                 PRODUCT NAME
               </th>
-              <th
-                style={{
-                  fontSize: '14px',
-                  width: '200px',
-                  fontWeight: '900',
-                  padding: '10px',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                PRODUCT PRICE
-              </th>
+            
               <th
                 style={{
                   fontSize: '14px',
@@ -149,7 +139,7 @@ const ProductTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {gallery.map((product) => (
               <tr
                 key={product.id}
                 style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
@@ -162,25 +152,25 @@ const ProductTable = () => {
                     color: '#000',
                     fontWeight: 'bold',
                     gap: '20px',
-                    width: '500px', // Fixed width for this column
+                    width: '300px', // Fixed width for this column
                   }}
                 >
-                  <a href={product.product_url}><span>
+                  <span>
                     <img
                       style={{
                         width: '7vh',
                         height: '7vh',
                         borderRadius: '50%',
                       }}
-                      src={renderImage(product?.product_image)}
+                      alt='undefined'
+                      src={renderImage(product?.url)}
+                     
+                      
                     />
-                  </span></a>
+                  </span>
                   {product.product_name}
                 </td>
-                <td style={{ padding: '10px', width: '200px' }}>
-                  {product.currency}
-                  {product.product_price}
-                </td>
+                
                 <td style={{ padding: '10px', width: '150px' }}>
                   <ToggleSwitch isActive={product.is_featured} />
                 </td>
@@ -190,7 +180,7 @@ const ProductTable = () => {
                 <td
                   style={{
                     padding: '10px',
-                    width: '600px',
+                    width: '500px',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -236,4 +226,4 @@ const ToggleSwitch = ({ isActive }) => {
   );
 };
 
-export default ProductTable;
+export default Gallery_table;

@@ -20,15 +20,6 @@ const UserTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, loading, error, pageData } = useSelector((state) => state.usersList);
-
-  const [open, setOpen] = useState(false);
-  const show = useRef();
-  const overlay = useRef();
-  const shownav = () => {
-    show.current.classList.toggle("navshow");
-    overlay.current.classList.toggle("hidden");
-  };
-
   
   const limit = 20;
   const [page, setPage] = useState(1);

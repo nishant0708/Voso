@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { fetchgallery } from '../../Redux/slicer/gallerySlicer';
+import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import "../product_table/toggle.css"
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT

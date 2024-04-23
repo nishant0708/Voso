@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTopUsers } from '../../Redux/slicer/slicer';
+import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
 import userimg from "../../images/icon/icons8-user-40.png"
 const TableOne = () => {
   const dispatch = useDispatch();

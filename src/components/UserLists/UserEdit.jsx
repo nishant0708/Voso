@@ -1,12 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaListUl } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
+import { fetchUserDetails } from '../../Redux/slicer/userDetails';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UserEdit = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useParams();
+  const { user } = useSelector((state) => state.userDetails);
+
+  useEffect(() => {
+    dispatch(fetchUserDetails({ userId }));
+  }, [userId]);
+
+  const format = (dateString) => {
+    const date = new Date(dateString);
+
+    // Extract year, month, and day from the date object
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Construct the date string in "yyyy-MM-dd" format
+    return `${year}-${month}-${day}`;
+  };
+
+  const setData = () => {
+    setFormData({
+      firstName: user?.first_name || '',
+      lastName: user?.last_name || '',
+      dateOfBirth: format(user?.dob) || '',
+      gender: user?.gender || '',
+      email: user?.email || '',
+      mobile: user?.mobile || '',
+      isApproved: user?.is_approved ? 'true' : 'false' || '',
+      isEmail: user?.is_email_verified ? 'true' : 'false' || '',
+      isMobile: user?.is_mobile_verified ? 'true' : 'false' || '',
+      isUnactive: user?.is_inactive ? 'true' : 'false' || '',
+    });
+  };
+
+  useEffect(() => {
+    setData();
+  }, [user]);
 
   const initialFormData = {
     firstName: '',
@@ -35,14 +75,16 @@ const UserEdit = () => {
   };
 
   const resetForm = () => {
-    setFormData(initialFormData);
+    setData();
   };
 
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold text-black dark:text-white">User Update</h1>
+          <h1 className="text-2xl font-semibold text-black dark:text-white">
+            User Update
+          </h1>
           <button
             onClick={() => navigate(-1)}
             className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
@@ -55,11 +97,11 @@ const UserEdit = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
-              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
+              <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="firstName"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     First Name <span className="text-meta-1">*</span>
                   </label>
@@ -71,14 +113,14 @@ const UserEdit = () => {
                     onChange={handleOnChange}
                     placeholder="Enter your first name"
                     required={true}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
 
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="lastName"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     Last Name <span className="text-meta-1">*</span>
                   </label>
@@ -90,28 +132,28 @@ const UserEdit = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter your last name"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
+              <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="gender"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     {' '}
                     Gender <span className="text-meta-1">*</span>
                   </label>
 
-                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                  <div className="mt-0.5 relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       value={formData.gender}
                       name="gender"
                       id="gender"
                       onChange={handleOnChange}
                       required={true}
-                      className="relative z-20 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -121,19 +163,19 @@ const UserEdit = () => {
                         Select your gender
                       </option>
                       <option
-                        value="Male"
+                        value="male"
                         className="text-body dark:text-bodydark"
                       >
                         Male
                       </option>
                       <option
-                        value="Female"
+                        value="female"
                         className="text-body dark:text-bodydark"
                       >
                         Female
                       </option>
                       <option
-                        value="Other"
+                        value="other"
                         className="text-body dark:text-bodydark"
                       >
                         Other
@@ -162,14 +204,14 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="dateOfBirth"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     Date picker <span className="text-meta-1">*</span>
                   </label>
-                  <div className="relative">
+                  <div className="mt-0.5 relative">
                     <input
                       type="date"
                       name="dateOfBirth"
@@ -178,7 +220,7 @@ const UserEdit = () => {
                       onChange={handleOnChange}
                       required={true}
                       placeholder="mm/dd/yyyy"
-                      className="text-black dark:text-white w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-0.5 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="text-black dark:text-white w-full rounded border-[1.5px] border-stroke bg-transparent px-3 py-0.5 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
 
                     {/* <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
@@ -198,12 +240,9 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
-                  <label
-                    htmlFor="email"
-                    className="mb-2.5 block text-black dark:text-white"
-                  >
+              <div className="mb-4 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full lg:w-1/2 text-sm">
+                  <label htmlFor="email" className="text-black dark:text-white">
                     Email <span className="text-meta-1">*</span>
                   </label>
                   <input
@@ -214,14 +253,14 @@ const UserEdit = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
 
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="mobile"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     Mobile <span className="text-meta-1">*</span>
                   </label>
@@ -233,27 +272,27 @@ const UserEdit = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter your mobile number"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
+              <div className="mb-4 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="isApproved"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     {' '}
                     Is Approved{' '}
                   </label>
 
-                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                  <div className="mt-0.5 relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="isApproved"
                       id="isApproved"
                       value={formData.isApproved}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -263,13 +302,13 @@ const UserEdit = () => {
                         -- Select --
                       </option>
                       <option
-                        value="Yes"
+                        value="true"
                         className="text-body dark:text-bodydark"
                       >
                         Yes
                       </option>
                       <option
-                        value="No"
+                        value="false"
                         className="text-body dark:text-bodydark"
                       >
                         No
@@ -298,22 +337,22 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="isEmail"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     {' '}
                     Is Email{' '}
                   </label>
 
-                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                  <div className="mt-0.5 relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="isEmail"
                       id="isEmail"
                       value={formData.isEmail}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -323,13 +362,13 @@ const UserEdit = () => {
                         -- Select --
                       </option>
                       <option
-                        value="Yes"
+                        value="true"
                         className="text-body dark:text-bodydark"
                       >
                         Yes
                       </option>
                       <option
-                        value="No"
+                        value="false"
                         className="text-body dark:text-bodydark"
                       >
                         No
@@ -358,23 +397,23 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4 flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
+              <div className="mb-4 flex flex-col gap-2.5 md:gap-6 md:flex-row">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="isMobile"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     {' '}
                     Is Mobile{' '}
                   </label>
 
-                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                  <div className="mt-0.5 relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="isMobile"
                       id="isMobile"
                       value={formData.isMobile}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -384,13 +423,13 @@ const UserEdit = () => {
                         -- Select --
                       </option>
                       <option
-                        value="Yes"
+                        value="true"
                         className="text-body dark:text-bodydark"
                       >
                         Yes
                       </option>
                       <option
-                        value="No"
+                        value="false"
                         className="text-body dark:text-bodydark"
                       >
                         No
@@ -419,22 +458,22 @@ const UserEdit = () => {
                   </div>
                 </div>
 
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 text-sm">
                   <label
                     htmlFor="isUnactive"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-black dark:text-white"
                   >
                     {' '}
                     Is Unactive{' '}
                   </label>
 
-                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                  <div className="mt-0.5 relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="isUnactive"
                       id="isUnactive"
                       value={formData.isUnactive}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -444,13 +483,13 @@ const UserEdit = () => {
                         -- Select --
                       </option>
                       <option
-                        value="Yes"
+                        value="true"
                         className="text-body dark:text-bodydark"
                       >
                         Yes
                       </option>
                       <option
-                        value="No"
+                        value="false"
                         className="text-body dark:text-bodydark"
                       >
                         No
@@ -479,7 +518,7 @@ const UserEdit = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-7 flex justify-center items-center gap-5">
+              <div className="mt-7 text-sm flex justify-center items-center gap-5">
                 <button
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-success py-1 px-3 font-medium text-gray hover:bg-opacity-90"

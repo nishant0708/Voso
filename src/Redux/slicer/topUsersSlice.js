@@ -1,31 +1,35 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
-
-const initialState = {
-  gallery: [],
  
+
+// Define the initial state
+const initialState = {
+  topUsers: [],
   status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchgallery = createAsyncThunk('gallery', async ({userId}) => {
+export const fetchTopUsers = createAsyncThunk('topUsers', async ({limit, page}) => {
   try {
-      const response = await AxiosInstance.post(`gallery/getGallery`, {
+      const response = await AxiosInstance.post(`user/topUsers/`, {
         params:{
-          id:userId,
+          limit:limit,
+          page:page,
         }  
       });
-      console.log('USER API Response:', response.data);
-      return response.data;
+      // console.log('TOP USERS API Response:', response.data);
+      return response.data.data;
   } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      console.error('Error fetching todos:', error);
       throw error;
   }
 });
 
-const gallerySlice = createSlice({
-  name: 'gallery',
+
+// Define the todos slice
+const todosSlice = createSlice({
+  name: 'topUsers',
   initialState,
   reducers: {
     // Additional reducers can go here for synchronous actions
@@ -33,15 +37,15 @@ const gallerySlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for handling async actions' lifecycle
     builder
-      .addCase(fetchgallery.pending, (state) => {
+      .addCase(fetchTopUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchgallery.fulfilled, (state, action) => {
+      .addCase(fetchTopUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.gallery = action.payload.data; // Set fetched data to state.todos
-        state.pageData = action.payload.meta;
+        state.topUsers = action.payload; // Set fetched data to state.todos
+       
       })
-      .addCase(fetchgallery.rejected, (state, action) => {
+      .addCase(fetchTopUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -49,4 +53,4 @@ const gallerySlice = createSlice({
 });
 
  
-export default gallerySlice.reducer;
+export default todosSlice.reducer;

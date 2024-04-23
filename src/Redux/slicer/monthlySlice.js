@@ -4,21 +4,16 @@ import { AxiosInstance } from '../../utils/intercept';
 
 // Define the initial state
 const initialState = {
-  topUsers: [],
+  Month: [],
   status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchTopUsers = createAsyncThunk('topUsers', async ({limit, page}) => {
+export const fetchMonth = createAsyncThunk('Month', async (e) => {
   try {
-      const response = await AxiosInstance.post(`user/topUsers/`, {
-        params:{
-          limit:limit,
-          page:page,
-        }  
-      });
-      // console.log('API Response:', response.data);
+      const response = await AxiosInstance.post(`user/eachMonthUsersCount`, e);
+      // console.log('MONTHLY API Response:', response.data.data);
       return response.data.data;
   } catch (error) {
       console.error('Error fetching todos:', error);
@@ -28,8 +23,8 @@ export const fetchTopUsers = createAsyncThunk('topUsers', async ({limit, page}) 
 
 
 // Define the todos slice
-const todosSlice = createSlice({
-  name: 'topUsers',
+const MonthSlice = createSlice({
+  name: 'Month',
   initialState,
   reducers: {
     // Additional reducers can go here for synchronous actions
@@ -37,15 +32,15 @@ const todosSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for handling async actions' lifecycle
     builder
-      .addCase(fetchTopUsers.pending, (state) => {
+      .addCase(fetchMonth.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchTopUsers.fulfilled, (state, action) => {
+      .addCase(fetchMonth.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.topUsers = action.payload; // Set fetched data to state.todos
+        state.Month = action.payload; // Set fetched data to state.todos
        
       })
-      .addCase(fetchTopUsers.rejected, (state, action) => {
+      .addCase(fetchMonth.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -53,4 +48,4 @@ const todosSlice = createSlice({
 });
 
  
-export default todosSlice.reducer;
+export default MonthSlice.reducer;

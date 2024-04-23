@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMonth } from '../../Redux/slicer/Monthlyslicer';
+import { fetchMonth } from '../../Redux/slicer/monthlySlice';
 
 const MonthlyUser = () => {
     const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { fetchEnquiriesList } from '../../Redux/slicer/enquiriesList';
+import { fetchEnquiriesList } from '../../Redux/slicer/userList';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const UserEnquiries = () => {

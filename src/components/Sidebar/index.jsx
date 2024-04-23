@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import Logo from '../../images/logo/vosoLogo.png';
+import voso_logo from '../../images/logo/vosovyapar_icon.png';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -58,17 +58,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
-          <img src={Logo} alt="Logo" />
-        </NavLink>
+      <div className="mt-12 flex items-center justify-between gap-2 px-5 lg:px-3">
+        <Link className="inline-block" to="/">
+          <span className="flex justify-center items-center gap-2">
+            <img className="w-20" src={voso_logo} alt="Logo" />
+            <p className="font-bold text-white text-3xl">Voso Vyapar</p>
+          </span>
+        </Link>
 
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden"
+          className="block lg:hidden text-white"
         >
           <svg
             className="fill-current"
@@ -89,7 +92,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+        <nav className="mt-12 py-4 px-4 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
@@ -107,18 +110,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   return (
                     <React.Fragment>
                       <NavLink
-                        to="#"
+                        to="/"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/' ||
                             pathname.includes('dashboard')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
+                        // onClick={(e) => {
+                        //   e.preventDefault();
+                        //   sidebarExpanded
+                        //     ? handleClick()
+                        //     : setSidebarExpanded(true);
+                        // }}
                       >
                         <svg
                           className="fill-current"

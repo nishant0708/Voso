@@ -3,6 +3,7 @@ import { AxiosInstance } from '../../utils/intercept';
 
 const initialState = {
   user: {},
+  userSEO: {},
   status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
   error: null,
 };
@@ -15,7 +16,22 @@ export const fetchUserDetails = createAsyncThunk('user', async ({userId}) => {
           id:userId,
         }  
       });
-      console.log('USER DETAILS API Response:', response.data);
+      // console.log('USER DETAILS API Response:', response.data);
+      return response.data.data;
+  } catch (error) {
+      console.error('Error fetching in USER API:', error);
+      throw error;
+  }
+});
+
+export const fetchUserSEODetails = createAsyncThunk('userSEO', async ({userId}) => {
+  try {
+      const response = await AxiosInstance.post(`website/getWebContent/`, {
+        params:{
+          id:userId,
+        }  
+      });
+      // console.log('USER SEO DETAILS API Response:', response.data);
       return response.data.data;
   } catch (error) {
       console.error('Error fetching in USER API:', error);
@@ -40,6 +56,17 @@ const userDetailsSlice = createSlice({
         state.user = action.payload; // Set fetched data to state.todos
       })
       .addCase(fetchUserDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchUserSEODetails.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUserSEODetails.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.userSEO = action.payload;
+      })
+      .addCase(fetchUserSEODetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

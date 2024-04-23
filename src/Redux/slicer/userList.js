@@ -9,7 +9,7 @@ const initialState = {
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async ({limit, page}) => {
   try {
       const response = await AxiosInstance.post(`user/getUsers/`, {
         params:{
@@ -18,6 +18,23 @@ export const fetchUsers = createAsyncThunk('users', async ({limit, page}) => {
         }  
       });
       // console.log('USER API Response:', response.data);
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching in USER API:', error);
+      throw error;
+  }
+});
+
+export const fetchEnquiriesList = createAsyncThunk('users/fetchEnquiriesList', async ({userId, limit, page}) => {
+  try {
+      const response = await AxiosInstance.post(`enquiry/getList/`, {
+        params:{
+          id:userId,
+          limit:limit,
+          page:page,
+        }  
+      });
+      // console.log('USER ENQUIRIES LIST API Response:', response.data);
       return response.data;
   } catch (error) {
       console.error('Error fetching in USER API:', error);
@@ -43,6 +60,18 @@ const usersSlice = createSlice({
         state.pageData = action.payload.meta;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchEnquiriesList.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchEnquiriesList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.users = action.payload.data;
+        state.pageData = action.payload.meta;
+      })
+      .addCase(fetchEnquiriesList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

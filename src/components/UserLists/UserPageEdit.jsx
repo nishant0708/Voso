@@ -8,7 +8,7 @@ const UserPageEdit = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold text-black dark:text-white">Pages</h1>
           <button

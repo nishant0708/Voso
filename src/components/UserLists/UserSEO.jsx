@@ -1,13 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { FaItalic } from 'react-icons/fa';
+import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 
 const UserSEO = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useParams();
+  const { userSEO } = useSelector((state) => state.userDetails);
   const [boldbtn, setBold] = useState(false);
   const [italicbtn, setItalic] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchUserSEODetails({ userId }));
+  }, [userId]);
+
+  useEffect(() => {
+    setFormData({
+      homeTitle: userSEO?.seo?.homeTitle || '',
+      siteTitle: userSEO?.seo?.siteTitle || '',
+      metaKeyword: userSEO?.seo?.metaKeyword || '',
+      googleAnalytics: userSEO?.seo?.googleAnalytics || '',
+      description: userSEO?.seo?.metaDescription || '',
+    });
+  }, [userSEO]);
 
   const initialFormData = {
     homeTitle: '',
@@ -32,7 +51,7 @@ const UserSEO = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold text-black dark:text-white">
             SEO
@@ -52,7 +71,7 @@ const UserSEO = () => {
                 <div className="w-full md:w-1/2">
                   <label
                     htmlFor="homeTitle"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-sm text-black dark:text-white"
                   >
                     Home Title
                   </label>
@@ -63,13 +82,14 @@ const UserSEO = () => {
                     value={formData.homeTitle}
                     onChange={handleOnChange}
                     required={true}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    placeholder="Enter home title"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
                   <label
                     htmlFor="siteTitle"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-sm text-black dark:text-white"
                   >
                     Site Title
                   </label>
@@ -80,7 +100,8 @@ const UserSEO = () => {
                     value={formData.siteTitle}
                     onChange={handleOnChange}
                     required={true}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    placeholder="Enter site title"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
@@ -88,7 +109,7 @@ const UserSEO = () => {
                 <div className="w-full md:w-1/2">
                   <label
                     htmlFor="metaKeyword"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-sm text-black dark:text-white"
                   >
                     Meta Keyword
                   </label>
@@ -99,13 +120,14 @@ const UserSEO = () => {
                     value={formData.metaKeyword}
                     onChange={handleOnChange}
                     required={true}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    placeholder="Enter meta keyword"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
                   <label
                     htmlFor="googleAnalytics"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-sm text-black dark:text-white"
                   >
                     Google Analytics
                   </label>
@@ -116,7 +138,8 @@ const UserSEO = () => {
                     value={formData.googleAnalytics}
                     onChange={handleOnChange}
                     required={true}
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    placeholder="Enter google analytics"
+                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
@@ -124,12 +147,13 @@ const UserSEO = () => {
                 <div className="w-full">
                   <label
                     htmlFor="description"
-                    className="mb-2.5 block text-black dark:text-white"
+                    className="text-sm text-black dark:text-white"
                   >
                     Description
                   </label>
-                  <div className="px-3 flex gap-3.5 items-center border-stroke rounded-t border-[1.5px] border-b-0 bg-transparent dark:border-form-strokedark dark:bg-form-input">
+                  <div className="mt-0.5 px-3 flex gap-3.5 items-center border-stroke rounded-t border-[1.5px] border-b-0 bg-transparent dark:border-form-strokedark dark:bg-form-input">
                     <button
+                      type="button"
                       onClick={() => setBold(!boldbtn)}
                       className="text-black dark:text-white font-bold cursor-pointer"
                     >
@@ -148,7 +172,7 @@ const UserSEO = () => {
                     onChange={handleOnChange}
                     required={true}
                     className={`${boldbtn && 'font-bold'} ${italicbtn && 'italic'} overflow-y-auto w-full border-[1.5px] rounded-b border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
-                    style={{ minHeight: '150px', maxHeight: '250px' }}
+                    style={{ minHeight: '150px', maxHeight: '200px' }}
                   />
                 </div>
               </div>

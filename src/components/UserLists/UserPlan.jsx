@@ -23,7 +23,7 @@ const UserPlan = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold text-black dark:text-white">
             User Plan Purchase - shanu@quintustech.co.in
@@ -39,23 +39,23 @@ const UserPlan = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
-              <div className="w-full xl:w-1/2">
+              <div className="w-full xl:w-1/2 text-sm">
                 <label
                   htmlFor="activePlan"
-                  className="mb-2.5 block text-black dark:text-white"
+                  className="text-black dark:text-white"
                 >
                   {' '}
                   Plan Id <span className="text-meta-1">*</span>
                 </label>
 
-                <div className="relative z-20 bg-transparent dark:bg-form-input">
+                <div className="mt-1 relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     value={formData}
                     name="activePlan"
                     id="activePlan"
                     onChange={handleOnChange}
                     required={true}
-                    className="relative z-20 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    className="relative z-20 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
                     <option
                       value=""
@@ -106,7 +106,7 @@ const UserPlan = () => {
                 </div>
               </div>
 
-              <div className="mt-8 flex justify-center items-center gap-5">
+              <div className="mt-8 text-sm flex justify-center items-center gap-5">
                 <button
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-success py-1 px-3 font-medium text-gray hover:bg-opacity-90"

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendOTP, verifyOTP } from '../../Redux/slicer/login_mobileSlicer';
+import { sendOTP, verifyOTP } from '../../Redux/slicer/login_mobileSlice';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 

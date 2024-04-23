@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import topUsersSlice from '../slicer/slicer';
-import month from "../slicer/Monthlyslicer"
-import authSlicer from '../slicer/authSlicer';
-import login_mobileReducer from '../slicer/login_mobileSlicer';
+import topUsersSlice from '../slicer/topUsersSlice';
+import month from "../slicer/monthlySlice"
+import authSlicer from '../slicer/authSlice';
+import login_mobileReducer from '../slicer/login_mobileSlice';
 import productSlice from '../slicer/productSlice';
 import usersSlice from "../slicer/userList";
 import userDetailsSlice from '../slicer/userDetails';
-import enquiriesListSlice from '../slicer/enquiriesList';
-import gallerySlicer from '../slicer/gallerySlicer';
+import gallerySlicer from '../slicer/gallerySlice';
 
 const store = configureStore({
   reducer: {
@@ -17,7 +16,6 @@ const store = configureStore({
     login_mobile: login_mobileReducer,
     usersList: usersSlice,
     userDetails: userDetailsSlice,
-    enquiriesList: enquiriesListSlice,
     Product:productSlice,
     Gallery:gallerySlicer,
   },

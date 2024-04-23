@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
@@ -20,6 +20,15 @@ const UserTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, loading, error, pageData } = useSelector((state) => state.usersList);
+
+  const [open, setOpen] = useState(false);
+  const show = useRef();
+  const overlay = useRef();
+  const shownav = () => {
+    show.current.classList.toggle("navshow");
+    overlay.current.classList.toggle("hidden");
+  };
+
   
   const limit = 20;
   const [page, setPage] = useState(1);
@@ -294,7 +303,7 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 bg-white">
+                    <div className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4">
                       <div
                         onClick={() =>
                           navigate(`/tables/user/edit/${user._id}`)

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import {React,  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -10,7 +10,8 @@ import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need B
 const ProductTable = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-
+  const navigate=useNavigate();
+  const [hoveredButtons, setHoveredButtons] = useState({});
    
   const renderImage = (imageUrl) => {
     if (imageUrl.startsWith('https://')) {
@@ -61,7 +62,7 @@ const ProductTable = () => {
             Back
           </button>
         </div>
-        <p style={{ color: 'red', fontSize:"18px" }}>No Product</p>
+        <p style={{ color: 'red', fontSize:"18px",marginBottom:"20px" }}>No Product</p>
         </div>
       </DefaultLayout>
     );
@@ -214,9 +215,15 @@ const ProductTable = () => {
                     style={{
                       whiteSpace: 'nowrap',
                       padding: '5px 15px',
-                      backgroundColor: 'limegreen',
+                      backgroundColor: hoveredButtons[product._id] ? 'green' : 'limegreen',
                       color: 'white',
                       borderRadius: '999rem',
+                      cursor:'pointer',
+                    }}
+                    onMouseEnter={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: true }))}
+                    onMouseLeave={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: false }))}
+                    onClick={()=>{
+                      navigate(`/products/product_edit/${product._id}`)
                     }}
                   >
                     Product Edit

@@ -28,6 +28,8 @@ import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
 import UserBusiness from './components/UserLists/UserBusiness';
 import Gallery_table from './components/Gallery_table/Gallery_table';
+import Gallery_edit from './components/Gallery_table/Gallery_edit';
+import Product_Edit from './components/product_table/Product_Edit';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -139,6 +141,15 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/products/product_edit/:productId"
+          element={
+            <>
+              <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Product_Edit/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
 
         <Route path="/tables/user/view/:userId" element={<UserView />} />
 
@@ -152,6 +163,16 @@ function App() {
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
               {hasToken ? <Gallery_table/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
+         <Route
+          path="/products/Galleryedit/:productId"
+          element={
+            <>
+              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Gallery_edit/> : <Navigate to="/auth/signin" />}
             </>
           }
         />

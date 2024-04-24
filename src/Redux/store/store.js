@@ -7,6 +7,10 @@ import productSlice from '../slicer/productSlice';
 import usersSlice from "../slicer/userList";
 import userDetailsSlice from '../slicer/userDetails';
 import gallerySlicer from '../slicer/gallerySlice';
+import galleryeditSlice from '../slicer/galleryeditSlice';
+import GalleryEdit from '../../components/Gallery_table/Gallery_edit';
+import updateGalleryReducer from '../slicer/updateGallerySlice';
+
 
 const store = configureStore({
   reducer: {
@@ -18,6 +22,8 @@ const store = configureStore({
     userDetails: userDetailsSlice,
     Product:productSlice,
     Gallery:gallerySlicer,
+    Editgallery:galleryeditSlice,
+    updateGallery: updateGalleryReducer,
   },
   // Other store configurations can go here, such as middleware setup
 });

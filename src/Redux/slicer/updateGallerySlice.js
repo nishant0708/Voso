@@ -1,0 +1,52 @@
+// UpdateGallerySlicer.js
+
+import { createSlice } from '@reduxjs/toolkit';
+import { AxiosInstance } from '../../utils/intercept'; // Import your custom AxiosInstance
+
+export const updateGallerySlice = createSlice({
+  name: 'updateGallery',
+  initialState: {
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    updateGalleryStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateGallerySuccess: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+    updateGalleryFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
+export const { updateGalleryStart, updateGallerySuccess, updateGalleryFailure } = updateGallerySlice.actions;
+
+export const updateGalleryUrl = (data) => async (dispatch) => {
+  dispatch(updateGalleryStart());
+  try {
+    // For all itemTypes, proceed with the provided URL in the data payload as FormData
+    const formData = new FormData();
+    formData.append('url', data.url);
+    formData.append('itemType', data.itemType);
+    formData.append('id', data.id);
+
+    // Make the API call using the custom AxiosInstance
+    const response = await AxiosInstance.post('/gallery/updateGallery', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    dispatch(updateGallerySuccess(response.data));
+  } catch (error) {
+    dispatch(updateGalleryFailure(error.message));
+  }
+};
+
+export default updateGallerySlice.reducer;

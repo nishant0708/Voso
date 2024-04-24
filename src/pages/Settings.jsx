@@ -1,8 +1,42 @@
+import react, { useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import userThree from '../images/user/user-03.png';
 import DefaultLayout from '../layout/DefaultLayout';
+import userimg from '../images/icon/icons8-user-40.png';
 
 const Settings = () => {
+  const user = JSON.parse(localStorage.getItem('userData'));
+
+  const setData = () => {
+    setFormData({
+      fullName: user.first_name + ' ' + user.last_name || '',
+      mobile: user.mobile || '',
+      email: user.email || '',
+    });
+  };
+
+  useEffect(() => {
+    setData();
+  }, []);
+
+  const initialFormData = {
+    fullName: '',
+    mobile: '',
+    email: '',
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleOnChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-270">
@@ -17,7 +51,7 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form onSubmit={handleSubmit}>
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
                       <label
@@ -58,7 +92,8 @@ const Settings = () => {
                           name="fullName"
                           id="fullName"
                           placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          value={formData.fullName}
+                          onChange={handleOnChange}
                         />
                       </div>
                     </div>
@@ -66,17 +101,18 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="phoneNumber"
+                        htmlFor="mobile"
                       >
                         Phone Number
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="phoneNumber"
-                        id="phoneNumber"
+                        name="mobile"
+                        id="mobile"
                         placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        value={formData.mobile}
+                        onChange={handleOnChange}
                       />
                     </div>
                   </div>
@@ -84,7 +120,7 @@ const Settings = () => {
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="emailAddress"
+                      htmlFor="email"
                     >
                       Email Address
                     </label>
@@ -117,10 +153,11 @@ const Settings = () => {
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="email"
-                        name="emailAddress"
-                        id="emailAddress"
+                        name="email"
+                        id="email"
                         placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        value={formData.email}
+                        onChange={handleOnChange}
                       />
                     </div>
                   </div>
@@ -194,14 +231,15 @@ const Settings = () => {
 
                   <div className="flex justify-end gap-4.5">
                     <button
+                      type="button"
+                      onClick={setData}
                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
                     >
                       Cancel
                     </button>
                     <button
-                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
+                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                     >
                       Save
                     </button>
@@ -220,8 +258,8 @@ const Settings = () => {
               <div className="p-7">
                 <form action="#">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="h-14 w-14 rounded-full">
-                      <img src={userThree} alt="User" />
+                    <div className="h-10 w-10 rounded-full">
+                      <img className="w-full" src={userimg} alt="User" />
                     </div>
                     <div>
                       <span className="mb-1.5 text-black dark:text-white">
@@ -287,14 +325,15 @@ const Settings = () => {
 
                   <div className="flex justify-end gap-4.5">
                     <button
+                      type="button"
+                      onClick={setData}
                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
                     >
                       Cancel
                     </button>
                     <button
-                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
+                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                     >
                       Save
                     </button>

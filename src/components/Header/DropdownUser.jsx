@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import userimg from "../../images/icon/icons8-user-40.png"
 import UserOne from '../../images/user/user-01.png';
 
 const DropdownUser = () => {
+  const user = JSON.parse(localStorage.getItem('userData'));
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
-
 
   // close on click outside
   useEffect(() => {
@@ -54,14 +54,14 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+          <span className="block text-sm capitalize font-medium text-black dark:text-white">
+            {user.first_name + " " + user.last_name}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs mt-0.3">{user.mobile}</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <span className="h-9 w-9 rounded-full">
+          <img src={userimg} alt="User" />
         </span>
 
         <svg
@@ -118,7 +118,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              to="#"
+              to="/profile/change-password"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -134,12 +134,12 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Contacts
+              Change Password
             </Link>
           </li>
           <li>
             <Link
-              to="/pages/settings"
+              to="/user/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -163,7 +163,8 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        <button
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
           onClick={handleLogout}
         >
           <svg

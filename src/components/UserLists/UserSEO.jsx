@@ -3,16 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { FaItalic } from 'react-icons/fa';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
+import QuillEditor from '../../utils/quillEditor';
 
 const UserSEO = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
-  const [boldbtn, setBold] = useState(false);
-  const [italicbtn, setItalic] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -83,7 +81,7 @@ const UserSEO = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter home title"
-                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
@@ -101,7 +99,7 @@ const UserSEO = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter site title"
-                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
@@ -121,7 +119,7 @@ const UserSEO = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter meta keyword"
-                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
@@ -139,42 +137,17 @@ const UserSEO = () => {
                     onChange={handleOnChange}
                     required={true}
                     placeholder="Enter google analytics"
-                    className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
               </div>
               <div className="mb-3">
-                <div className="w-full">
-                  <label
-                    htmlFor="description"
-                    className="text-sm text-black dark:text-white"
-                  >
-                    Description
-                  </label>
-                  <div className="mt-0.5 px-3 flex gap-3.5 items-center border-stroke rounded-t border-[1.5px] border-b-0 bg-transparent dark:border-form-strokedark dark:bg-form-input">
-                    <button
-                      type="button"
-                      onClick={() => setBold(!boldbtn)}
-                      className="text-black dark:text-white font-bold cursor-pointer"
-                    >
-                      B
-                    </button>
-                    <FaItalic
-                      onClick={() => setItalic(!italicbtn)}
-                      size={14}
-                      className="text-black dark:text-white font-bold cursor-pointer"
-                    />
-                  </div>
-                  <textarea
-                    name="description"
-                    id="description"
-                    value={formData.description}
-                    onChange={handleOnChange}
-                    required={true}
-                    className={`${boldbtn && 'font-bold'} ${italicbtn && 'italic'} overflow-y-auto w-full border-[1.5px] rounded-b border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
-                    style={{ minHeight: '150px', maxHeight: '200px' }}
-                  />
-                </div>
+                <QuillEditor
+                  label="Description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleOnChange}
+                />
               </div>
               <div className="flex justify-center">
                 <button

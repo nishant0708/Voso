@@ -13,24 +13,23 @@ export const updateUserDetails = createAsyncThunk(
   async ({ formData, userId }) => {
     try {
       const response = await AxiosInstance.put(`user/update/`, {
-        params: {
-          dob: formData.dateOfBirth,
-          email: formData.email,
-          first_name: formData.firstName,
-          gender: formData.gender,
-          is_approved: formData.isApproved === 'true' ? true : false,
-          is_email_verified: formData.isEmail === 'true' ? true : false,
-          is_inactive: formData.isUnactive === 'true' ? true : false,
-          is_mobile_verified: formData.isMobile === 'true' ? true : false,
-          last_name: formData.lastName,
-          mobile: formData.mobile,
-          _id: userId,
-        },
+        dob: formData.dateOfBirth,
+        email: formData.email,
+        first_name: formData.firstName,
+        gender: formData.gender,
+        is_approved: formData.isApproved === 'true' ? true : false,
+        is_email_verified: formData.isEmail === 'true' ? true : false,
+        is_inactive: formData.isUnactive === 'true' ? true : false,
+        is_mobile_verified: formData.isMobile === 'true' ? true : false,
+        last_name: formData.lastName,
+        mobile: formData.mobile,
+        _id: userId,
       });
       console.log('USER DETAILS UPDATE API Response:', response.data);
       toast.success('User Updated Successfully');
       return response.data.data;
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error('Error fetching in USER API:', error);
       throw error;
     }
@@ -50,6 +49,7 @@ export const updateUserPlan = createAsyncThunk(
       toast.success('Plan Purchase Successfully');
       return response.data.data;
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error('Error fetching in USER API:', error);
       throw error;
     }
@@ -74,6 +74,7 @@ export const updateUserSEO = createAsyncThunk(
       toast.success('SEO Update Successfully');
       return response.data.data;
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error('Error fetching in USER API:', error);
       throw error;
     }

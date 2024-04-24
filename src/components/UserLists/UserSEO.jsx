@@ -5,6 +5,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import QuillEditor from '../../utils/quillEditor';
+import { updateUserSEO } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserSEO = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const UserSEO = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserSEO({formData, email:userSEO?.userId?.email, mobile:userSEO?.userId?.mobile, userId}))
   };
 
   return (

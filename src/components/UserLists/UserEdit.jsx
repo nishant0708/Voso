@@ -6,6 +6,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
 import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateUserDetails } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserEdit = () => {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ const UserEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserDetails({ formData, userId }));
   };
 
   const resetForm = () => {

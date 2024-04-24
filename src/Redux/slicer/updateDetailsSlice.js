@@ -1,43 +1,84 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
+import toast from 'react-hot-toast';
 
 const initialState = {
-  user: {},
-  userSEO: {},
-  status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
+  status: 'idle',
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const updateUserDetails = createAsyncThunk('updateUserDetails', async (userId) => {
-  try {
+export const updateUserDetails = createAsyncThunk(
+  'updateUserDetails',
+  async ({ formData, userId }) => {
+    try {
       const response = await AxiosInstance.put(`user/update/`, {
-        params:{
-          id:userId,
-        }  
+        params: {
+          dob: formData.dateOfBirth,
+          email: formData.email,
+          first_name: formData.firstName,
+          gender: formData.gender,
+          is_approved: formData.isApproved === 'true' ? true : false,
+          is_email_verified: formData.isEmail === 'true' ? true : false,
+          is_inactive: formData.isUnactive === 'true' ? true : false,
+          is_mobile_verified: formData.isMobile === 'true' ? true : false,
+          last_name: formData.lastName,
+          mobile: formData.mobile,
+          _id: userId,
+        },
       });
-      // console.log('USER DETAILS API Response:', response.data);
+      console.log('USER DETAILS UPDATE API Response:', response.data);
+      toast.success('User Updated Successfully');
       return response.data.data;
-  } catch (error) {
+    } catch (error) {
       console.error('Error fetching in USER API:', error);
       throw error;
-  }
-});
+    }
+  },
+);
 
-export const fetchUserSEODetails = createAsyncThunk('userSEO', async ({userId}) => {
-  try {
-      const response = await AxiosInstance.post(`website/getWebContent/`, {
-        params:{
-          id:userId,
-        }  
+export const updateUserPlan = createAsyncThunk(
+  'updateUserPlan',
+  async ({ email, plan }) => {
+    try {
+      const response = await AxiosInstance.post(`user/planSubscribeByAdmin`, {
+        amount: 0,
+        email: email,
+        planId: plan === 'Yearly' ? 12 : plan === 'Half-Yearly' ? 6 : 3,
       });
-      // console.log('USER SEO DETAILS API Response:', response.data);
+      console.log('USER PLAN UPDATE API Response:', response.data);
+      toast.success('Plan Purchase Successfully');
       return response.data.data;
-  } catch (error) {
+    } catch (error) {
       console.error('Error fetching in USER API:', error);
       throw error;
-  }
-});
+    }
+  },
+);
+
+export const updateUserSEO = createAsyncThunk(
+  'updateUserSEO',
+  async ({ formData, email, mobile, userId }) => {
+    try {
+      const response = await AxiosInstance.post(`website/updateSEO`, {
+        email: email,
+        googleAnalytics: formData.googleAnalytics,
+        homeTitle: formData.homeTitle,
+        metaDescription: formData.description,
+        metaKeyword: formData.metaKeyword,
+        mobile: mobile,
+        siteTitle: formData.siteTitle,
+        _id: userId,
+      });
+      console.log('USER SEO UPDATE API Response:', response.data);
+      toast.success('SEO Update Successfully');
+      return response.data.data;
+    } catch (error) {
+      console.error('Error fetching in USER API:', error);
+      throw error;
+    }
+  },
+);
 
 const updateDetailsSlice = createSlice({
   name: 'updateDetails',
@@ -48,30 +89,37 @@ const updateDetailsSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for handling async actions' lifecycle
     builder
-      .addCase(fetchUserDetails.pending, (state) => {
+      .addCase(updateUserDetails.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUserDetails.fulfilled, (state, action) => {
+      .addCase(updateUserDetails.fulfilled, (state) => {
         state.status = 'succeeded';
-        state.user = action.payload; // Set fetched data to state.todos
       })
-      .addCase(fetchUserDetails.rejected, (state, action) => {
+      .addCase(updateUserDetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(fetchUserSEODetails.pending, (state) => {
+      .addCase(updateUserPlan.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUserSEODetails.fulfilled, (state, action) => {
+      .addCase(updateUserPlan.fulfilled, (state) => {
         state.status = 'succeeded';
-        state.userSEO = action.payload;
       })
-      .addCase(fetchUserSEODetails.rejected, (state, action) => {
+      .addCase(updateUserPlan.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(updateUserSEO.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateUserSEO.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(updateUserSEO.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
- 
 export default updateDetailsSlice.reducer;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, Navigate, Outlet } from 'react-router-dom';
-import "./App.css";
+import './App.css';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
@@ -28,6 +28,7 @@ import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
 import UserBusiness from './components/UserLists/UserBusiness';
 import Gallery_table from './components/Gallery_table/Gallery_table';
+import ChangePassword from './pages/ChangePassword';
 import Gallery_edit from './components/Gallery_table/Gallery_edit';
 import Product_Edit from './components/product_table/Product_Edit';
 
@@ -93,7 +94,7 @@ function App() {
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/forms/form-layout"
           element={
             <>
@@ -101,7 +102,7 @@ function App() {
               {hasToken ? <FormLayout /> : <Navigate to="/auth/signin" />}
             </>
           }
-        />
+        /> */}
         <Route
           path="/tables"
           element={
@@ -112,32 +113,64 @@ function App() {
           }
         />
 
-        <Route path="/tables/user/edit/:userId" element={<UserEdit />} />
+        <Route
+          path="/tables/user/edit/:userId"
+          element={hasToken ? <UserEdit /> : <Navigate to="/auth/signin" />}
+        />
 
-        <Route path="/tables/user/plan-subscribe/:userId" element={<UserPlan />} />
+        <Route
+          path="/tables/user/plan-subscribe/:userId"
+          element={hasToken ? <UserPlan /> : <Navigate to="/auth/signin" />}
+        />
 
-        <Route path="/tables/user/social-edit/:userId" element={<UserSocial />} />
+        <Route
+          path="/tables/user/seo/:userId"
+          element={hasToken ? <UserSEO /> : <Navigate to="/auth/signin" />}
+        />
 
-        <Route path="/tables/user/seo/:userId" element={<UserSEO />} />
+        <Route
+          path="/tables/user/business-edit/:userId"
+          element={hasToken ? <UserBusiness /> : <Navigate to="/auth/signin" />}
+        />
 
-        <Route path="/tables/user/business-edit/:userId" element={<UserBusiness />} />
+        <Route
+          path="/tables/user/social-edit/:userId"
+          element={hasToken ? <UserSocial /> : <Navigate to="/auth/signin" />}
+        />
+
+        <Route
+          path="/tables/user/pages-edit/:userId"
+          element={hasToken ? <UserPageEdit /> : <Navigate to="/auth/signin" />}
+        />
+
+        <Route
+          path="/tables/user/view/:userId"
+          element={hasToken ? <UserView /> : <Navigate to="/auth/signin" />}
+        />
+
+        <Route
+          path="/tables/user/contact-us/:userId"
+          element={
+            hasToken ? <UserEnquiries /> : <Navigate to="/auth/signin" />
+          }
+        />
 
         <Route
           path="/products"
           element={
             <>
               <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              {hasToken ? <Products/> : <Navigate to="/auth/signin" />}
+              {hasToken ? <Products /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
 
-         <Route
+        <Route
           path="/products/product_list/:userId"
           element={
             <>
               <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              {hasToken ? <Product_table/> : <Navigate to="/auth/signin" />}
+              {hasToken ? <Product_table /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -151,22 +184,25 @@ function App() {
           }
         />
 
-        <Route path="/tables/user/view/:userId" element={<UserView />} />
-
-        <Route path="/tables/user/pages-edit/:userId" element={<UserPageEdit />} />
-
-        <Route path="/tables/user/contact-us/:userId" element={<UserEnquiries />} />
-
-<Route
+        <Route
           path="/products/Gallery/:userId"
           element={
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              {hasToken ? <Gallery_table/> : <Navigate to="/auth/signin" />}
+              {hasToken ? <Gallery_table /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
 
+        <Route
+          path="/profile/change-password"
+          element={
+            <>
+              <PageTitle title="Change-Password | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <ChangePassword /> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
          <Route
           path="/products/Galleryedit/:productId"
           element={
@@ -179,7 +215,7 @@ function App() {
 
 
         <Route
-          path="/settings"
+          path="/user/settings"
           element={
             <>
               <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />

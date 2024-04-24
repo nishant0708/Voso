@@ -1,8 +1,7 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import CoverOne from '../images/cover/cover-01.png';
-import userSix from '../images/user/user-06.png';
-import { Link } from 'react-router-dom';
+import userimg from "../images/icon/icons8-user-40.png"
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem("userData"));
@@ -22,7 +21,7 @@ const Profile = () => {
               htmlFor="cover"
               className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-90 xsm:px-4"
             >
-              <input type="file" name="cover" id="cover" className="sr-only" />
+              <input type="file" accept="image/*,.jpeg,.jpg,.png" name="cover" id="cover" className="sr-only" />
               <span>
                 <svg
                   className="fill-current"
@@ -51,9 +50,10 @@ const Profile = () => {
           </div>
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+          <div className="relative z-30 mx-auto -mt-13 md:-mt-18 h-22 w-full max-w-22 rounded-full bg-white/20 p-1 backdrop-blur sm:h-32 sm:max-w-32 sm:p-3">
             <div className="relative drop-shadow-2">
-              <img src={userSix} alt="profile" />
+              <img className='bg-white rounded-full w-full' src={userimg} alt="profile" />
+              {/* <img src={userSix} alt="" /> */}
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -88,12 +88,12 @@ const Profile = () => {
               </label>
             </div>
           </div>
-          <div className="mt-4">
+          <div className="mt-1">
             <h3 className="mb-1.5 text-2xl font-semibold capitalize text-black dark:text-white">
               {user.first_name + " " + user.last_name}
             </h3>
-            <p className="font-medium">Ui/Ux Designer</p>
-            <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+            <p className="font-medium">Superadmin</p>
+            {/* <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <span className="font-semibold text-black dark:text-white">
                   259
@@ -112,9 +112,9 @@ const Profile = () => {
                 </span>
                 <span className="text-sm">Following</span>
               </div>
-            </div>
+            </div> */}
 
-            <div className="mx-auto max-w-180">
+            {/* <div className="mx-auto max-w-180">
               <h4 className="font-semibold text-black dark:text-white">
                 About Me
               </h4>
@@ -125,9 +125,9 @@ const Profile = () => {
                 ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
                 pharetra ligula sed, aliquam lacus.
               </p>
-            </div>
+            </div> */}
 
-            <div className="mt-6.5">
+            {/* <div className="mt-6.5">
               <h4 className="mb-3.5 font-medium text-black dark:text-white">
                 Follow me on
               </h4>
@@ -278,7 +278,7 @@ const Profile = () => {
                   </svg>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

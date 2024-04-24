@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { BACKEND_URL } from '../../url/url';
+import QuillEditor from '../../utils/quillEditor';
 
 const UserBusiness = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,12 @@ const UserBusiness = () => {
   useEffect(() => {
     setFormData({
       domainName: userSEO?.domain || '',
-      profileImage: `${BACKEND_URL}website/${userSEO?.business_details?.business_profile_image}` || '',
-      coverImage: `${BACKEND_URL}website/${userSEO?.business_details?.business_cover_image}` || '',
+      profileImage:
+        `${BACKEND_URL}website/${userSEO?.business_details?.business_profile_image}` ||
+        '',
+      coverImage:
+        `${BACKEND_URL}website/${userSEO?.business_details?.business_cover_image}` ||
+        '',
       businessName: userSEO?.business_details?.business_name || '',
       businessSegment: userSEO?.business_details?.business_segment || '',
       description: userSEO?.business_details?.business_description || '',
@@ -98,7 +103,12 @@ const UserBusiness = () => {
                     htmlFor="domainName"
                     className="text-sm text-black dark:text-white"
                   >
-                    Website Link - <Link to={`https://${formData.domainName}.vosovyapar.in`} target="_blank" className='text-primary'>{`${formData.domainName}.vosovyapar.in`}</Link>
+                    Website Link -{' '}
+                    <Link
+                      to={`https://${formData.domainName}.vosovyapar.in`}
+                      target="_blank"
+                      className="text-primary"
+                    >{`${formData.domainName}.vosovyapar.in`}</Link>
                   </label>
                   <div className="flex gap-0">
                     <input
@@ -142,7 +152,11 @@ const UserBusiness = () => {
                     Profile Image (200x200 px)
                   </label>
                   <div className="mt-0.5 h-[100px] sm:h-[150px]">
-                    <img className='w-5/12 h-full' src={formData.profileImage} alt="profileImg" />
+                    <img
+                      className="w-5/12 h-full"
+                      src={formData.profileImage}
+                      alt="profileImg"
+                    />
                   </div>
                 </div>
                 <div className="w-full md:w-1/2">
@@ -153,7 +167,11 @@ const UserBusiness = () => {
                     Cover Image (576x200 px)
                   </label>
                   <div className="mt-0.5 h-[100px] sm:h-[150px]">
-                    <img className='w-full h-full' src={formData.coverImage} alt="coverImg" />
+                    <img
+                      className="w-full h-full"
+                      src={formData.coverImage}
+                      alt="coverImg"
+                    />
                   </div>
                 </div>
               </div>
@@ -233,36 +251,12 @@ const UserBusiness = () => {
               </div>
 
               <div className="mb-3">
-                <div className="w-full">
-                  <label
-                    htmlFor="description"
-                    className="text-sm text-black dark:text-white"
-                  >
-                    Description
-                  </label>
-                  <div className="mt-0.5 px-3 flex gap-3.5 items-center border-stroke rounded-t border-[1.5px] border-b-0 bg-transparent dark:border-form-strokedark dark:bg-form-input">
-                    <button
-                      onClick={() => setBold(!boldbtn)}
-                      className="text-black dark:text-white font-bold cursor-pointer"
-                    >
-                      B
-                    </button>
-                    <FaItalic
-                      onClick={() => setItalic(!italicbtn)}
-                      size={14}
-                      className="text-black dark:text-white font-bold cursor-pointer"
-                    />
-                  </div>
-                  <textarea
-                    name="description"
-                    id="description"
-                    value={formData.description}
-                    onChange={handleOnChange}
-                    required={true}
-                    className={`${boldbtn && 'font-bold'} ${italicbtn && 'italic'} overflow-y-auto w-full text-sm border-[1.5px] rounded-b border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
-                    style={{ minHeight: '150px', maxHeight: '150px' }}
-                  />
-                </div>
+                <QuillEditor
+                  label="Description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleOnChange}
+                />
               </div>
 
               <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">

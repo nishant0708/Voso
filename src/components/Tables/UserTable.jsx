@@ -15,11 +15,15 @@ import { FaEye } from 'react-icons/fa';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 
 const UserTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, loading, error, pageData } = useSelector((state) => state.usersList);
+
+  const ref = useRef(null);
+  useOnClickOutside(ref, (index) => clickHandler(index));
   
   const limit = 20;
   const [page, setPage] = useState(1);
@@ -294,7 +298,7 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4">
+                    <div onClick={(e) => e.stopPropagation()} ref={ref} className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4">
                       <div
                         onClick={() =>
                           navigate(`/tables/user/edit/${user._id}`)

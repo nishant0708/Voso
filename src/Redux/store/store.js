@@ -11,6 +11,7 @@ import galleryeditSlice from '../slicer/galleryeditSlice';
 import GalleryEdit from '../../components/Gallery_table/Gallery_edit';
 import updateGalleryReducer from '../slicer/updateGallerySlice';
 
+import updateDetailsSlice from '../slicer/updateDetailsSlice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     userDetails: userDetailsSlice,
     Product:productSlice,
     Gallery:gallerySlicer,
+    updateDetails:updateDetailsSlice,
     Editgallery:galleryeditSlice,
     updateGallery: updateGalleryReducer,
   },

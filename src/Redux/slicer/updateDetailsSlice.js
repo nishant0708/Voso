@@ -47,7 +47,7 @@ export const updateUserPlan = createAsyncThunk(
         planId: plan === 'Yearly' ? 12 : plan === 'Half-Yearly' ? 6 : 3,
       });
       // console.log('USER PLAN UPDATE API Response:', response.data);
-      toast.success('Plan Purchase Successfully');
+      toast.success('Plan Purchased Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -72,7 +72,7 @@ export const updateUserSEO = createAsyncThunk(
         _id: userId,
       });
       // console.log('USER SEO UPDATE API Response:', response.data);
-      toast.success('SEO Update Successfully');
+      toast.success('SEO Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -86,7 +86,17 @@ export const updateUserBusiness = createAsyncThunk(
   'updateUserBusiness',
   async ({ formData, email, mobile, userId }) => {
     try {
-      const {coverImage, description, businessName, profileImage, businessSegment, company, designation, businessGST, locationURL} = formData;
+      const {
+        coverImage,
+        description,
+        businessName,
+        profileImage,
+        businessSegment,
+        company,
+        designation,
+        businessGST,
+        locationURL,
+      } = formData;
       const response = await AxiosInstance.post(`website/business_details`, {
         address: {
           address_1: formData.address1,
@@ -109,7 +119,7 @@ export const updateUserBusiness = createAsyncThunk(
         _id: userId,
       });
       // console.log('USER BUSINESS UPDATE API Response:', response.data);
-      toast.success('Business Update Successfully');
+      toast.success('Business Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -123,7 +133,9 @@ export const updateUserSocial = createAsyncThunk(
   'updateUserSocial',
   async ({ formData, email, mobile, userId }) => {
     try {
-      const items = Object.entries(formData).filter(([key, value]) => value.length > 0).map(([name, url]) => ({ name, url }));
+      const items = Object.entries(formData)
+        .filter(([key, value]) => value.length > 0)
+        .map(([name, url]) => ({ name, url }));
       const response = await AxiosInstance.post(`website/updateSocialMedia`, {
         email: email,
         links: items,
@@ -131,7 +143,27 @@ export const updateUserSocial = createAsyncThunk(
         _id: userId,
       });
       // console.log('USER SOCIAL UPDATE API Response:', response.data);
-      toast.success('Social Update Successfully');
+      toast.success('Social Updated Successfully');
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error('Error fetching in USER API:', error);
+      throw error;
+    }
+  },
+);
+
+export const userChangePassword = createAsyncThunk(
+  'userChangePassword',
+  async ({ userId, oldPassword, newPassword }) => {
+    try {
+      const response = await AxiosInstance.post(`user/changePassword`, {
+        id: userId,
+        oldPassword: oldPassword,
+        password: newPassword,
+      });
+      // console.log('USER CHANGE PASSWORD API Response:', response.data);
+      toast.success('Password Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -197,6 +229,16 @@ const updateDetailsSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(updateUserSocial.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(userChangePassword.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(userChangePassword.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(userChangePassword.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

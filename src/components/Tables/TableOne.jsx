@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
-import userimg from "../../images/icon/icons8-user-40.png"
+import userimg from '../../images/icon/icons8-user-40.png';
 const TableOne = () => {
   const dispatch = useDispatch();
   const limit = 10;
@@ -12,25 +12,27 @@ const TableOne = () => {
     dispatch(fetchTopUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
-const formatDate = (dateString) => {
-  const options = {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: true,
-  };
+  const formatDate = (dateString) => {
+    const options = {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    };
 
-  const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
-  return formattedDate;
-};
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      'en-US',
+      options,
+    );
+    return formattedDate;
+  };
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-      Latest Top 10 Users
-
+        Latest Top 10 Users
       </h4>
 
       <div className="overflow-auto flex flex-col">
@@ -84,7 +86,9 @@ const formatDate = (dateString) => {
                     alt="Profile"
                     className="w-10 h-10 rounded-full"
                   />
-                  <p className="ml-3  text-black dark:text-white">{user.first_name}</p>
+                  <p className="ml-3  text-black dark:text-white">
+                    {user.first_name}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-center p-2.5 xl:p-5">
@@ -100,9 +104,7 @@ const formatDate = (dateString) => {
                 </div>
 
                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                  <p className="text-meta-5">
-                  {formatDate(user.created_at)}
-                    </p>
+                  <p className="text-meta-5">{formatDate(user.created_at)}</p>
                 </div>
               </div>
             ))}

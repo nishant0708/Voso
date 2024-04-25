@@ -1,10 +1,10 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import CoverOne from '../images/cover/cover-01.png';
-import userimg from "../images/icon/icons8-user-40.png"
+import userimg from '../images/icon/icons8-user-40.png';
 
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem("userData"));
+  const user = JSON.parse(localStorage.getItem('userData'));
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
@@ -21,7 +21,13 @@ const Profile = () => {
               htmlFor="cover"
               className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-90 xsm:px-4"
             >
-              <input type="file" accept="image/*,.jpeg,.jpg,.png" name="cover" id="cover" className="sr-only" />
+              <input
+                type="file"
+                accept="image/*,.jpeg,.jpg,.png"
+                name="cover"
+                id="cover"
+                className="sr-only"
+              />
               <span>
                 <svg
                   className="fill-current"
@@ -52,7 +58,11 @@ const Profile = () => {
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-13 md:-mt-18 h-22 w-full max-w-22 rounded-full bg-white/20 p-1 backdrop-blur sm:h-32 sm:max-w-32 sm:p-3">
             <div className="relative drop-shadow-2">
-              <img className='bg-white rounded-full w-full' src={userimg} alt="profile" />
+              <img
+                className="bg-white rounded-full w-full"
+                src={userimg}
+                alt="profile"
+              />
               {/* <img src={userSix} alt="" /> */}
               <label
                 htmlFor="profile"
@@ -90,7 +100,7 @@ const Profile = () => {
           </div>
           <div className="mt-1">
             <h3 className="mb-1.5 text-2xl font-semibold capitalize text-black dark:text-white">
-              {user.first_name + " " + user.last_name}
+              {user.first_name + ' ' + user.last_name}
             </h3>
             <p className="font-medium">Superadmin</p>
             {/* <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">

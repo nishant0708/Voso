@@ -62,7 +62,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <Link className="inline-block" to="/">
           <span className="flex justify-center items-center gap-2">
             <img className="w-14 lg:w-17" src={voso_logo} alt="Logo" />
-            <p className="font-bold text-white text-[20px] lg:text-[26px]">Voso Vyapar</p>
+            <p className="font-bold text-white text-[20px] lg:text-[26px]">
+              Voso Vyapar
+            </p>
           </span>
         </Link>
 

@@ -4,14 +4,13 @@ import { useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import DefaultLayout from '../../layout/DefaultLayout';
-import "../product_table/toggle.css"
+import '../product_table/toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
 
 const Gallery_table = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
 
-   
   const renderImage = (imageUrl) => {
     if (imageUrl.startsWith('https://')) {
       return imageUrl;
@@ -19,8 +18,6 @@ const Gallery_table = () => {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
   };
-
-
 
   const formatDate = (dateString) => {
     const options = {
@@ -35,10 +32,6 @@ const Gallery_table = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', options);
   };
-
-
-
-
 
   useEffect(() => {
     dispatch(fetchgallery({ userId }));
@@ -56,17 +49,21 @@ const Gallery_table = () => {
   if (gallery.length === 0) {
     return (
       <DefaultLayout>
-          <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="flex justify-between items-center">
-          <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-            Products {gallery.length}
-          </h1>
-          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button>
-        </div>
-        <p style={{ color: 'red', fontSize:"18px" }}>No Product</p>
+        <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="flex justify-between items-center">
+            <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+              Products {gallery.length}
+            </h1>
+            <button
+              onClick={() => (window.location.href = '/products')}
+              style={{ position: 'absolute', right: '9%', top: '20%' }}
+              className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+            >
+              <FaCircleArrowLeft size={14} />
+              Back
+            </button>
+          </div>
+          <p style={{ color: 'red', fontSize: '18px' }}>No Product</p>
         </div>
       </DefaultLayout>
     );
@@ -79,10 +76,14 @@ const Gallery_table = () => {
           <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
             Products {gallery.length}
           </h1>
-          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-  <FaCircleArrowLeft size={14} />
-  Back
-</button>
+          <button
+            onClick={() => (window.location.href = '/products')}
+            style={{ position: 'absolute', right: '9%', top: '20%' }}
+            className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
+            <FaCircleArrowLeft size={14} />
+            Back
+          </button>
         </div>
         <table
           style={{
@@ -96,7 +97,6 @@ const Gallery_table = () => {
             <col style={{ width: '200px' }} />{' '}
             {/* Adjust width for each column */}
             <col style={{ width: '200px' }} />
-     
             <col style={{ width: '150px' }} />
             <col style={{ width: '300px' }} />
             <col style={{ width: '100px' }} />
@@ -113,7 +113,7 @@ const Gallery_table = () => {
               >
                 PRODUCT NAME
               </th>
-            
+
               <th
                 style={{
                   fontSize: '14px',
@@ -180,15 +180,13 @@ const Gallery_table = () => {
                         height: '7vh',
                         borderRadius: '50%',
                       }}
-                      alt='undefined'
+                      alt="undefined"
                       src={renderImage(product?.url)}
-                     
-                      
                     />
                   </span>
                   {product.product_name}
                 </td>
-                
+
                 <td style={{ padding: '10px', width: '150px' }}>
                   <ToggleSwitch isActive={product.is_featured} />
                 </td>
@@ -235,12 +233,25 @@ const ToggleSwitch = ({ isActive }) => {
 
   return (
     <div>
-    <div className={`toggle-switch ${isToggled ? 'active' : ''}`} onClick={handleToggle}>
-      <div className="slider"></div>
-     
+      <div
+        className={`toggle-switch ${isToggled ? 'active' : ''}`}
+        onClick={handleToggle}
+      >
+        <div className="slider"></div>
+      </div>
+      <div
+        className="toggle-text"
+        style={{
+          whiteSpace: 'nowrap',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          color: 'black',
+          transform: 'translate(-5px,0px)',
+        }}
+      >
+        {isToggled ? 'Featured' : 'Not Featured'}
+      </div>
     </div>
-     <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",color:"black",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
-     </div>
   );
 };
 

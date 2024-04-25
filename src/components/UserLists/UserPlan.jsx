@@ -37,7 +37,7 @@ const UserPlan = () => {
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold text-black dark:text-white">
-            User Plan Purchase - shanu@quintustech.co.in
+            User Plan Purchase - {user?.email}
           </h1>
           <button
             onClick={() => navigate(-1)}

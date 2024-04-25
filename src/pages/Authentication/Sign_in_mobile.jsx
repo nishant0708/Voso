@@ -10,10 +10,10 @@ const Sign_in_mobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
   const dispatch = useDispatch();
-  const sendingOTP = useSelector(state => state.login_mobile.sendingOTP);
-  const verifyingOTP = useSelector(state => state.login_mobile.verifyingOTP);
-  const error = useSelector(state => state.login_mobile.error);
-const navigate=useNavigate();
+  const sendingOTP = useSelector((state) => state.login_mobile.sendingOTP);
+  const verifyingOTP = useSelector((state) => state.login_mobile.verifyingOTP);
+  const error = useSelector((state) => state.login_mobile.error);
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     if (mobileNo.length === 10) {
@@ -22,7 +22,8 @@ const navigate=useNavigate();
         if (sendOTP.fulfilled.match(actionResult)) {
           setShowLabel(true);
         } else if (sendOTP.rejected.match(actionResult)) {
-          const errorMessage = actionResult.error.message || 'Unknown error occurred.';
+          const errorMessage =
+            actionResult.error.message || 'Unknown error occurred.';
           alert('Error sending OTP: ' + errorMessage);
         }
       } catch (error) {
@@ -32,7 +33,7 @@ const navigate=useNavigate();
       alert('Please enter a valid 10-digit mobile number.');
     }
   };
-  
+
   const handleVerify = () => {
     dispatch(verifyOTP({ mobileNo, otp }))
       .then((action) => {
@@ -65,16 +66,26 @@ const navigate=useNavigate();
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img className="w-96 hidden dark:block" src={voso_logo} alt="Logo" />
+                <img
+                  className="w-96 hidden dark:block"
+                  src={voso_logo}
+                  alt="Logo"
+                />
                 <span className="flex justify-center items-center gap-1.5 ">
-                  <img className="w-20 dark:hidden" src={voso_logo} alt="Logo" />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">Voso Vyapar</p>
+                  <img
+                    className="w-20 dark:hidden"
+                    src={voso_logo}
+                    alt="Logo"
+                  />
+                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
+                    Voso Vyapar
+                  </p>
                 </span>
               </Link>
-              <p className="2xl:px-20 text-[22px]">Welcome! Log in to your account.</p>
-              <span className="mt-15 inline-block">
-             
-              </span>
+              <p className="2xl:px-20 text-[22px]">
+                Welcome! Log in to your account.
+              </p>
+              <span className="mt-15 inline-block"></span>
             </div>
           </div>
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
@@ -98,12 +109,21 @@ const navigate=useNavigate();
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <span className="absolute right-4 top-4">
-                      <img className="w-8" src={mobile_logo_light} alt="Mobile icon" />
+                      <img
+                        className="w-8"
+                        src={mobile_logo_light}
+                        alt="Mobile icon"
+                      />
                     </span>
                   </div>
                 </div>
-                <div className="" style={{ display: showLabel ? 'block' : 'none' }}>
-                  <label className="block font-medium text-black dark:text-white">Verify Your OTP:</label>
+                <div
+                  className=""
+                  style={{ display: showLabel ? 'block' : 'none' }}
+                >
+                  <label className="block font-medium text-black dark:text-white">
+                    Verify Your OTP:
+                  </label>
                   <div className="relative">
                     <input
                       type="text"
@@ -114,8 +134,21 @@ const navigate=useNavigate();
                     />
                   </div>
                 </div>
-                <div className="mb-6 text-right" style={{ display: showLabel ? 'block' : 'none' }}>
-                  <p style={{ display: showLabel ? 'block' : 'none' , cursor : "pointer"}}> <a onClick={sendOTP} className="text-primary">Resend OTP</a></p>
+                <div
+                  className="mb-6 text-right"
+                  style={{ display: showLabel ? 'block' : 'none' }}
+                >
+                  <p
+                    style={{
+                      display: showLabel ? 'block' : 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {' '}
+                    <a onClick={sendOTP} className="text-primary">
+                      Resend OTP
+                    </a>
+                  </p>
                 </div>
                 <input
                   type="button"

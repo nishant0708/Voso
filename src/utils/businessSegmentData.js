@@ -114,5 +114,5 @@ export default [
   {
     value: 'travel',
     name: 'Travel and Tourism',
-  }
-]
+  },
+];

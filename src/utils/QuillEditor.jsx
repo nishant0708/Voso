@@ -3,14 +3,13 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const QuillEditor = ({ label, name, value, onChange }) => {
-  console.log('enter');
   const handleChange = (content) => {
     onChange({ target: { name, value: content } });
   };
 
   return (
     <div>
-      <label className='text-sm text-black dark:text-white'>{label}</label>
+      <label className="text-sm text-black dark:text-white">{label}</label>
       <ReactQuill
         value={value}
         className="min-h-[150px] max-h-[200px] mt-1 w-full overflow-y-auto outline-none transition text-black focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"

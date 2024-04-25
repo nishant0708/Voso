@@ -106,12 +106,10 @@ const ECommerce = () => {
         {/* <MapOne /> */}
         <div className="col-span-12 xl:col-span-12">
           <TableOne />
-          
         </div>
-        
-        <div className="col-span-12 xl:col-span-12">
-        <MonthlyUser/>
 
+        <div className="col-span-12 xl:col-span-12">
+          <MonthlyUser />
         </div>
         {/* <ChatCard /> */}
       </div>

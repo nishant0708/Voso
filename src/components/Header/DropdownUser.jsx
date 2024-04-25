@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import userimg from "../../images/icon/icons8-user-40.png"
+import userimg from '../../images/icon/icons8-user-40.png';
 import UserOne from '../../images/user/user-01.png';
 
 const DropdownUser = () => {
@@ -55,7 +55,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm capitalize font-medium text-black dark:text-white">
-            {user.first_name + " " + user.last_name}
+            {user.first_name + ' ' + user.last_name}
           </span>
           <span className="block text-xs mt-0.3">{user.mobile}</span>
         </span>

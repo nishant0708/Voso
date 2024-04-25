@@ -1,10 +1,18 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
+import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 
 const UserPageEdit = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchUserSEODetails({ userId }));
+  }, [userId]);
 
   return (
     <DefaultLayout>

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { fetchServices } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { fetchProducts } from '../../Redux/slicer/productSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
 
-const ProductTable = () => {
+const ServiceView = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const { products, status, error } = useSelector((state) => state.Product);
+  const { services, status, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
-    dispatch(fetchProducts({ userId }));
+    dispatch(fetchServices({ userId }));
   }, [dispatch, userId]);
 
   const renderImage = (imageUrl) => {
@@ -46,13 +46,13 @@ const ProductTable = () => {
     return <div>Error: {error}</div>;
   }
 
-  if (products.length === 0) {
+  if (services.length === 0) {
     return (
       <DefaultLayout>
         <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex justify-between items-center">
             <h1 className="mb-6 text-2xl sm:text-3xl font-medium text-black dark:text-white">
-              Products - {products.length}
+              Services - {services.length}
             </h1>
             <button
               onClick={() => (window.location.href = '/products')}
@@ -63,7 +63,7 @@ const ProductTable = () => {
             </button>
           </div>
           <p className="text-danger text-lg text-center pb-5">
-            No Products Found
+            No Services Found
           </p>
         </div>
       </DefaultLayout>
@@ -75,7 +75,7 @@ const ProductTable = () => {
       <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="mb-8 ml-2 w-full flex justify-between items-center">
           <h1 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
-            Products - {products.length}
+            Services - {services.length}
           </h1>
           <button
             onClick={() => navigate(-1)}
@@ -89,10 +89,10 @@ const ProductTable = () => {
           <thead>
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
               <th className="w-[270px] font-extrabold p-2.5">
-                PRODUCT NAME
+                SERVICE NAME
               </th>
               <th className="w-[258px] whitespace-nowrap font-extrabold p-2.5 pl-1.5">
-                PRODUCT PRICE
+                SERVICE PRICE
               </th>
               <th className="w-[170px] font-extrabold p-2.5 pl-6">
                 FEATURED
@@ -109,38 +109,38 @@ const ProductTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {services.map((service) => (
               <tr
-                key={product._id}
+                key={service._id}
                 style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
               >
                 <td className="w-[270px] p-2.5 flex items-center gap-5 font-bold">
-                  <a href={product.product_url}>
+                  <a href={service.service_img}>
                     <span>
                       <img
                         className="w-[7vh] h-[7vh] rounded-[50%]"
-                        src={renderImage(product?.product_image)}
+                        src={renderImage(service?.service_image)}
                       />
                     </span>
                   </a>
-                  {product.product_name}
+                  {service.service_name}
                 </td>
-                <td className="w-[255px] p-2.5 pl-3">
-                  {product.currency}
-                  {product.product_price}
+                <td className="w-[255px] p-2.5 pl-4.5">
+                  {service.currency}
+                  {service.service_price}
                 </td>
                 <td className="w-[170px] p-2.5 pl-5.5">
-                  <ToggleSwitch isActive={product.is_featured} />
+                  <ToggleSwitch isActive={service.is_featured} />
                 </td>
                 <td className="w-[160px] text-center p-2.5 pl-5.5">
-                  {product.is_active ? 'Active' : 'Inactive'}
+                  {service?.is_active ? 'Active' : 'Inactive'}
                 </td>
                 <td className="w-[320px] p-2.5 pl-5.5 whitespace-nowrap">
-                  {formatDate(product.created_at)}
+                  {formatDate(service.created_at)}
                 </td>
                 <td className="w-[100px] p-2.5 pl-3">
                   <p className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
-                    Product Edit
+                    Service Edit
                   </p>
                 </td>
               </tr>
@@ -174,4 +174,4 @@ const ToggleSwitch = ({ isActive }) => {
   );
 };
 
-export default ProductTable;
+export default ServiceView;

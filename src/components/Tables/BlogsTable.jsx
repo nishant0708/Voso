@@ -7,24 +7,20 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { TbDotsVertical } from 'react-icons/tb';
 import { FaCircleUser } from 'react-icons/fa6';
 import { FaRupeeSign } from 'react-icons/fa';
-import { HiSpeakerphone } from 'react-icons/hi';
-import { PiToolboxFill } from 'react-icons/pi';
-import { FaShareSquare } from 'react-icons/fa';
-import { FaFileAlt } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 
-const UserTable = () => {
+const BlogsTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { users, loading, error, pageData } = useSelector((state) => state.usersList);
+  const { users, loading, error, pageData } = useSelector(
+    (state) => state.usersList,
+  );
 
   const ref = useRef(null);
   useOnClickOutside(ref, (index) => clickHandler(index));
-  
+
   const limit = 20;
   const [page, setPage] = useState(1);
 
@@ -37,36 +33,6 @@ const UserTable = () => {
     // Dispatch the fetchUsers action when the component mounts
     callFetchUsers(limit, page);
   }, [limit, page]);
-
-  const formatDate = (dateString) => {
-    const options = {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      'en-US',
-      options,
-    );
-    return formattedDate;
-  };
-
-  const calculateDays = (user) => {
-    if (user.subscription && user.subscription.endDate) {
-      const days = Math.ceil(
-        (new Date(user.subscription.endDate) - new Date()) /
-          (1000 * 60 * 60 * 24),
-      );
-      return days;
-    } else {
-      return 0;
-    }
-  };
 
   const [active, setActive] = useState(Array(users.length).fill(false));
   const clickHandler = (index) => {
@@ -175,10 +141,6 @@ const UserTable = () => {
           Users List
         </h4>
         <div className="flex gap-3 mb-6 text-base font-medium text-white dark:text-white">
-          <button className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-            <IoIosAddCircle />
-            Create
-          </button>
           <button
             onClick={() => navigate(-1)}
             className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
@@ -200,7 +162,7 @@ const UserTable = () => {
       </div>
 
       <div className="flex flex-col overflow-x-scroll">
-        <div className="grid place-items-center grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4">
+        <div className="grid place-items-center grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4">
           <div className="p-2.5 xl:p-3">
             <h5 className="text-sm text-center font-semibold uppercase">#</h5>
           </div>
@@ -216,17 +178,7 @@ const UserTable = () => {
           </div>
           <div className="p-2.5 xl:p-3">
             <h5 className="text-sm text-center font-semibold uppercase">
-              Plan
-            </h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">
-              Remaining Days
-            </h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">
-              Created At
+              Email
             </h5>
           </div>
           <div className="p-2.5 xl:p-3">
@@ -245,7 +197,7 @@ const UserTable = () => {
             {users.map((user, index) => (
               <div
                 key={user._id}
-                className={`text-sm grid grid-cols-7 ${
+                className={`text-sm grid grid-cols-5 ${
                   index === users.length - 1
                     ? ''
                     : 'border-b border-stroke dark:border-strokedark'
@@ -271,23 +223,7 @@ const UserTable = () => {
                 </div>
 
                 <div className="flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-center text-meta-3">
-                    {user?.subscription?.currentPlan
-                      ? user?.subscription?.currentPlan
-                      : 'NA'}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-center text-black dark:text-white">
-                    {calculateDays(user)}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-center text-meta-5">
-                    {formatDate(user.created_at)}
-                  </p>
+                  <p className="text-center text-meta-5">{user?.email}</p>
                 </div>
 
                 <div className="relative flex items-center justify-center p-2.5 xl:p-3">
@@ -298,81 +234,27 @@ const UserTable = () => {
                     />
                   </p>
                   {active[index] && (
-                    <div onClick={(e) => e.stopPropagation()} ref={ref} className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4">
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      ref={ref}
+                      className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[60%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                    >
                       <div
-                        onClick={() =>
-                          navigate(`/users/user/edit/${user._id}`)
-                        }
+                        onClick={() => navigate(`/blogs/blogView/${user._id}`)}
                         className="flex gap-3 cursor-pointer items-center"
                       >
                         <FaCircleUser className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">User Edit</span>
+                        <span className="text-xs sm:text-sm">Blogs List</span>
                       </div>
                       <div
                         onClick={() =>
-                          navigate(`/users/user/plan-subscribe/${user._id}`)
+                          navigate(`/blogs/serviceView/${user._id}`)
                         }
                         className="flex gap-3 cursor-pointer items-center"
                       >
                         <FaRupeeSign className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">
-                          Plan Purchase
-                        </span>
-                      </div>
-                      <div
-                        onClick={() => navigate(`/users/user/seo/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <HiSpeakerphone className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">SEO Edit</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/users/user/business-edit/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <PiToolboxFill className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">
-                          Business Edit
-                        </span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/users/user/social-edit/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaShareSquare className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Social Edit</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/users/user/pages-edit/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaFileAlt className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Pages Edit</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/users/user/view/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaEye className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">User View</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/users/user/contact-us/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <BsFillQuestionCircleFill className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">
-                          User Enquiries
+                          Services List
                         </span>
                       </div>
                     </div>
@@ -387,4 +269,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default BlogsTable;

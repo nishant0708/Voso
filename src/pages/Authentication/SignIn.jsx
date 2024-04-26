@@ -28,37 +28,32 @@ const SignIn = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    <div className="overflow-hidden">
-      <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center translate-y-[5%]">
-          <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/">
-                <img
-                  className="w-96 hidden dark:block"
-                  src={voso_logo}
-                  alt="Logo"
-                ></img>
-                <span className="flex justify-center items-center gap-1.5 ">
+    <div>
+      <div className="h-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="mt-10 flex flex-wrap">
+          <div className="hidden w-full md:block md:w-1/2">
+            <div className="px-16 py-12 lg:py-17.5 lg:px-26 text-center">
+              <Link className="mb-5 inline-block" to="/">
+                <span className="flex justify-center items-center gap-1.5">
                   <img
-                    className="w-20 dark:hidden"
+                    className="w-14"
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
+                  <p className="font-bold text-black dark:text-white text-[32px] lg:text-[42px] translate-y-[7px]">
                     Voso Vyapar
                   </p>
                 </span>
               </Link>
 
-              <p className="2xl:px-20 text-[22px]">
+              <p className="2xl:px-20 text-[20px] lg:text-[22px]">
                 Welcome! Log in to your account.
               </p>
 
-              <span className="mt-15 inline-block">
+              <span className="mt-12 lg:mt-15 inline-block">
                 <svg
-                  width="350"
-                  height="350"
+                  width="300"
+                  height="300"
                   viewBox="0 0 350 350"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -180,9 +175,8 @@ const SignIn = () => {
             </div>
           </div>
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Start for free</span>
+          <div className="w-full border-stroke dark:border-strokedark md:w-1/2 md:border-l-2">
+            <div className="w-full p-8 sm:px-16 sm:py-14 lg:py-17.5 lg:px-26">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign In to Voso Vyapar
               </h2>

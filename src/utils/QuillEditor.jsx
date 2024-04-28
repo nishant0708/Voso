@@ -29,10 +29,10 @@ QuillEditor.modules = {
     [
       { list: 'ordered' },
       { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
+      // { indent: '-1' },
+      // { indent: '+1' },
     ],
-    ['link', 'image', 'video'],
+    // ['link', 'image', 'video'],
   ],
   clipboard: {
     matchVisual: false,
@@ -50,10 +50,10 @@ QuillEditor.formats = [
   'blockquote',
   'list',
   'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
+  // 'indent',
+  // 'link',
+  // 'image',
+  // 'video',
 ];
 
 export default QuillEditor;

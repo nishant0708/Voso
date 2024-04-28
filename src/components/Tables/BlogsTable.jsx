@@ -2,21 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
-import { IoIosAddCircle } from 'react-icons/io';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { TbDotsVertical } from 'react-icons/tb';
 import { FaCircleUser } from 'react-icons/fa6';
 import { FaRupeeSign } from 'react-icons/fa';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
 
 const BlogsTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { users, loading, error, pageData } = useSelector(
-    (state) => state.usersList,
-  );
+  const { users, pageData } = useSelector((state) => state.usersList);
 
   const ref = useRef(null);
   useOnClickOutside(ref, (index) => clickHandler(index));
@@ -24,14 +21,8 @@ const BlogsTable = () => {
   const limit = 20;
   const [page, setPage] = useState(1);
 
-  const callFetchUsers = (limit, page) => {
-    dispatch(fetchUsers({ limit, page }));
-    return;
-  };
-
   useEffect(() => {
-    // Dispatch the fetchUsers action when the component mounts
-    callFetchUsers(limit, page);
+    dispatch(fetchUsers({ limit, page }));
   }, [limit, page]);
 
   const [active, setActive] = useState(Array(users.length).fill(false));
@@ -135,23 +126,21 @@ const BlogsTable = () => {
   };
 
   return (
-    <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="flex justify-between items-center">
-        <h4 className="mb-6 text-3xl font-medium text-black dark:text-white">
+    <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="mb-10 flex justify-between items-center">
+        <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
           Users List
         </h4>
-        <div className="flex gap-3 mb-6 text-base font-medium text-white dark:text-white">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
-          >
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button>
-        </div>
+        <button
+          onClick={() => navigate(-1)}
+          className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+        >
+          <FaCircleArrowLeft size={14} />
+          Back
+        </button>
       </div>
 
-      <div className="mb-5 flex justify-center items-center gap-5">
+      <div className="mb-10 text-sm sm:text-base flex justify-center items-center gap-5 text-black dark:text-white">
         <button onClick={handlePrev}>
           <MdOutlineKeyboardDoubleArrowLeft />
         </button>
@@ -161,110 +150,62 @@ const BlogsTable = () => {
         </button>
       </div>
 
-      <div className="flex flex-col overflow-x-scroll">
-        <div className="grid place-items-center grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4">
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">#</h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm  text-center font-semibold uppercase">
-              Name
-            </h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">
-              Mobile
-            </h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">
-              Email
-            </h5>
-          </div>
-          <div className="p-2.5 xl:p-3">
-            <h5 className="text-sm text-center font-semibold uppercase">
-              Actions
-            </h5>
-          </div>
-        </div>
-
-        {loading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <div>Error: {error.message}</div>
-        ) : users ? (
-          <div>
-            {users.map((user, index) => (
-              <div
-                key={user._id}
-                className={`text-sm grid grid-cols-5 ${
-                  index === users.length - 1
-                    ? ''
-                    : 'border-b border-stroke dark:border-strokedark'
-                }`}
-              >
-                {/* Render user information */}
-                <div className="flex justify-center items-center p-2.5 xl:p-3">
-                  <p className="text-center font-extrabold text-black dark:text-white">
-                    {index + 1}
-                  </p>
-                </div>
-
-                <div className="flex justify-center items-center p-2.5 xl:p-3">
-                  <p className="capitalize text-center text-black dark:text-white">
-                    {user.first_name + ' ' + user.last_name}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-center text-black dark:text-white">
-                    {user.mobile}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-center text-meta-5">{user?.email}</p>
-                </div>
-
-                <div className="relative flex items-center justify-center p-2.5 xl:p-3">
-                  <p className="text-black dark:text-white cursor-pointer">
-                    <TbDotsVertical
-                      size={22}
-                      onClick={() => clickHandler(index)}
-                    />
-                  </p>
-                  {active[index] && (
+      <table className="w-full text-sm">
+        <thead className="font-extrabold text-center">
+          <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
+            <th className="p-2.5 pl-12">#</th>
+            <th className="p-2.5 pl-13">NAME</th>
+            <th className="p-2.5 pl-13">MOBILE</th>
+            <th className="p-2.5 pl-12">EMAIL</th>
+            <th className="p-2.5 pl-5">ACTION</th>
+          </tr>
+        </thead>
+        <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+          {users.map((user, index) => (
+            <tr
+              key={user._id}
+              style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
+            >
+              <td className="p-2.5 pl-12 font-extrabold">{index + 1}</td>
+              <td className="p-2.5 pl-13 capitalize">
+                {user.first_name + ' ' + user.last_name}
+              </td>
+              <td className="p-2.5 pl-13">{user.mobile}</td>
+              <td className="p-2.5 pl-12 text-meta-5">{user?.email}</td>
+              <td className="relative p-2.5 pl-5 flex justify-center items-center">
+                <p className="cursor-pointer">
+                  <TbDotsVertical
+                    size={22}
+                    onClick={() => clickHandler(index)}
+                  />
+                </p>
+                {active[index] && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    ref={ref}
+                    className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                  >
                     <div
-                      onClick={(e) => e.stopPropagation()}
-                      ref={ref}
-                      className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[60%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                      onClick={() => navigate(`/blogs/blogView/${user._id}`)}
+                      className="flex gap-3 cursor-pointer items-center"
                     >
-                      <div
-                        onClick={() => navigate(`/blogs/blogView/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaCircleUser className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Blogs List</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/blogs/serviceView/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaRupeeSign className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">
-                          Services List
-                        </span>
-                      </div>
+                      <FaCircleUser className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Blogs List</span>
                     </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </div>
+                    <div
+                      onClick={() => navigate(`/blogs/serviceView/${user._id}`)}
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaRupeeSign className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Services List</span>
+                    </div>
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

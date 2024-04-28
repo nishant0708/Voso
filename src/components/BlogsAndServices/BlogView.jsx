@@ -39,7 +39,11 @@ const ProductTable = () => {
   };
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-2xl flex justify-center items-center">
+        Loading...
+      </div>
+    );
   }
 
   if (status === 'failed') {
@@ -70,43 +74,35 @@ const ProductTable = () => {
 
   return (
     <DefaultLayout>
-      <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="mb-8 ml-5 w-full flex justify-between items-center">
+      <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7 xl:pb-1">
+        <div className="px-0 sm:px-3 mb-10 flex justify-between items-center">
           <h1 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
             Blogs - {blogs.length}
           </h1>
           <button
             onClick={() => navigate(-1)}
-            className="mr-5 flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+            className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
           >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
         </div>
-        <table className="w-full ml-5 text-left text-sm">
-          <thead>
+        <table className="w-full text-sm">
+          <thead className="font-extrabold text-left whitespace-nowrap">
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th className="w-[320px] font-extrabold p-2.5 pl-3.5">
-                TITLE
-              </th>
-              <th className="w-[120px] font-extrabold p-2.5 pl-1.5">
-                ACTIVE
-              </th>
-              <th className="w-[320px] font-extrabold p-2.5 pl-10">
-                CREATED AT
-              </th>
-              <th className="w-[150px] font-extrabold p-2.5 pl-5">
-                ACTION
-              </th>
+              <th className="p-2.5 pl-5 sm:pl-12">TITLE</th>
+              <th className="p-2.5 pl-5">ACTIVE</th>
+              <th className="p-2.5 pl-13">CREATED AT</th>
+              <th className="p-2.5 pl-5">ACTION</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-black dark:text-white text-left whitespace-nowrap">
             {blogs.map((blog) => (
               <tr
                 key={blog._id}
                 style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
               >
-                <td className="w-[320px] p-2.5 flex items-center gap-5 font-bold">
+                <td className="p-2.5 w-[280px] pl-5 sm:pl-12 flex gap-5 items-center font-bold">
                   <a href={blog.blog}>
                     <span>
                       <img
@@ -117,13 +113,11 @@ const ProductTable = () => {
                   </a>
                   {blog.title}
                 </td>
-                <td className="w-[120px] p-2.5">
+                <td className="p-2.5 pl-5">
                   {blog.is_active ? 'Active' : 'Inactive'}
                 </td>
-                <td className="w-[320px] p-2.5 pl-10 whitespace-nowrap">
-                  {formatDate(blog.created_at)}
-                </td>
-                <td className="w-[150px] p-2.5">
+                <td className="p-2.5 pl-13">{formatDate(blog.created_at)}</td>
+                <td className="p-2.5 pl-5">
                   <p className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
                     Blog Edit
                   </p>
@@ -134,37 +128,6 @@ const ProductTable = () => {
         </table>
       </div>
     </DefaultLayout>
-  );
-};
-
-const ToggleSwitch = ({ isActive }) => {
-  const [isToggled, setIsToggled] = useState(isActive);
-
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-  };
-
-  return (
-    <div>
-      <div
-        className={`toggle-switch ${isToggled ? 'active' : ''}`}
-        onClick={handleToggle}
-      >
-        <div className="slider"></div>
-      </div>
-      <div
-        className="toggle-text"
-        style={{
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 'bold',
-          color: 'black',
-          transform: 'translate(-5px,0px)',
-        }}
-      >
-        {isToggled ? 'Featured' : 'Not Featured'}
-      </div>
-    </div>
   );
 };
 

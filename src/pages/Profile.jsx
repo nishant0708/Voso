@@ -84,7 +84,6 @@ const Profile = () => {
                 src={userimg}
                 alt="profile"
               />
-              {/* <img src={userSix} alt="" /> */}
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -126,7 +125,7 @@ const Profile = () => {
             <p className="font-medium">Superadmin</p>
 
             <div className="mt-5 flex justify-center items-center">
-              <div className="rounded-md border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div className="rounded-md border border-stroke bg-white shadow-default dark:border-form-strokedark dark:bg-boxdark">
                 <div className="p-7">
                   <form action="#">
                     <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">

@@ -294,7 +294,7 @@ const UserEdit = () => {
                       id="isApproved"
                       value={formData.isApproved}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative text-black dark:text-white z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -354,7 +354,7 @@ const UserEdit = () => {
                       id="isEmail"
                       value={formData.isEmail}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative text-black dark:text-white z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -415,7 +415,7 @@ const UserEdit = () => {
                       id="isMobile"
                       value={formData.isMobile}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative text-black dark:text-white z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""
@@ -475,7 +475,7 @@ const UserEdit = () => {
                       id="isUnactive"
                       value={formData.isUnactive}
                       onChange={handleOnChange}
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative text-black dark:text-white z-20 w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option
                         value=""

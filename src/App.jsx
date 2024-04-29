@@ -29,6 +29,9 @@ import UserSEO from './components/UserLists/UserSEO';
 import UserBusiness from './components/UserLists/UserBusiness';
 import Gallery_table from './components/Gallery_table/Gallery_table';
 import ChangePassword from './pages/ChangePassword';
+import Blogs from './pages/Blogs';
+import BlogView from './components/BlogsAndServices/BlogView';
+import ServiceView from './components/BlogsAndServices/ServiceView';
 import Gallery_edit from './components/Gallery_table/Gallery_edit';
 import Product_Edit from './components/product_table/Product_Edit';
 
@@ -104,52 +107,52 @@ function App() {
           }
         /> */}
         <Route
-          path="/tables"
+          path="/users"
           element={
             <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Users | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               {hasToken ? <Tables /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
 
         <Route
-          path="/tables/user/edit/:userId"
+          path="/users/user/edit/:userId"
           element={hasToken ? <UserEdit /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/plan-subscribe/:userId"
+          path="/users/user/plan-subscribe/:userId"
           element={hasToken ? <UserPlan /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/seo/:userId"
+          path="/users/user/seo/:userId"
           element={hasToken ? <UserSEO /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/business-edit/:userId"
+          path="/users/user/business-edit/:userId"
           element={hasToken ? <UserBusiness /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/social-edit/:userId"
+          path="/users/user/social-edit/:userId"
           element={hasToken ? <UserSocial /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/pages-edit/:userId"
+          path="/users/user/pages-edit/:userId"
           element={hasToken ? <UserPageEdit /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/view/:userId"
+          path="/users/user/view/:userId"
           element={hasToken ? <UserView /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/tables/user/contact-us/:userId"
+          path="/users/user/contact-us/:userId"
           element={
             hasToken ? <UserEnquiries /> : <Navigate to="/auth/signin" />
           }
@@ -191,6 +194,30 @@ function App() {
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
               {hasToken ? <Gallery_table /> : <Navigate to="/auth/signin" />}
             </>
+          }
+        />
+
+        <Route
+          path="/blogs"
+          element={
+            <>
+              <PageTitle title="Blogs | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Blogs /> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
+        <Route
+          path="/blogs/blogView/:userId"
+          element={
+            hasToken ? <BlogView /> : <Navigate to="/auth/signin" />
+          }
+        />
+
+        <Route
+          path="/blogs/serviceView/:userId"
+          element={
+            hasToken ? <ServiceView /> : <Navigate to="/auth/signin" />
           }
         />
 

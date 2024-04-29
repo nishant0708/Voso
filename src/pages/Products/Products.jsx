@@ -84,7 +84,7 @@ const Products = () => {
             onClick={() => handlePageChange(i)}
           >
             {i}
-          </span>
+          </span>,
         );
       }
     } else {
@@ -92,7 +92,7 @@ const Products = () => {
       const leftBoundary = Math.max(1, page - Math.floor(maxVisiblePages / 2));
       const rightBoundary = Math.min(
         totalPages,
-        leftBoundary + maxVisiblePages - 1
+        leftBoundary + maxVisiblePages - 1,
       );
 
       if (leftBoundary > 1) {
@@ -103,7 +103,7 @@ const Products = () => {
             onClick={() => handlePageChange(1)}
           >
             1
-          </span>
+          </span>,
         );
         pageNumbers.push(<span key="leftDots">...</span>);
       }
@@ -118,7 +118,7 @@ const Products = () => {
             onClick={() => handlePageChange(i)}
           >
             {i}
-          </span>
+          </span>,
         );
       }
 
@@ -131,7 +131,7 @@ const Products = () => {
             onClick={() => handlePageChange(totalPages)}
           >
             {totalPages}
-          </span>
+          </span>,
         );
       }
     }
@@ -244,9 +244,10 @@ const Products = () => {
                     {menuOpenIndex === index && (
                       <div className="lg:w-[180px] flex flex-col gap-4 top-[80%] right-[55%] absolute z-5 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
                         <div
-                          onClick={() => navigate(`/products/product_list/${user._id}`)}//to be added
+                          onClick={() =>
+                            navigate(`/products/product_list/${user._id}`)
+                          } //to be added
                           className="flex gap-3 w-30 text-sm cursor-pointer"
-                          
                         >
                           <svg
                             fill="#646e88"
@@ -269,8 +270,8 @@ const Products = () => {
                           Products List
                         </div>
                         <div
-                          onClick={() =>
-                            navigate(`/products/Gallery/${user._id}`)//to be added
+                          onClick={
+                            () => navigate(`/products/Gallery/${user._id}`) //to be added
                           }
                           className="flex gap-3 cursor-pointer"
                         >

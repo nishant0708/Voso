@@ -66,22 +66,23 @@ const Gallery_table = () => {
         <table
           style={{
             textAlign: 'left',
+            justifyItems:"center",
             width: 'auto',
             margin: '2% 0% 0% 0%',
             // Separate borders
           }}
         >
           <colgroup>
-            <col style={{ width: '200px' }} />
-            <col style={{ width: '200px' }} />
+            <col style={{ width: '400px' }} />
+            {/* <col style={{ width: '200px' }} /> */}
             <col style={{ width: '150px' }} />
-            <col style={{ width: '150px' }} />
-            <col style={{ width: '300px' }} />
+            <col style={{ width: '200px' }} />
+            <col style={{ width: '350px' }} />
             <col style={{ width: '100px' }} />
           </colgroup>
           <thead>
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th
+              {/* <th
                 style={{
                   fontSize: '14px',
                   width: '200px',
@@ -90,16 +91,16 @@ const Gallery_table = () => {
                 }}
               >
                 PRODUCT NAME
-              </th>
+              </th> */}
               <th
                 style={{
                   fontSize: '14px',
-                  width: '200px',
+                  width: '400px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
               >
-                PRODUCT IMAGE
+                PRODUCT URL
               </th>
               <th
                 style={{
@@ -114,7 +115,7 @@ const Gallery_table = () => {
               <th
                 style={{
                   fontSize: '14px',
-                  width: '150px',
+                  width: '200px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
@@ -124,7 +125,7 @@ const Gallery_table = () => {
               <th
                 style={{
                   fontSize: '14px',
-                  width: '300px',
+                  width: '350px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
@@ -157,11 +158,11 @@ const Gallery_table = () => {
                     color: '#000',
                     fontWeight: 'bold',
                     gap: '20px',
-                    width: '300px',
+                    width: '400px',
                   }}
                 >
                   <span>
-                    <img
+                  <a href="">  <img
                       style={{
                         width: '7vh',
                         height: '7vh',
@@ -169,20 +170,21 @@ const Gallery_table = () => {
                       }}
                       alt='Product'
                       src={renderImage(product?.url)}
-                    />
+                    /></a>
                   </span>
-                  {product.product_name}
+                  {/* {product.product_name} */}
                 </td>
-                <td style={{ padding: '10px', width: '200px' }}>
+                {/* <td style={{ padding: '10px', width: '200px' }}>
                   {product.product_image}
-                </td>
+                </td> */}
                 <td style={{ padding: '10px', width: '150px' }}>
                   {product.is_featured ? 'Yes' : 'No'}
                 </td>
-                <td style={{ padding: '10px', width: '150px' }}>
-                  {product.is_active ? 'Active' : 'Inactive'}
+                <td style={{ padding: '10px', width: '200px' }}>
+                
+                  <ToggleSwitch isActive={product.is_featured} />
                 </td>
-                <td style={{ padding: '10px', width: '300px', whiteSpace: 'nowrap' }}>
+                <td style={{ padding: '10px', width: '350px', whiteSpace: 'nowrap' }}>
                   {formatDate(product.created_at)}
                 </td>
                 <td style={{ padding: '10px', width: '100px' }}>
@@ -212,5 +214,23 @@ const Gallery_table = () => {
     </DefaultLayout>
   );
 };
+
+const ToggleSwitch = ({ isActive }) => {
+  const [isToggled, setIsToggled] = useState(isActive);
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
+  return (
+    <div>
+      <div className={`toggle-switch ${isToggled ? 'active' : ''}`} onClick={handleToggle}>
+        <div className="slider"></div>
+      </div>
+      <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",color:"black",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
+    </div>
+  );
+};
+
 
 export default Gallery_table;

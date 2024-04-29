@@ -4,20 +4,18 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import businessSegmentData from '../../utils/businessSegmentData';
 import stateNames from '../../utils/stateNames';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { FaItalic } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { BACKEND_URL } from '../../url/url';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
+import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserBusiness = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
-  const [boldbtn, setBold] = useState(false);
-  const [italicbtn, setItalic] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -26,12 +24,8 @@ const UserBusiness = () => {
   useEffect(() => {
     setFormData({
       domainName: userSEO?.domain || '',
-      profileImage:
-        `${BACKEND_URL}website/${userSEO?.business_details?.business_profile_image}` ||
-        '',
-      coverImage:
-        `${BACKEND_URL}website/${userSEO?.business_details?.business_cover_image}` ||
-        '',
+      profileImage: userSEO?.business_details?.business_profile_image || '',
+      coverImage: userSEO?.business_details?.business_cover_image || '',
       businessName: userSEO?.business_details?.business_name || '',
       businessSegment: userSEO?.business_details?.business_segment || '',
       description: userSEO?.business_details?.business_description || '',
@@ -51,6 +45,8 @@ const UserBusiness = () => {
 
   const initialFormData = {
     domainName: '',
+    profileImage: '',
+    coverImage: '',
     businessName: '',
     businessSegment: '',
     description: '',
@@ -77,6 +73,7 @@ const UserBusiness = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserBusiness({formData, email: userSEO?.userId?.email, mobile: userSEO?.userId?.mobile, userId}));
   };
 
   return (
@@ -146,7 +143,7 @@ const UserBusiness = () => {
               <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
                 <div className="w-full md:w-1/2">
                   <label
-                    htmlFor="businessName"
+                    htmlFor="profileImage"
                     className="text-sm text-black dark:text-white"
                   >
                     Profile Image (200x200 px)
@@ -154,14 +151,14 @@ const UserBusiness = () => {
                   <div className="mt-0.5 h-[100px] sm:h-[150px]">
                     <img
                       className="w-5/12 h-full"
-                      src={formData.profileImage}
+                      src={`${BACKEND_URL}website/${formData.profileImage}`}
                       alt="profileImg"
                     />
                   </div>
                 </div>
                 <div className="w-full md:w-1/2">
                   <label
-                    htmlFor="businessSegment"
+                    htmlFor="coverImage"
                     className="text-sm text-black dark:text-white"
                   >
                     Cover Image (576x200 px)
@@ -169,7 +166,7 @@ const UserBusiness = () => {
                   <div className="mt-0.5 h-[100px] sm:h-[150px]">
                     <img
                       className="w-full h-full"
-                      src={formData.coverImage}
+                      src={`${BACKEND_URL}website/${formData.coverImage}`}
                       alt="coverImg"
                     />
                   </div>
@@ -508,7 +505,6 @@ const UserBusiness = () => {
                     id="businessPan"
                     value={formData.businessPan}
                     onChange={handleOnChange}
-                    required={true}
                     placeholder="Enter business pan"
                     className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -526,7 +522,6 @@ const UserBusiness = () => {
                     id="businessGST"
                     value={formData.businessGST}
                     onChange={handleOnChange}
-                    required={true}
                     placeholder="Enter business gst"
                     className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />

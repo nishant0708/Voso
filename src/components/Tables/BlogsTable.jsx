@@ -152,27 +152,33 @@ const BlogsTable = () => {
 
       <table className="w-full text-sm">
         <thead className="font-extrabold text-center">
-          <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-            <th className="p-2.5 pl-12">#</th>
-            <th className="p-2.5 pl-13">NAME</th>
-            <th className="p-2.5 pl-13">MOBILE</th>
-            <th className="p-2.5 pl-12">EMAIL</th>
-            <th className="p-2.5 pl-5">ACTION</th>
+          <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+            <th className="p-2.5 lg:p-4 !pl-12">#</th>
+            <th className="p-2.5 lg:p-4 !pl-13">NAME</th>
+            <th className="p-2.5 lg:p-4 !pl-13">MOBILE</th>
+            <th className="p-2.5 lg:p-4 !pl-12">EMAIL</th>
+            <th className="p-2.5 lg:p-4 !pl-5">ACTION</th>
           </tr>
         </thead>
         <tbody className="text-black dark:text-white text-center whitespace-nowrap">
           {users.map((user, index) => (
             <tr
               key={user._id}
-              style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
+              className={`${
+                index === users.length - 1
+                  ? ''
+                  : 'border-b border-stroke dark:border-strokedark'
+              }`}
             >
-              <td className="p-2.5 pl-12 font-extrabold">{index + 1}</td>
-              <td className="p-2.5 pl-13 capitalize">
+              <td className="p-2.5 lg:p-4 !pl-12 font-extrabold">
+                {index + 1}
+              </td>
+              <td className="p-2.5 lg:p-4 !pl-13 capitalize">
                 {user.first_name + ' ' + user.last_name}
               </td>
-              <td className="p-2.5 pl-13">{user.mobile}</td>
-              <td className="p-2.5 pl-12 text-meta-5">{user?.email}</td>
-              <td className="relative p-2.5 pl-5 flex justify-center items-center">
+              <td className="p-2.5 lg:p-4 !pl-13">{user.mobile}</td>
+              <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">{user?.email}</td>
+              <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
                 <p className="cursor-pointer">
                   <TbDotsVertical
                     size={22}

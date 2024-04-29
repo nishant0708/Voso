@@ -118,7 +118,7 @@ const ProductTable = () => {
                 </td>
                 <td className="p-2.5 pl-13">{formatDate(blog.created_at)}</td>
                 <td className="p-2.5 pl-5">
-                  <p className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
+                  <p onClick={() => navigate(`/blogs/blogEdit/${blog._id}`)} className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
                     Blog Edit
                   </p>
                 </td>

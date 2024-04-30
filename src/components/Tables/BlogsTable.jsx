@@ -153,7 +153,7 @@ const BlogsTable = () => {
       <table className="w-full text-sm">
         <thead className="font-extrabold text-center">
           <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-            <th className="p-2.5 lg:p-4 !pl-12">#</th>
+            <th className="p-2.5 lg:p-4 sm:!pl-14 pl-3">#</th>
             <th className="p-2.5 lg:p-4 !pl-13">NAME</th>
             <th className="p-2.5 lg:p-4 !pl-13">MOBILE</th>
             <th className="p-2.5 lg:p-4 !pl-12">EMAIL</th>
@@ -170,7 +170,7 @@ const BlogsTable = () => {
                   : 'border-b border-stroke dark:border-strokedark'
               }`}
             >
-              <td className="p-2.5 lg:p-4 !pl-12 font-extrabold">
+              <td className="p-2.5 lg:p-4 sm:!pl-14 pl-3 font-extrabold">
                 {index + 1}
               </td>
               <td className="p-2.5 lg:p-4 !pl-13 capitalize">
@@ -187,7 +187,6 @@ const BlogsTable = () => {
                 </p>
                 {active[index] && (
                   <div
-                    // onClick={(e) => e.stopPropagation()}
                     ref={ref}
                     className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                   >

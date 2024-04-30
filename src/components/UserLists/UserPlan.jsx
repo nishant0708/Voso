@@ -25,7 +25,7 @@ const UserPlan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserPlan({email:user?.email, plan}));
+    dispatch(updateUserPlan({ email: user?.email, plan }));
   };
 
   const resetForm = () => {
@@ -36,16 +36,18 @@ const UserPlan = () => {
     <DefaultLayout>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold text-black dark:text-white">
+          <h1 className="text-lg sm:text-2xl font-semibold text-black dark:text-white">
             User Plan Purchase - {user?.email}
           </h1>
-          <button
-            onClick={() => navigate(-1)}
-            className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
-          >
-            <FaListUl />
-            <span>List</span>
-          </button>
+          <div className="flex justify-center items-center">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+            >
+              <FaListUl />
+              <span>List</span>
+            </button>
+          </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>

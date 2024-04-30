@@ -131,7 +131,7 @@ const ServiceView = () => {
                   {formatDate(service.created_at)}
                 </td>
                 <td className="p-2.5 pl-7">
-                  <p className="w-fit py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
+                  <p onClick={() => navigate(`/blogs/serviceEdit/${service._id}`)} className="w-fit py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
                     Service Edit
                   </p>
                 </td>

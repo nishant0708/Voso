@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchproductedit } from '../../Redux/slicer/productEditSlice';
 import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer'; // Import the updateProductDetails action
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -9,61 +9,49 @@ import QuillEditor from '../../utils/QuillEditor';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 
 const Product_Edit = () => {
-
-
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const {product, status, error } = useSelector((state) => state.Editproduct);
+  const navigate = useNavigate();
+  const { product, status, error } = useSelector((state) => state.Editproduct);
+  const [imageUrl, setimageUrl] = useState('');
+ 
+
+  const renderImage = (imageUrl) => {
+    if (imageUrl.startsWith('https://')) {
+      return imageUrl;
+    } else {
+      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
+    }
+  };
   const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
   }, []);
 
-  const [formData, setFormData] = useState({
-    productName: '',
-    productPrice: '',
-    productDescription: '',
-    productUrl: '',
-  });
   useEffect(() => {
-    // Initialize form data with the product details after fetching
     if (product) {
-      setFormData({
-        productName: product.product_name,
-        productPrice: product.product_price,
-        productDescription: product.product_description,
-        productUrl: product.product_url,
-      });
+      setProductName(product.product_name);
+      setProductPrice(product.product_price);
+      setProductDescription(product.product_description);
+      setimageUrl(product.product_image);
+      setProductUrl(product.product_url);
+      console.log('1');
     }
   }, [product]);
 
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-
+  const [productName, setProductName] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+  const [productUrl, setProductUrl] = useState('');
   
+
   const [showAddUrl, setShowAddUrl] = useState(true);
   console.log(product);
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
-  const renderImage = (imageUrl) => {
-    
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    
-  };
-
   const handleGalleryUrlChange = (event) => {
-    
-
-      setGalleryUrl(event.target.value);
-    
+    setGalleryUrl(event.target.value);
   };
 
   const handleFileSelect = (e) => {
@@ -72,22 +60,30 @@ const Product_Edit = () => {
   };
 
   //updating details
-
   const handleUpdateProduct = () => {
-    // Prepare data for updating product details
     const updatedProductData = {
-      productId:product._id,
-      productName: product.product_name,
-      productPrice: product.product_price,
-      productDescription: product.product_description,
-      productImage: selectedImage, // Updated image file
-      productUrl: product.product_url,
+      productId: product._id,
+      productName: productName,
+      productPrice: productPrice,
+      productDescription: productDescription,
+      productImage:
+        setShowAddUrl === true ? selectedImage === null
+        ? renderImage(product.product_image)
+        : selectedImage : imageUrl ,
+      productUrl: productUrl,
     };
 
-    // Dispatch the updateProductDetails action with updatedProductData
-    dispatch(updateProductDetails(updatedProductData));
+    dispatch(updateProductDetails(updatedProductData))
+      .then(() => {
+        // Show success message to the user
+        alert('Operation Successful');
+        navigate('/products');
+      })
+      .catch((error) => {
+        // Handle error by showing an alert with the error message
+        alert(`Error updating product: ${error.message}`);
+      });
   };
-
 
   return (
     <DefaultLayout>
@@ -96,7 +92,9 @@ const Product_Edit = () => {
           Gallery Update
         </h1>
         <button
-          onClick={() => (window.location.href = '')}
+          onClick={() =>
+            (window.location.href = `/products/product_list/${product.userId}`)
+          }
           style={{ position: 'absolute', right: '9%', top: '15%' }}
           className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
         >
@@ -117,31 +115,35 @@ const Product_Edit = () => {
           }}
         >
           <div style={{ width: '100%' }}>
-            <label className='text-black dark:text-white' >Product Name</label>
+            <label className="text-black dark:text-white">Product Name</label>
             <input
               type="text"
               name="productName"
-              onChange={handleInputChange}
-              value={product.product_name}
+              onChange={(e) => setProductName(e.target.value)}
+              value={productName}
               id="productname"
               className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             ></input>
           </div>
           <div style={{ width: '100%' }}>
-            <label className='text-black dark:text-white' >Product Price</label>
+            <label className="text-black dark:text-white">Product Price</label>
             <input
               type="text"
               name="productprice"
               id="productprice"
-              value={product.product_price}
+              onChange={(e) => setProductPrice(e.target.value)}
+              value={productPrice}
               className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             ></input>
           </div>
         </div>
         <div style={{ width: '100%' }}>
-          <p className='text-black dark:text-white'>Product Description</p>
+          <p className="text-black dark:text-white">Product Description</p>
           {/* <ReactQuill/> */}
-          <QuillEditor value={product.product_description} />
+          <QuillEditor
+            value={productDescription}
+            onChange={(e) => setProductDescription(e.target.value)}
+          />
         </div>
         <div
           class="lg:flex"
@@ -151,8 +153,14 @@ const Product_Edit = () => {
             marginTop: '20px',
           }}
         >
-          <div style={{ position: 'relative', width: '100%',display:showAddUrl ? 'block' : 'none' }}>
-            <label class='text-black dark:text-white'>
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              display: showAddUrl ? 'block' : 'none',
+            }}
+          >
+            <label class="text-black dark:text-white">
               Product Image (200 X 200 px){' '}
               <span
                 onMouseEnter={() => setIsHovered(true)}
@@ -187,9 +195,9 @@ const Product_Edit = () => {
                 Add url
               </span>
             </label>
-            <div style={{position:"relative",marginTop:'10px'}}>
-            <div className="relative">
-                <div className='flex'>
+            <div style={{ position: 'relative', marginTop: '10px' }}>
+              <div className="relative">
+                <div className="flex">
                   <input
                     type="file"
                     accept="image/*"
@@ -208,29 +216,57 @@ const Product_Edit = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => document.getElementById('galleryInput').click()} // Trigger click event on file input
-                    style={{position:"absolute",zIndex:"40",width:"100px",height:"40px", background:"#E9ECEF",top:"2%", right:"0%"}}
+                    onClick={() =>
+                      document.getElementById('galleryInput').click()
+                    } // Trigger click event on file input
+                    style={{
+                      position: 'absolute',
+                      zIndex: '40',
+                      width: '100px',
+                      height: '40px',
+                      background: '#E9ECEF',
+                      top: '2%',
+                      right: '0%',
+                    }}
                   >
                     Browse
                   </button>
                 </div>
-                {(selectedImage || product.product_image ) && (
+                {(selectedImage || product.product_image) && (
                   <img
-                    style={{ width: "200px", height: "200px", marginTop: "25px", transform: "translateX(20px)" }}
-                    src={selectedImage ? URL.createObjectURL(selectedImage) : renderImage(product.product_image)}
+                    style={{
+                      width: '200px',
+                      height: '200px',
+                      marginTop: '25px',
+                      transform: 'translateX(20px)',
+                    }}
+                    src={
+                      selectedImage
+                        ? URL.createObjectURL(selectedImage)
+                        : renderImage(product.product_image)
+                    }
                     alt="Gallery Image"
                   />
                 )}
               </div>
             </div>
           </div>
-          <div style={{display: showAddUrl ? 'none' : 'block',width:"100%"}}>
-            <label style={{color:"black",width:"100%"}}>Product Image Url</label>
-            <div style={{position:"relative"}}>
-            <input  className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" value={product.product_image}></input>
-            <p onMouseEnter={() => setbutIsHovered(true)}
+          <div
+            style={{ display: showAddUrl ? 'none' : 'block', width: '100%' }}
+          >
+            <label style={{ color: 'black', width: '100%' }}>
+              Product Image Url
+            </label>
+            <div style={{ position: 'relative' }}>
+              <input
+                className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                value={imageUrl}
+                onChange={(e) => setimageUrl(e.target.value)}
+              ></input>
+              <p
+                onMouseEnter={() => setbutIsHovered(true)}
                 onMouseLeave={() => setbutIsHovered(false)}
-            style={{
+                style={{
                   width: 'max-content',
                   border: '2px solid #727CF5',
                   color: isbutHovered ? 'white' : '#727CF5',
@@ -238,41 +274,42 @@ const Product_Edit = () => {
                   marginLeft: '10px',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
-                  zIndex:"40",
-                  position:"absolute",
-                  top:"13%",
-                  right:"0%",
+                  zIndex: '40',
+                  position: 'absolute',
+                  top: '13%',
+                  right: '0%',
                   backgroundColor: isbutHovered ? '#727CF5' : 'white',
-                }} 
+                }}
                 onClick={() => setShowAddUrl((prev) => !prev)}
-                >Change to upload Image</p>
-         </div>
+              >
+                Change to upload Image
+              </p>
+            </div>
           </div>
 
           <div style={{ width: '100%' }}>
-            <p className='text-black mt-5 lg:mt-0 dark:text-white'>Product Url(External)</p>
+            <p className="text-black mt-5 lg:mt-0 dark:text-white">
+              Product Url(External)
+            </p>
             <input
               style={{ margintop: '25px' }}
               type="text"
               name="productName"
-              value={product.product_url}
+              onChange={(e) => setProductUrl(e.target.value)}
+              value={productUrl}
               id="productname"
               className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             ></input>
           </div>
-          
         </div>
-        
+
         <button
           style={{ position: 'relative' }}
           onClick={handleUpdateProduct}
-
           className="mt-[20px] w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
         >
           Update
         </button>
-
-        
       </div>
     </DefaultLayout>
   );

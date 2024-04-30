@@ -171,405 +171,170 @@ const UserTable = () => {
   };
 
   return (
-    <div>
-      <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="flex justify-between items-center">
-          <h4 className="mb-6 text-3xl font-medium text-black dark:text-white">
-            Users List
-          </h4>
-          <div className="flex gap-3 mb-6 text-base font-medium text-white dark:text-white">
-            <button className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-              <IoIosAddCircle />
-              Create
-            </button>
-            <button
-              onClick={() => navigate(-1)}
-              className="flex justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
-            >
-              <FaCircleArrowLeft size={14} />
-              Back
-            </button>
-          </div>
-        </div>
-
-        <div className="mb-5 flex justify-center items-center gap-5">
-          <button onClick={handlePrev}>
-            <MdOutlineKeyboardDoubleArrowLeft />
+    <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="mb-10 flex justify-between items-center gap-7 sm:gap-0">
+        <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
+          Users List
+        </h4>
+        <div className="flex gap-2 sm:gap-3 text-base font-medium text-white dark:text-white">
+          <button className="flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-2.5 sm:px-3 rounded-md hover:bg-primary transition-all duration-200">
+            <IoIosAddCircle />
+            Create
           </button>
-          <div className="flex gap-5">{renderPageNumbers()}</div>
-          <button onClick={handleNext}>
-            <MdOutlineKeyboardDoubleArrowRight />
-          </button>
-        </div>
-
-        <div className="flex flex-col overflow-x-scroll">
-          <div className="grid place-items-center grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4">
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">#</h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm  text-center font-semibold uppercase">
-                Name
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">
-                Mobile
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">
-                Plan
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">
-                Remaining Days
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">
-                Created At
-              </h5>
-            </div>
-            <div className="p-2.5 xl:p-3">
-              <h5 className="text-sm text-center font-semibold uppercase">
-                Actions
-              </h5>
-            </div>
-          </div>
-
-          {loading ? (
-            <div>Loading...</div>
-          ) : error ? (
-            <div>Error: {error.message}</div>
-          ) : users ? (
-            <div>
-              {users.map((user, index) => (
-                <div
-                  key={user._id}
-                  className={`text-sm grid grid-cols-7 ${
-                    index === users.length - 1
-                      ? ''
-                      : 'border-b border-stroke dark:border-strokedark'
-                  }`}
-                >
-                  {/* Render user information */}
-                  <div className="flex justify-center items-center p-2.5 xl:p-3">
-                    <p className="text-center font-extrabold text-black dark:text-white">
-                      {index + 1}
-                    </p>
-                  </div>
-
-                  <div className="flex justify-center items-center p-2.5 xl:p-3">
-                    <p className="capitalize text-center text-black dark:text-white">
-                      {user.first_name + ' ' + user.last_name}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center p-2.5 xl:p-3">
-                    <p className="text-center text-black dark:text-white">
-                      {user.mobile}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center p-2.5 xl:p-3">
-                    <p className="text-center text-meta-3">
-                      {user?.subscription?.currentPlan
-                        ? user?.subscription?.currentPlan
-                        : 'NA'}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center p-2.5 xl:p-3">
-                    <p className="text-center text-black dark:text-white">
-                      {calculateDays(user)}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center p-2.5 xl:p-3">
-                    <p className="text-center text-meta-5">
-                      {formatDate(user.created_at)}
-                    </p>
-                  </div>
-
-                  <div className="relative flex items-center justify-center p-2.5 xl:p-3">
-                    <p className="text-black dark:text-white cursor-pointer">
-                      <TbDotsVertical
-                        size={22}
-                        onClick={() => clickHandler(index)}
-                      />
-                    </p>
-                    {active[index] && (
-                      <div
-                        onClick={(e) => e.stopPropagation()}
-                        ref={ref}
-                        className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
-                      >
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <FaCircleUser className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">User Edit</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/plan-subscribe/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <FaRupeeSign className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Plan Purchase
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/seo/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <HiSpeakerphone className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">SEO Edit</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/business-edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <PiToolboxFill className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Business Edit
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/social-edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <FaShareSquare className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Social Edit
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/pages-edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <FaFileAlt className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">Pages Edit</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/view/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <FaEye className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">User View</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/contact-us/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center"
-                        >
-                          <BsFillQuestionCircleFill className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            User Enquiries
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
-      <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="mb-10 flex justify-between items-center">
-          <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
-            Users List
-          </h4>
           <button
             onClick={() => navigate(-1)}
-            className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+            className="flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-2.5 sm:px-3 rounded-md hover:bg-primary transition-all duration-200"
           >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
         </div>
+      </div>
 
-        <div className="mb-10 text-sm sm:text-base flex justify-center items-center gap-5 text-black dark:text-white">
-          <button onClick={handlePrev}>
-            <MdOutlineKeyboardDoubleArrowLeft />
-          </button>
-          <div className="flex gap-5">{renderPageNumbers()}</div>
-          <button onClick={handleNext}>
-            <MdOutlineKeyboardDoubleArrowRight />
-          </button>
-        </div>
+      <div className="mb-10 text-sm sm:text-base flex justify-center items-center gap-5 text-black dark:text-white">
+        <button onClick={handlePrev}>
+          <MdOutlineKeyboardDoubleArrowLeft />
+        </button>
+        <div className="flex gap-5">{renderPageNumbers()}</div>
+        <button onClick={handleNext}>
+          <MdOutlineKeyboardDoubleArrowRight />
+        </button>
+      </div>
 
-        <table className="w-full text-sm">
-          <thead className="font-extrabold text-center">
-            <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th className="p-2.5 pl-12">#</th>
-              <th className="p-2.5 pl-13">NAME</th>
-              <th className="p-2.5 pl-13">MOBILE</th>
-              <th className="p-2.5 pl-13">PLAN</th>
-              <th className="p-2.5 pl-13">REMAINING DAYS</th>
-              <th className="p-2.5 pl-12">CREATED AT</th>
-              <th className="p-2.5 pl-5">ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-            {loading ? (
+      <table className="w-full text-sm">
+        <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+          <tr>
+            <th className="p-2.5 lg:p-4 !pl-5">#</th>
+            <th className="p-2.5 lg:p-4 !pl-10">NAME</th>
+            <th className="p-2.5 lg:p-4 !pl-10">MOBILE</th>
+            <th className="p-2.5 lg:p-4 !pl-12 text-center">PLAN</th>
+            <th className="p-2.5 lg:p-4 !pl-8">REMAINING DAYS</th>
+            <th className="p-2.5 lg:p-4 !pl-10 text-center">CREATED AT</th>
+            <th className="p-2.5 lg:p-4 !pl-5">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody className="text-black dark:text-white text-left whitespace-nowrap">
+          {/* {loading ? (
               <div>Loading...</div>
             ) : error ? (
               <div>Error: {error.message}</div>
-            ) : users ? (
-              <div>
-                {users.map((user, index) => (
-                  <tr
-                    key={user._id}
-                    style={{
-                      borderBottom: '1px solid rgb(159 157 157 / 13%)',
-                    }}
+            ) : users.length > 0 ? (
+              <div> */}
+          {users.map((user, index) => (
+            <tr
+              key={user._id}
+              className={`${
+                index === users.length - 1
+                  ? ''
+                  : 'border-b border-stroke dark:border-strokedark'
+              }`}
+            >
+              <td className="p-2.5 lg:p-4 !pl-5 font-extrabold">{index + 1}</td>
+              <td className="p-2.5 lg:p-4 !pl-10 capitalize">
+                {user.first_name + ' ' + user.last_name}
+              </td>
+              <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
+              <td className="p-2.5 lg:p-4 !pl-12 text-center text-meta-3">
+                {user?.subscription?.currentPlan
+                  ? user?.subscription?.currentPlan
+                  : 'NA'}
+              </td>
+              <td className="p-2.5 lg:p-4 !pl-8 text-center">
+                {calculateDays(user)}
+              </td>
+              <td className="p-2.5 lg:p-4 !pl-10 text-center text-meta-5">
+                {formatDate(user.created_at)}
+              </td>
+              <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
+                <p className="cursor-pointer">
+                  <TbDotsVertical
+                    size={22}
+                    onClick={() => clickHandler(index)}
+                  />
+                </p>
+                {active[index] && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    ref={ref}
+                    className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                   >
-                    <td className="p-2.5 pl-12 font-extrabold">{index + 1}</td>
-                    <td className="p-2.5 pl-13 capitalize">
-                      {user.first_name + ' ' + user.last_name}
-                    </td>
-                    <td className="p-2.5 pl-13">{user.mobile}</td>
-                    <td className="p-2.5 pl-12 text-meta-3">
-                      {user?.subscription?.currentPlan
-                        ? user?.subscription?.currentPlan
-                        : 'NA'}
-                    </td>
-                    <td className="p-2.5 pl-13">{calculateDays(user)}</td>
-                    <td className="p-2.5 pl-13 text-meta-5">
-                      {formatDate(user.created_at)}
-                    </td>
-                    <td className="relative p-2.5 pl-5 flex justify-center items-center">
-                      <p className="cursor-pointer">
-                        <TbDotsVertical
-                          size={22}
-                          onClick={() => clickHandler(index)}
-                        />
-                      </p>
-                      {active[index] && (
-                        <div
-                          onClick={(e) => e.stopPropagation()}
-                          ref={ref}
-                          className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
-                        >
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/edit/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <FaCircleUser className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              User Edit
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/plan-subscribe/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <FaRupeeSign className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              Plan Purchase
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/seo/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <HiSpeakerphone className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">SEO Edit</span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/business-edit/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <PiToolboxFill className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              Business Edit
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/social-edit/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <FaShareSquare className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              Social Edit
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/pages-edit/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <FaFileAlt className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              Pages Edit
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/view/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <FaEye className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              User View
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/users/user/contact-us/${user._id}`)
-                            }
-                            className="flex gap-3 cursor-pointer items-center"
-                          >
-                            <BsFillQuestionCircleFill className="text-sm sm:text-md" />
-                            <span className="text-xs sm:text-sm">
-                              User Enquiries
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </div>
+                    <div
+                      onClick={() => navigate(`/users/user/edit/${user._id}`)}
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaCircleUser className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">User Edit</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/users/user/plan-subscribe/${user._id}`)
+                      }
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaRupeeSign className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Plan Purchase</span>
+                    </div>
+                    <div
+                      onClick={() => navigate(`/users/user/seo/${user._id}`)}
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <HiSpeakerphone className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">SEO Edit</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/users/user/business-edit/${user._id}`)
+                      }
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <PiToolboxFill className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Business Edit</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/users/user/social-edit/${user._id}`)
+                      }
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaShareSquare className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Social Edit</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/users/user/pages-edit/${user._id}`)
+                      }
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaFileAlt className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">Pages Edit</span>
+                    </div>
+                    <div
+                      onClick={() => navigate(`/users/user/view/${user._id}`)}
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <FaEye className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">User View</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/users/user/contact-us/${user._id}`)
+                      }
+                      className="flex gap-3 cursor-pointer items-center"
+                    >
+                      <BsFillQuestionCircleFill className="text-sm sm:text-md" />
+                      <span className="text-xs sm:text-sm">User Enquiries</span>
+                    </div>
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+          {/* </div>
             ) : (
-              <div className='text-danger'>No User Found</div>
-            )}
-          </tbody>
-        </table>
-      </div>
+              <div className="text-danger">No User Found</div>
+            )} */}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -32,6 +32,8 @@ import ChangePassword from './pages/ChangePassword';
 import Blogs from './pages/Blogs';
 import BlogView from './components/BlogsAndServices/BlogView';
 import ServiceView from './components/BlogsAndServices/ServiceView';
+import BlogEdit from './components/BlogsAndServices/BlogEdit';
+import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
 import Gallery_edit from './components/Gallery_table/Gallery_edit';
 import Product_Edit from './components/product_table/Product_Edit';
 
@@ -115,49 +117,40 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/users/user/edit/:userId"
           element={hasToken ? <UserEdit /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/plan-subscribe/:userId"
           element={hasToken ? <UserPlan /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/seo/:userId"
           element={hasToken ? <UserSEO /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/business-edit/:userId"
           element={hasToken ? <UserBusiness /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/social-edit/:userId"
           element={hasToken ? <UserSocial /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/pages-edit/:userId"
           element={hasToken ? <UserPageEdit /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/view/:userId"
           element={hasToken ? <UserView /> : <Navigate to="/auth/signin" />}
         />
-
         <Route
           path="/users/user/contact-us/:userId"
           element={
             hasToken ? <UserEnquiries /> : <Navigate to="/auth/signin" />
           }
         />
-
         <Route
           path="/products"
           element={
@@ -167,7 +160,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/products/product_list/:userId"
           element={
@@ -196,7 +188,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/blogs"
           element={
@@ -206,19 +197,23 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/blogs/blogView/:userId"
-          element={
-            hasToken ? <BlogView /> : <Navigate to="/auth/signin" />
-          }
+          element={hasToken ? <BlogView /> : <Navigate to="/auth/signin" />}
+        />
+        <Route
+          path="/blogs/serviceView/:userId"
+          element={hasToken ? <ServiceView /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
-          path="/blogs/serviceView/:userId"
-          element={
-            hasToken ? <ServiceView /> : <Navigate to="/auth/signin" />
-          }
+          path="/blogs/blogEdit/:blogId"
+          element={hasToken ? <BlogEdit /> : <Navigate to="/auth/signin" />}
+        />
+
+        <Route
+          path="/blogs/serviceEdit/:serviceId"
+          element={hasToken ? <ServiceEdit /> : <Navigate to="/auth/signin" />}
         />
 
         <Route
@@ -250,7 +245,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/chart"
           element={

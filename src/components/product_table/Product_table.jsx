@@ -82,6 +82,7 @@ const ProductTable = () => {
           </button>
         </div>
         <table
+        className='dark:text-white'
           style={{
             textAlign: 'left',
             width: 'auto',
@@ -174,7 +175,7 @@ const ProductTable = () => {
                     padding: '10px', // Adjust padding as needed
                     alignItems: 'center',
                     display: 'flex',
-                    color: '#000',
+                   
                     fontWeight: 'bold',
                     gap: '20px',
                     width: '500px', // Fixed width for this column
@@ -257,7 +258,7 @@ const ToggleSwitch = ({ isActive,productId,userId }) => {
       <div className={`toggle-switch ${isToggled ? 'active' : ''}`} onClick={handleToggle}>
         <div className="slider"></div>
       </div>
-      <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",color:"black",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
+      <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
     </div>
   );
 };

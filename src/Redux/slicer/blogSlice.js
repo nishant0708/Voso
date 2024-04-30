@@ -134,6 +134,25 @@ export const updateBlogById = createAsyncThunk(
   },
 );
 
+export const toggleServiceFeature = createAsyncThunk(
+  'toggleServiceFeature',
+  async ({ serviceId, userId, isActive }) => {
+    try {
+      const response = await AxiosInstance.post(
+        'service/assignFeaturedService',
+        {
+          serviceId: serviceId,
+          is_featured: !isActive,
+          userId: userId,
+        },
+      );
+      return response.data; // Assuming the response contains relevant data
+    } catch (error) {
+      throw error;
+    }
+  },
+);
+
 const blogSlice = createSlice({
   name: 'blogs',
   initialState,
@@ -206,6 +225,16 @@ const blogSlice = createSlice({
         state.blog = action.payload;
       })
       .addCase(updateBlogById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(toggleServiceFeature.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(toggleServiceFeature.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(toggleServiceFeature.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

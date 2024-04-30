@@ -45,7 +45,6 @@ const Gallery_edit = () => {
       // For other options, update the gallery URL state normally
       setGalleryUrl(event.target.value);
     }
-   
   };
 
   // Function to handle update button click
@@ -70,15 +69,21 @@ const Gallery_edit = () => {
 
   return (
     <DefaultLayout>
-      <div class="flex">
-      <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-        Gallery Update
-      </h1>
-      <button onClick={() => window.location.href = `/products/Gallery/${gallery.userId}`} style={{ position: "absolute", right: "9%", top: "15%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button>
-          </div>
+      <div class="px-0 sm:px-3 mb-10 flex justify-between items-center">
+        <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+          Gallery Update
+        </h1>
+        <button
+          onClick={() =>
+            (window.location.href = `/products/Gallery/${gallery.userId}`)
+          }
+         
+          className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+        >
+          <FaCircleArrowLeft size={14} />
+          Back
+        </button>
+      </div>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-5">
         <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
           <div className="w-full md:w-1/2">
@@ -120,9 +125,11 @@ const Gallery_edit = () => {
           {/* Conditionally render label and input based on selected option */}
           {selectedOption === 'image' && (
             <div className="w-full md:w-1/2">
-              <label className="text-sm text-black dark:text-white">Gallery Image (200x200 px)</label>
+              <label className="text-sm text-black dark:text-white">
+                Gallery Image (200x200 px)
+              </label>
               <div className="relative">
-                <div className='flex'>
+                <div className="flex">
                   <input
                     type="file"
                     accept="image/*"
@@ -141,16 +148,35 @@ const Gallery_edit = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => document.getElementById('galleryInput').click()} // Trigger click event on file input
-                    style={{position:"absolute",zIndex:"40",width:"100px",height:"40px", background:"gre#d3cece",top:"2%", right:"0%"}}
+                    onClick={() =>
+                      document.getElementById('galleryInput').click()
+                    } // Trigger click event on file input
+                    style={{
+                      position: 'absolute',
+                      zIndex: '40',
+                      width: '100px',
+                      height: '40px',
+                      background: 'gre#d3cece',
+                      top: '2%',
+                      right: '0%',
+                    }}
                   >
                     Browse
                   </button>
                 </div>
                 {(selectedImage || gallery.url) && (
                   <img
-                    style={{ width: "200px", height: "200px", marginTop: "25px", transform: "translateX(20px)" }}
-                    src={selectedImage ? URL.createObjectURL(selectedImage) : renderImage(gallery.url)}
+                    style={{
+                      width: '200px',
+                      height: '200px',
+                      marginTop: '25px',
+                      transform: 'translateX(20px)',
+                    }}
+                    src={
+                      selectedImage
+                        ? URL.createObjectURL(selectedImage)
+                        : renderImage(gallery.url)
+                    }
                     alt="Gallery Image"
                   />
                 )}
@@ -190,7 +216,11 @@ const Gallery_edit = () => {
             </div>
           )}
         </div>
-        <button onClick={handleUpdateClick} style={{ position: "relative"}} className="w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+        <button
+          onClick={handleUpdateClick}
+          style={{ position: 'relative' }}
+          className="w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+        >
           Update
         </button>
       </div>

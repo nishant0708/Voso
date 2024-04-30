@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchServices } from '../../Redux/slicer/blogSlice';
+import { fetchServices, toggleServiceFeature } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
@@ -126,7 +126,7 @@ const ServiceView = () => {
                   {service.service_price}
                 </td>
                 <td className="p-2.5 lg:p-4 !pl-6">
-                  <ToggleSwitch isActive={service.is_featured} />
+                  <ToggleSwitch serviceId={service._id} isActive={service.is_featured} userId={userId} />
                 </td>
                 <td className="p-2.5 lg:p-4 !pl-10">
                   {service?.is_active ? 'Active' : 'Inactive'}
@@ -153,11 +153,16 @@ const ServiceView = () => {
   );
 };
 
-const ToggleSwitch = ({ isActive }) => {
+const ToggleSwitch = ({ serviceId, isActive, userId }) => {
   const [isToggled, setIsToggled] = useState(isActive);
+  const dispatch = useDispatch();
 
   const handleToggle = () => {
-    if (confirm('Do you confirm?') === true) setIsToggled(!isToggled);
+    if (confirm('Do you confirm?') === true) {
+      dispatch(toggleServiceFeature({ serviceId, userId, isActive })).then(() => {
+        setIsToggled(!isToggled), window.location.reload();
+      });
+    }
   };
 
   return (

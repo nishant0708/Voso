@@ -16,6 +16,10 @@ import blogSlice from '../slicer/blogSlice';
 import productEditSlice from '../slicer/productEditSlice';
 import ProductDetailsUpdatedSlicer from '../slicer/ProductDetailsUpdatedSlicer';
 
+import productFeatureSlice from '../slicer/productFeatureSlice';
+import galleryfeatureSlice from '../slicer/galleryfeatureSlice';
+
+
 
 const store = configureStore({
   reducer: {
@@ -36,6 +40,9 @@ const store = configureStore({
     updateGallery: updateGalleryReducer,
     Editproduct:productEditSlice,
     updateProdct:ProductDetailsUpdatedSlicer,
+    productFeature: productFeatureSlice,
+    galleryFeature:galleryfeatureSlice,
+  
   },
   // Other store configurations can go here, such as middleware setup
 });

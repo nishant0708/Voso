@@ -5,8 +5,6 @@ import { fetchUsers } from '../../Redux/slicer/userList';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { TbDotsVertical } from 'react-icons/tb';
-import { FaCircleUser } from 'react-icons/fa6';
-import { FaRupeeSign } from 'react-icons/fa';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import DefaultLayout from '../../layout/DefaultLayout';

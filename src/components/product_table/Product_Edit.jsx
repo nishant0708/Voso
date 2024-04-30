@@ -87,16 +87,17 @@ const Product_Edit = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex">
-        <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-          Gallery Update
+      <div className="px-0 sm:px-3 mb-10 flex justify-between items-center">
+        
+        <h1 className="mb-1 text-3xl font-medium text-black dark:text-white">
+          Product Edit
         </h1>
         <button
           onClick={() =>
             (window.location.href = `/products/product_list/${product.userId}`)
           }
-          style={{ position: 'absolute', right: '9%', top: '15%' }}
-          className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          
+          className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
         >
           <FaCircleArrowLeft size={14} />
           Back

@@ -1,18 +1,18 @@
-import {React,  useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
-import "./toggle.css"
+import './toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
 
 const ProductTable = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [hoveredButtons, setHoveredButtons] = useState({});
-   
+
   const renderImage = (imageUrl) => {
     if (imageUrl.startsWith('https://')) {
       return imageUrl;
@@ -52,17 +52,23 @@ const ProductTable = () => {
   if (products.length === 0) {
     return (
       <DefaultLayout>
-          <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="flex justify-between items-center">
-          <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-            Products {products.length}
-          </h1>
-          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button>
-        </div>
-        <p style={{ color: 'red', fontSize:"18px",marginBottom:"20px" }}>No Product</p>
+        <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="flex justify-between items-center">
+            <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+              Products {products.length}
+            </h1>
+            <button
+              onClick={() => (window.location.href = '/products')}
+              style={{ position: 'absolute', right: '9%', top: '20%' }}
+              className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+            >
+              <FaCircleArrowLeft size={14} />
+              Back
+            </button>
+          </div>
+          <p style={{ color: 'red', fontSize: '18px', marginBottom: '20px' }}>
+            No Product
+          </p>
         </div>
       </DefaultLayout>
     );
@@ -75,7 +81,11 @@ const ProductTable = () => {
           <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
             Products {products.length}
           </h1>
-          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+          <button
+            onClick={() => (window.location.href = '/products')}
+            style={{ position: 'absolute', right: '9%', top: '20%' }}
+            className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
@@ -179,16 +189,18 @@ const ProductTable = () => {
                     width: '500px', // Fixed width for this column
                   }}
                 >
-                  <a href={product.product_url}><span>
-                    <img
-                      style={{
-                        width: '7vh',
-                        height: '7vh',
-                        borderRadius: '50%',
-                      }}
-                      src={renderImage(product?.product_image)}
-                    />
-                  </span></a>
+                  <a href={product.product_url}>
+                    <span>
+                      <img
+                        style={{
+                          width: '7vh',
+                          height: '7vh',
+                          borderRadius: '50%',
+                        }}
+                        src={renderImage(product?.product_image)}
+                      />
+                    </span>
+                  </a>
                   {product.product_name}
                 </td>
                 <td style={{ padding: '10px', width: '200px' }}>
@@ -215,15 +227,27 @@ const ProductTable = () => {
                     style={{
                       whiteSpace: 'nowrap',
                       padding: '5px 15px',
-                      backgroundColor: hoveredButtons[product._id] ? 'green' : 'limegreen',
+                      backgroundColor: hoveredButtons[product._id]
+                        ? 'green'
+                        : 'limegreen',
                       color: 'white',
                       borderRadius: '999rem',
-                      cursor:'pointer',
+                      cursor: 'pointer',
                     }}
-                    onMouseEnter={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: true }))}
-                    onMouseLeave={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: false }))}
-                    onClick={()=>{
-                      navigate(`/products/product_edit/${product._id}`)
+                    onMouseEnter={() =>
+                      setHoveredButtons((prevState) => ({
+                        ...prevState,
+                        [product._id]: true,
+                      }))
+                    }
+                    onMouseLeave={() =>
+                      setHoveredButtons((prevState) => ({
+                        ...prevState,
+                        [product._id]: false,
+                      }))
+                    }
+                    onClick={() => {
+                      navigate(`/products/product_edit/${product._id}`);
                     }}
                   >
                     Product Edit
@@ -247,10 +271,24 @@ const ToggleSwitch = ({ isActive }) => {
 
   return (
     <div>
-      <div className={`toggle-switch ${isToggled ? 'active' : ''}`} onClick={handleToggle}>
+      <div
+        className={`toggle-switch ${isToggled ? 'active' : ''}`}
+        onClick={handleToggle}
+      >
         <div className="slider"></div>
       </div>
-      <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",color:"black",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
+      <div
+        className="toggle-text"
+        style={{
+          whiteSpace: 'nowrap',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          color: 'black',
+          transform: 'translate(-5px,0px)',
+        }}
+      >
+        {isToggled ? 'Featured' : 'Not Featured'}
+      </div>
     </div>
   );
 };

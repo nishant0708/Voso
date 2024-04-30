@@ -89,7 +89,7 @@ const ServiceView = () => {
             Back
           </button>
         </div>
-        <table className="w-full text-sm">
+        <table className="w-full text-lg xl:text-base">
           <thead className="font-extrabold text-[13px] text-left whitespace-nowrap">
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
               <th className="p-2.5">SERVICE NAME</th>
@@ -100,7 +100,7 @@ const ServiceView = () => {
               <th className="p-2.5 pl-7.5">ACTION</th>
             </tr>
           </thead>
-          <tbody className="text-xs text-black dark:text-white text-left whitespace-nowrap">
+          <tbody className="text-xs xl:text-base text-black dark:text-white text-left whitespace-nowrap">
             {services.map((service) => (
               <tr
                 key={service._id}

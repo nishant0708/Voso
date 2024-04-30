@@ -5,8 +5,8 @@ import { fetchproductedit } from '../../Redux/slicer/productEditSlice';
 import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer'; // Import the updateProductDetails action
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import QuillEditor from '../../utils/QuillEditor';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
+import QuillEditor from '../../utils/quillEditor';
 
 const Product_Edit = () => {
   const dispatch = useDispatch();

@@ -61,15 +61,17 @@ const Product_Edit = () => {
 
   //updating details
   const handleUpdateProduct = () => {
+    console.log("kk: ", imageUrl);
+    console.log("l: ",showAddUrl );
     const updatedProductData = {
       productId: product._id,
       productName: productName,
       productPrice: productPrice,
       productDescription: productDescription,
       productImage:
-        setShowAddUrl === true ? selectedImage === null
+      showAddUrl === true ? (selectedImage === null
         ? renderImage(product.product_image)
-        : selectedImage : imageUrl ,
+        : selectedImage) : imageUrl ,
       productUrl: productUrl,
     };
 
@@ -167,9 +169,9 @@ const Product_Edit = () => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <a
+                <a className='text-meta-5 dark:lightblue'
                   style={{
-                    color: 'blue',
+                    
                     cursor: 'pointer',
 
                     textDecoration: isHovered ? 'underline' : 'none',

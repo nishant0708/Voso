@@ -8,6 +8,7 @@ import { TbDotsVertical } from 'react-icons/tb';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import DefaultLayout from '../../layout/DefaultLayout';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const Products = () => {
   const callFetchUsers = (limit, page) => {
     dispatch(fetchUsers({ limit, page }));
   };
+  const ref = useRef(null);
+  useOnClickOutside(ref, (index) => clickHandler(index));
 
   useEffect(() => {
     callFetchUsers(limit, page);
@@ -167,7 +170,7 @@ const Products = () => {
           </button>
         </div>
 
-        <div className="flex flex-col overflow-x-scroll">
+        <div className="flex flex-col overflow-x-auto">
           <div className="grid place-items-center grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4 md:grid-cols-5">
             <div className="p-2.5 xl:p-3">
               <h5 className="text-sm text-center font-semibold uppercase">#</h5>
@@ -242,13 +245,11 @@ const Products = () => {
                       />
                     </p>
                     {menuOpenIndex === index && (
-                      <div className="lg:w-[180px] flex flex-col gap-4 top-[80%] right-[55%] absolute z-5 shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)]  rounded-lg p-7 bg-white text-xl">
+                      <div ref={ref} className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4">
                         <div
-                          onClick={() =>
-                            navigate(`/products/product_list/${user._id}`)
-                          } //to be added
-                          className="flex gap-3 w-30 text-sm cursor-pointer"
-                        >
+                          //to be added
+                          className="flex gap-3  w-30 text-sm cursor-pointer"
+                        ><a className="flex gap-2" href={`/products/product_list/${user._id}`}>
                           <svg
                             fill="#646e88"
                             viewBox="0 0 24 24"
@@ -268,13 +269,12 @@ const Products = () => {
                             </g>
                           </svg>
                           Products List
+                          </a>
                         </div>
                         <div
-                          onClick={
-                            () => navigate(`/products/Gallery/${user._id}`) //to be added
-                          }
-                          className="flex gap-3 cursor-pointer"
-                        >
+                          
+                          className="flex gap-3 w-50 text-sm whitespace-nowrap cusor-pointer cursor-pointer"
+                        ><a  className="flex gap-2" href={`/products/Gallery/${user._id}`}>
                           <svg
                             fill="#646e88"
                             height="20px"
@@ -309,7 +309,8 @@ const Products = () => {
                               </g>{' '}
                             </g>
                           </svg>
-                          <span className="text-sm">Gallery List</span>
+                          Gallery List
+                          </a>
                         </div>
                       </div>
                     )}

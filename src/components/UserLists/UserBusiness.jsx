@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { BACKEND_URL } from '../../url/url';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
 import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserBusiness = () => {

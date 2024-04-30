@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
+import './toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
 
 const ProductTable = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { userId } = useParams();
-  const { products, status, error } = useSelector((state) => state.Product);
-
-  useEffect(() => {
-    dispatch(fetchProducts({ userId }));
-  }, [dispatch, userId]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [hoveredButtons, setHoveredButtons] = useState({});
 
   const renderImage = (imageUrl) => {
     if (imageUrl.startsWith('https://')) {
@@ -38,6 +35,12 @@ const ProductTable = () => {
     return date.toLocaleDateString('en-US', options);
   };
 
+  useEffect(() => {
+    dispatch(fetchProducts({ userId }));
+  }, [dispatch, userId]);
+
+  const { products, status, error } = useSelector((state) => state.Product);
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
@@ -51,19 +54,20 @@ const ProductTable = () => {
       <DefaultLayout>
         <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex justify-between items-center">
-            <h1 className="mb-6 text-2xl sm:text-3xl font-medium text-black dark:text-white">
-              Products - {products.length}
+            <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+              Products {products.length}
             </h1>
             <button
               onClick={() => (window.location.href = '/products')}
-              className="-mt-5 flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+              style={{ position: 'absolute', right: '9%', top: '20%' }}
+              className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
             >
               <FaCircleArrowLeft size={14} />
               Back
             </button>
           </div>
-          <p className="text-danger text-lg text-center pb-5">
-            No Products Found
+          <p style={{ color: 'red', fontSize: '18px', marginBottom: '20px' }}>
+            No Product
           </p>
         </div>
       </DefaultLayout>
@@ -73,37 +77,97 @@ const ProductTable = () => {
   return (
     <DefaultLayout>
       <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="mb-8 ml-2 w-full flex justify-between items-center">
-          <h1 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
-            Products - {products.length}
+        <div className="flex justify-between items-center">
+          <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
+            Products {products.length}
           </h1>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => (window.location.href = '/products')}
+            style={{ position: 'absolute', right: '9%', top: '20%' }}
             className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
           >
             <FaCircleArrowLeft size={14} />
             Back
           </button>
         </div>
-        <table className="w-full ml-2 text-left text-sm">
+        <table
+          style={{
+            textAlign: 'left',
+            width: 'auto',
+            margin: '2% 0% 0% 0%',
+            // Separate borders
+          }}
+        >
+          <colgroup>
+            <col style={{ width: '400px' }} />{' '}
+            {/* Adjust width for each column */}
+            <col style={{ width: '200px' }} />
+            <col style={{ width: '150px' }} />
+            <col style={{ width: '150px' }} />
+            <col style={{ width: '300px' }} />
+            <col style={{ width: '100px' }} />
+          </colgroup>
           <thead>
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th className="w-[270px] font-extrabold p-2.5">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '400px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
                 PRODUCT NAME
               </th>
-              <th className="w-[258px] whitespace-nowrap font-extrabold p-2.5 pl-1.5">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '200px',
+                  fontWeight: '900',
+                  padding: '10px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 PRODUCT PRICE
               </th>
-              <th className="w-[170px] font-extrabold p-2.5 pl-6">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '150px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
                 FEATURED
               </th>
-              <th className="w-[160px] text-center font-extrabold p-2.5 pl-5">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '150px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
                 ACTIVE
               </th>
-              <th className="w-[320px] whitespace-nowrap font-extrabold p-2.5 pl-5">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '300px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
                 CREATED AT
               </th>
-              <th className="w-[100px] font-extrabold p-2.5 pl-4.5">
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '100px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
                 ACTION
               </th>
             </tr>
@@ -111,35 +175,81 @@ const ProductTable = () => {
           <tbody>
             {products.map((product) => (
               <tr
-                key={product._id}
+                key={product.id}
                 style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
               >
-                <td className="w-[270px] p-2.5 flex items-center gap-5 font-bold">
+                <td
+                  style={{
+                    padding: '10px', // Adjust padding as needed
+                    alignItems: 'center',
+                    display: 'flex',
+                    color: '#000',
+                    fontWeight: 'bold',
+                    gap: '20px',
+                    width: '500px', // Fixed width for this column
+                  }}
+                >
                   <a href={product.product_url}>
                     <span>
                       <img
-                        className="w-[7vh] h-[7vh] rounded-[50%]"
+                        style={{
+                          width: '7vh',
+                          height: '7vh',
+                          borderRadius: '50%',
+                        }}
                         src={renderImage(product?.product_image)}
                       />
                     </span>
                   </a>
                   {product.product_name}
                 </td>
-                <td className="w-[255px] p-2.5 pl-3">
+                <td style={{ padding: '10px', width: '200px' }}>
                   {product.currency}
                   {product.product_price}
                 </td>
-                <td className="w-[170px] p-2.5 pl-5.5">
+                <td style={{ padding: '10px', width: '150px' }}>
                   <ToggleSwitch isActive={product.is_featured} />
                 </td>
-                <td className="w-[160px] text-center p-2.5 pl-5.5">
+                <td style={{ padding: '10px', width: '150px' }}>
                   {product.is_active ? 'Active' : 'Inactive'}
                 </td>
-                <td className="w-[320px] p-2.5 pl-5.5 whitespace-nowrap">
+                <td
+                  style={{
+                    padding: '10px',
+                    width: '600px',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
                   {formatDate(product.created_at)}
                 </td>
-                <td className="w-[100px] p-2.5 pl-3">
-                  <p className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
+                <td style={{ padding: '10px', width: '100px' }}>
+                  <p
+                    style={{
+                      whiteSpace: 'nowrap',
+                      padding: '5px 15px',
+                      backgroundColor: hoveredButtons[product._id]
+                        ? 'green'
+                        : 'limegreen',
+                      color: 'white',
+                      borderRadius: '999rem',
+                      cursor: 'pointer',
+                    }}
+                    onMouseEnter={() =>
+                      setHoveredButtons((prevState) => ({
+                        ...prevState,
+                        [product._id]: true,
+                      }))
+                    }
+                    onMouseLeave={() =>
+                      setHoveredButtons((prevState) => ({
+                        ...prevState,
+                        [product._id]: false,
+                      }))
+                    }
+                    onClick={() => {
+                      navigate(`/products/product_edit/${product._id}`);
+                    }}
+                  >
                     Product Edit
                   </p>
                 </td>
@@ -156,7 +266,7 @@ const ToggleSwitch = ({ isActive }) => {
   const [isToggled, setIsToggled] = useState(isActive);
 
   const handleToggle = () => {
-    if (confirm('Do you confirm?') === true) setIsToggled(!isToggled);
+    setIsToggled(!isToggled);
   };
 
   return (
@@ -167,7 +277,16 @@ const ToggleSwitch = ({ isActive }) => {
       >
         <div className="slider"></div>
       </div>
-      <div className="toggle-text whitespace-nowrap text-sm font-bold">
+      <div
+        className="toggle-text"
+        style={{
+          whiteSpace: 'nowrap',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          color: 'black',
+          transform: 'translate(-5px,0px)',
+        }}
+      >
         {isToggled ? 'Featured' : 'Not Featured'}
       </div>
     </div>

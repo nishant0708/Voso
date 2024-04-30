@@ -34,6 +34,8 @@ import BlogView from './components/BlogsAndServices/BlogView';
 import ServiceView from './components/BlogsAndServices/ServiceView';
 import BlogEdit from './components/BlogsAndServices/BlogEdit';
 import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
+import Gallery_edit from './components/Gallery_table/Gallery_edit';
+import Product_Edit from './components/product_table/Product_Edit';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -168,6 +170,16 @@ function App() {
           }
         />
         <Route
+          path="/products/product_edit/:productId"
+          element={
+            <>
+              <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Product_Edit/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
+        <Route
           path="/products/Gallery/:userId"
           element={
             <>
@@ -213,6 +225,17 @@ function App() {
             </>
           }
         />
+         <Route
+          path="/products/Galleryedit/:productId"
+          element={
+            <>
+              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <Gallery_edit/> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+
+
         <Route
           path="/user/settings"
           element={

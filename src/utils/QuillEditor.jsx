@@ -12,7 +12,7 @@ const QuillEditor = ({ label, name, value, onChange }) => {
       <label className="text-sm text-black dark:text-white">{label}</label>
       <ReactQuill
         value={value}
-        className="min-h-[150px] max-h-[200px] mt-1 w-full overflow-y-auto outline-none transition text-black focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        className="min-h-[0px] max-h-[200px] mt-1 w-full overflow-y-auto outline-none transition text-black focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
         onChange={handleChange}
         modules={QuillEditor.modules}
         formats={QuillEditor.formats}
@@ -23,12 +23,12 @@ const QuillEditor = ({ label, name, value, onChange }) => {
 
 QuillEditor.modules = {
   toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    // [{ header: '1' }, { header: '2' }, { font: [] }],
+    // [{ size: [] }],
+    ['bold', 'italic'],
     [
-      { list: 'ordered' },
-      { list: 'bullet' },
+      // { list: 'ordered' },
+      // { list: 'bullet' },
       // { indent: '-1' },
       // { indent: '+1' },
     ],
@@ -40,16 +40,16 @@ QuillEditor.modules = {
 };
 
 QuillEditor.formats = [
-  'header',
-  'font',
-  'size',
+  // 'header',
+  // 'font',
+  // 'size',
   'bold',
   'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
+  // 'underline',
+  // 'strike',
+  // 'blockquote',
+  // 'list',
+  // 'bullet',
   // 'indent',
   // 'link',
   // 'image',

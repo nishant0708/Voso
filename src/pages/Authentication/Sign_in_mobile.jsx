@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,10 +11,10 @@ const Sign_in_mobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
   const dispatch = useDispatch();
-  const sendingOTP = useSelector((state) => state.login_mobile.sendingOTP);
-  const verifyingOTP = useSelector((state) => state.login_mobile.verifyingOTP);
-  const error = useSelector((state) => state.login_mobile.error);
-  const navigate = useNavigate();
+  const sendingOTP = useSelector(state => state.login_mobile.sendingOTP);
+  const verifyingOTP = useSelector(state => state.login_mobile.verifyingOTP);
+  const error = useSelector(state => state.login_mobile.error);
+const navigate=useNavigate();
 
   const handleClick = async () => {
     if (mobileNo.length === 10) {
@@ -22,8 +23,7 @@ const Sign_in_mobile = () => {
         if (sendOTP.fulfilled.match(actionResult)) {
           setShowLabel(true);
         } else if (sendOTP.rejected.match(actionResult)) {
-          const errorMessage =
-            actionResult.error.message || 'Unknown error occurred.';
+          const errorMessage = actionResult.error.message || 'Unknown error occurred.';
           alert('Error sending OTP: ' + errorMessage);
         }
       } catch (error) {
@@ -33,7 +33,7 @@ const Sign_in_mobile = () => {
       alert('Please enter a valid 10-digit mobile number.');
     }
   };
-
+  
   const handleVerify = () => {
     dispatch(verifyOTP({ mobileNo, otp }))
       .then((action) => {
@@ -62,30 +62,21 @@ const Sign_in_mobile = () => {
   return (
     <div className="overflow-hidden">
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="mt-20 md:mt-10 flex flex-wrap">
-          <div className="hidden w-full md:block md:w-1/2">
-            <div className="px-16 py-17.5 lg:px-26 text-center">
-              <Link className="mb-5 inline-block" to="/">
-                <span className="flex justify-center items-center gap-1.5">
-                  <img
-                    className="w-14"
-                    src={voso_logo}
-                    alt="Logo"
-                  />
-                  <p className="font-bold text-black dark:text-white text-[32px] lg:text-[42px] translate-y-[7px]">
-                    Voso Vyapar
-                  </p>
+        <div className="flex flex-wrap items-center translate-y-[5%]">
+          <div className="hidden w-full xl:block xl:w-1/2">
+            <div className="py-17.5 px-26 text-center">
+              <Link className="mb-5.5 inline-block" to="/">
+                <img className="w-96 hidden dark:block" src={voso_logo} alt="Logo" />
+                <span className="flex justify-center items-center gap-1.5 ">
+                  <img className="w-20 dark:hidden" src={voso_logo} alt="Logo" />
+                  <p className="font-bold text-black text-[54px] translate-y-[10px]">Voso Vyapar</p>
                 </span>
               </Link>
-
-              <p className="2xl:px-20 text-[20px] lg:text-[22px]">
-                Welcome! Log in to your account.
-              </p>
-
-              <span className="mt-12 lg:mt-15 inline-block">
-                <svg
-                  width="300"
-                  height="300"
+              <p className="2xl:px-20 text-[22px]">Welcome! Log in to your account.</p>
+              <span className="mt-15 inline-block">
+              <svg
+                  width="350"
+                  height="350"
                   viewBox="0 0 350 350"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -206,8 +197,9 @@ const Sign_in_mobile = () => {
               </span>
             </div>
           </div>
-          <div className="mt-5 xl:mt-14 w-full border-stroke dark:border-strokedark md:w-1/2 md:border-l-2">
-            <div className="w-full p-8 sm:px-16 sm:py-14 lg:py-17.5 lg:px-26">
+          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+              <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign In to Voso Vyapar
               </h2>
@@ -226,21 +218,12 @@ const Sign_in_mobile = () => {
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <span className="absolute right-4 top-4">
-                      <img
-                        className="w-8"
-                        src={mobile_logo_light}
-                        alt="Mobile icon"
-                      />
+                      <img className="w-8" src={mobile_logo_light} alt="Mobile icon" />
                     </span>
                   </div>
                 </div>
-                <div
-                  className=""
-                  style={{ display: showLabel ? 'block' : 'none' }}
-                >
-                  <label className="block font-medium text-black dark:text-white">
-                    Verify Your OTP:
-                  </label>
+                <div className="" style={{ display: showLabel ? 'block' : 'none' }}>
+                  <label className="block font-medium text-black dark:text-white">Verify Your OTP:</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -251,21 +234,8 @@ const Sign_in_mobile = () => {
                     />
                   </div>
                 </div>
-                <div
-                  className="mb-6 text-right"
-                  style={{ display: showLabel ? 'block' : 'none' }}
-                >
-                  <p
-                    style={{
-                      display: showLabel ? 'block' : 'none',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {' '}
-                    <a onClick={sendOTP} className="text-primary">
-                      Resend OTP
-                    </a>
-                  </p>
+                <div className="mb-6 text-right" style={{ display: showLabel ? 'block' : 'none' }}>
+                  <p style={{ display: showLabel ? 'block' : 'none' , cursor : "pointer"}}> <a onClick={sendOTP} className="text-primary">Resend OTP</a></p>
                 </div>
                 <input
                   type="button"

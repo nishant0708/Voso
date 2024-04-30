@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import DefaultLayout from '../../layout/DefaultLayout';
-import '../product_table/toggle.css';
-import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
+import "../product_table/toggle.css"
+import { BACKEND_URL_PRODUCT } from '../../url/url';
 
 const Gallery_table = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Track hover state for each button using an object
+  const [hoveredButtons, setHoveredButtons] = useState({});
 
   const renderImage = (imageUrl) => {
     if (imageUrl.startsWith('https://')) {
@@ -46,28 +50,6 @@ const Gallery_table = () => {
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
-  if (gallery.length === 0) {
-    return (
-      <DefaultLayout>
-        <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between items-center">
-            <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
-              Products {gallery.length}
-            </h1>
-            <button
-              onClick={() => (window.location.href = '/products')}
-              style={{ position: 'absolute', right: '9%', top: '20%' }}
-              className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
-            >
-              <FaCircleArrowLeft size={14} />
-              Back
-            </button>
-          </div>
-          <p style={{ color: 'red', fontSize: '18px' }}>No Product</p>
-        </div>
-      </DefaultLayout>
-    );
-  }
 
   return (
     <DefaultLayout>
@@ -76,11 +58,7 @@ const Gallery_table = () => {
           <h1 className="mb-6 text-3xl font-medium text-black dark:text-white">
             Products {gallery.length}
           </h1>
-          <button
-            onClick={() => (window.location.href = '/products')}
-            style={{ position: 'absolute', right: '9%', top: '20%' }}
-            className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
-          >
+          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
             <FaCircleArrowLeft size={14} />
             Back
           </button>
@@ -88,22 +66,23 @@ const Gallery_table = () => {
         <table
           style={{
             textAlign: 'left',
+            justifyItems:"center",
             width: 'auto',
             margin: '2% 0% 0% 0%',
             // Separate borders
           }}
         >
           <colgroup>
-            <col style={{ width: '200px' }} />{' '}
-            {/* Adjust width for each column */}
-            <col style={{ width: '200px' }} />
+            <col style={{ width: '400px' }} />
+            {/* <col style={{ width: '200px' }} /> */}
             <col style={{ width: '150px' }} />
-            <col style={{ width: '300px' }} />
+            <col style={{ width: '200px' }} />
+            <col style={{ width: '350px' }} />
             <col style={{ width: '100px' }} />
           </colgroup>
           <thead>
             <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th
+              {/* <th
                 style={{
                   fontSize: '14px',
                   width: '200px',
@@ -112,8 +91,17 @@ const Gallery_table = () => {
                 }}
               >
                 PRODUCT NAME
+              </th> */}
+              <th
+                style={{
+                  fontSize: '14px',
+                  width: '400px',
+                  fontWeight: '900',
+                  padding: '10px',
+                }}
+              >
+                PRODUCT URL
               </th>
-
               <th
                 style={{
                   fontSize: '14px',
@@ -127,7 +115,7 @@ const Gallery_table = () => {
               <th
                 style={{
                   fontSize: '14px',
-                  width: '150px',
+                  width: '200px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
@@ -137,7 +125,7 @@ const Gallery_table = () => {
               <th
                 style={{
                   fontSize: '14px',
-                  width: '300px',
+                  width: '350px',
                   fontWeight: '900',
                   padding: '10px',
                 }}
@@ -159,47 +147,44 @@ const Gallery_table = () => {
           <tbody>
             {gallery.map((product) => (
               <tr
-                key={product._id}
+                key={product.id}
                 style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
               >
                 <td
                   style={{
-                    padding: '10px', // Adjust padding as needed
+                    padding: '10px',
                     alignItems: 'center',
                     display: 'flex',
                     color: '#000',
                     fontWeight: 'bold',
                     gap: '20px',
-                    width: '300px', // Fixed width for this column
+                    width: '400px',
                   }}
                 >
                   <span>
-                    <img
+                  <a href="">  <img
                       style={{
                         width: '7vh',
                         height: '7vh',
                         borderRadius: '50%',
                       }}
-                      alt="undefined"
+                      alt='Product'
                       src={renderImage(product?.url)}
-                    />
+                    /></a>
                   </span>
-                  {product.product_name}
+                  {/* {product.product_name} */}
                 </td>
-
+                {/* <td style={{ padding: '10px', width: '200px' }}>
+                  {product.product_image}
+                </td> */}
                 <td style={{ padding: '10px', width: '150px' }}>
+                  {product.is_featured ? 'Yes' : 'No'}
+                </td>
+                <td style={{ padding: '10px', width: '200px' }}>
+                
                   <ToggleSwitch isActive={product.is_featured} />
                 </td>
-                <td style={{ padding: '10px', width: '150px' }}>
-                  {product.is_active ? 'Active' : 'Inactive'}
-                </td>
-                <td
-                  style={{
-                    padding: '10px',
-                    width: '500px',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
+                <td style={{ padding: '10px', width: '350px', whiteSpace: 'nowrap' }}>
                   {formatDate(product.created_at)}
                 </td>
                 <td style={{ padding: '10px', width: '100px' }}>
@@ -207,10 +192,16 @@ const Gallery_table = () => {
                     style={{
                       whiteSpace: 'nowrap',
                       padding: '5px 15px',
-                      backgroundColor: 'limegreen',
+                      backgroundColor: hoveredButtons[product._id] ? 'green' : 'limegreen',
                       color: 'white',
                       borderRadius: '999rem',
+                      cursor:"pointer"
                     }}
+                    onMouseEnter={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: true }))}
+                    onMouseLeave={() => setHoveredButtons(prevState => ({ ...prevState, [product._id]: false }))}
+                    onClick={() =>
+                      navigate(`/products/Galleryedit/${product._id}`)//to be added
+                    }
                   >
                     Product Edit
                   </p>
@@ -233,26 +224,13 @@ const ToggleSwitch = ({ isActive }) => {
 
   return (
     <div>
-      <div
-        className={`toggle-switch ${isToggled ? 'active' : ''}`}
-        onClick={handleToggle}
-      >
+      <div className={`toggle-switch ${isToggled ? 'active' : ''}`} onClick={handleToggle}>
         <div className="slider"></div>
       </div>
-      <div
-        className="toggle-text"
-        style={{
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 'bold',
-          color: 'black',
-          transform: 'translate(-5px,0px)',
-        }}
-      >
-        {isToggled ? 'Featured' : 'Not Featured'}
-      </div>
+      <div className="toggle-text" style={{whiteSpace:'nowrap',fontSize:"14px",fontWeight:"bold",color:"black",transform:"translate(-5px,0px)"}}>{isToggled ? 'Featured' : 'Not Featured'}</div>
     </div>
   );
 };
+
 
 export default Gallery_table;

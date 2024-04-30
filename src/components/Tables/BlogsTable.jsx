@@ -153,7 +153,7 @@ const BlogsTable = () => {
       <table className="w-full text-sm">
         <thead className="font-extrabold text-center">
           <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-            <th className="p-2.5 lg:p-4 !pl-12">#</th>
+            <th className="p-2.5 lg:p-4 sm:pl-12 pl-3">#</th>
             <th className="p-2.5 lg:p-4 !pl-13">NAME</th>
             <th className="p-2.5 lg:p-4 !pl-13">MOBILE</th>
             <th className="p-2.5 lg:p-4 !pl-12">EMAIL</th>
@@ -170,7 +170,7 @@ const BlogsTable = () => {
                   : 'border-b border-stroke dark:border-strokedark'
               }`}
             >
-              <td className="p-2.5 lg:p-4 !pl-12 font-extrabold">
+              <td className="p-2.5 lg:p-4 sm:pl-12 pl-3 font-extrabold">
                 {index + 1}
               </td>
               <td className="p-2.5 lg:p-4 !pl-13 capitalize">

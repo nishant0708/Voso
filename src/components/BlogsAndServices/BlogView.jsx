@@ -88,21 +88,25 @@ const ProductTable = () => {
           </button>
         </div>
         <table className="w-full text-sm">
-          <thead className="font-extrabold text-left whitespace-nowrap">
-            <tr style={{ borderBottom: '2px solid rgb(159 157 157 / 33%)' }}>
-              <th className="p-2.5 pl-5 sm:pl-12">TITLE</th>
-              <th className="p-2.5 pl-5">ACTIVE</th>
-              <th className="p-2.5 pl-13">CREATED AT</th>
-              <th className="p-2.5 pl-5">ACTION</th>
+          <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+            <tr>
+              <th className="p-3 lg:p-4 pl-5 sm:!pl-14">TITLE</th>
+              <th className="p-3 lg:p-4 !pl-5">ACTIVE</th>
+              <th className="p-3 lg:p-4 !pl-13">CREATED AT</th>
+              <th className="p-3 lg:p-4 !pl-5">ACTION</th>
             </tr>
           </thead>
           <tbody className="text-black dark:text-white text-left whitespace-nowrap">
-            {blogs.map((blog) => (
+            {blogs.map((blog, index) => (
               <tr
                 key={blog._id}
-                style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
+                className={`${
+                  index === blogs.length - 1
+                    ? ''
+                    : 'border-b border-stroke dark:border-strokedark'
+                }`}
               >
-                <td className="p-2.5 w-[280px] pl-5 sm:pl-12 flex gap-5 items-center font-bold">
+                <td className="p-2.5 w-[280px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
                   <a href={blog.blog}>
                     <span>
                       <img
@@ -113,12 +117,15 @@ const ProductTable = () => {
                   </a>
                   {blog.title}
                 </td>
-                <td className="p-2.5 pl-5">
+                <td className="p-2.5 lg:p-4 !pl-5">
                   {blog.is_active ? 'Active' : 'Inactive'}
                 </td>
-                <td className="p-2.5 pl-13">{formatDate(blog.created_at)}</td>
-                <td className="p-2.5 pl-5">
-                  <p onClick={() => navigate(`/blogs/blogEdit/${blog._id}`)} className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700">
+                <td className="p-2.5 lg:p-4 !pl-13">{formatDate(blog.created_at)}</td>
+                <td className="p-2.5 lg:p-4 !pl-5">
+                  <p
+                    onClick={() => navigate(`/blogs/blogEdit/${blog._id}`)}
+                    className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700"
+                  >
                     Blog Edit
                   </p>
                 </td>

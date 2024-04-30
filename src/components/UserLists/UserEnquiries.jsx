@@ -43,7 +43,7 @@ const UserEnquiries = () => {
 
   return (
     <DefaultLayout>
-      <div className="overflow-x-auto flex flex-col gap-5">
+      <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="mb-10 flex justify-between items-center">
           <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
             Enquiries List
@@ -57,136 +57,43 @@ const UserEnquiries = () => {
           </button>
         </div>
 
-        <div className="p-5.5 flex flex-col gap-5.5 text-sm text-center text-black dark:text-white rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          {loading ? (
-            <div>Loading...</div>
-          ) : error ? (
-            <div>Error: {error.message}</div>
-          ) : users.length > 0 ? (
-            <div>
-              <div>
-                <div className="grid auto-cols-max grid-cols-6 rounded-sm bg-gray-2 dark:bg-meta-4">
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm text-center font-semibold uppercase">
-                      #
-                    </h5>
-                  </div>
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm  text-center font-semibold uppercase">
-                      Name
-                    </h5>
-                  </div>
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm text-center font-semibold uppercase">
-                      Mobile
-                    </h5>
-                  </div>
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm text-center font-semibold uppercase">
-                      EMAIL
-                    </h5>
-                  </div>
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm text-center font-semibold uppercase">
-                      DESCRIPTION
-                    </h5>
-                  </div>
-                  <div className="p-2.5 xl:p-3">
-                    <h5 className="text-sm text-center font-semibold uppercase">
-                      Created At
-                    </h5>
-                  </div>
-                </div>
-                {users.map((user, index) => (
-                  <div
-                    key={user._id}
-                    className={`text-sm grid grid-cols-6 ${
-                      index === users.length - 1
-                        ? ''
-                        : 'border-b border-stroke dark:border-strokedark'
-                    }`}
-                  >
-                    {/* Render user information */}
-                    <div className="flex justify-center items-center p-2.5 xl:p-3">
-                      <p className="text-center font-extrabold text-black dark:text-white">
-                        {index + 1}
-                      </p>
-                    </div>
-
-                    <div className="flex justify-center items-center p-2.5 xl:p-3">
-                      <p className="capitalize text-center text-black dark:text-white">
-                        {user.fullName}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-center p-2.5 xl:p-3">
-                      <p className="text-center text-black dark:text-white">
-                        {user.mobile}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-center p-2.5 xl:p-3">
-                      <p className="text-center text-meta-3">{user.email}</p>
-                    </div>
-
-                    <div className="flex items-center justify-center p-2.5 xl:p-3">
-                      <p className="text-center text-black dark:text-white">
-                        {user.message}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-center p-2.5 xl:p-3">
-                      <p className="text-center text-meta-5">
-                        {formatDate(user.created_at)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <table className="w-full text-sm">
-                <thead className="font-extrabold text-center">
-                  <tr
-                    style={{
-                      borderBottom: '2px solid rgb(159 157 157 / 33%)',
-                    }}
-                  >
-                    <th className="p-2.5 pl-12">#</th>
-                    <th className="p-2.5 pl-13">NAME</th>
-                    <th className="p-2.5 pl-13">MOBILE</th>
-                    <th className="p-2.5 pl-13">EMAIL</th>
-                    <th className="p-2.5 pl-13">DESCRIPTION</th>
-                    <th className="p-2.5 pl-12">CREATED AT</th>
-                  </tr>
-                </thead>
-                <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-                  {users.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      style={{
-                        borderBottom: '1px solid rgb(159 157 157 / 13%)',
-                      }}
-                    >
-                      <td className="p-2.5 pl-12 font-extrabold">
-                        {index + 1}
-                      </td>
-                      <td className="p-2.5 pl-13 capitalize">
-                        {user.fullName}
-                      </td>
-                      <td className="p-2.5 pl-13">{user.mobile}</td>
-                      <td className="p-2.5 pl-12 text-meta-3">{user.email}</td>
-                      <td className="p-2.5 pl-13">{user.message}</td>
-                      <td className="p-2.5 pl-13">
-                        {formatDate(user.created_at)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-danger text-base">Not Found</div>
-          )}
-        </div>
+        <table className="w-full text-sm">
+          <thead className="font-extrabold text-center">
+            <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+              <th className="p-2.5 lg:p-4 sm:pl-12 pl-5">#</th>
+              <th className="p-2.5 lg:p-4 !pl-10">NAME</th>
+              <th className="p-2.5 lg:p-4 !pl-10">MOBILE</th>
+              <th className="p-2.5 lg:p-4 !pl-8">EMAIL</th>
+              <th className="p-2.5 lg:p-4 !pl-5">DESCRIPTION</th>
+              <th className="p-2.5 lg:p-4 !pl-8 pr-5">CREATED AT</th>
+            </tr>
+          </thead>
+          <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+            {users.map((user, index) => (
+              <tr
+                key={user._id}
+                className={`${
+                  index === users.length - 1
+                    ? ''
+                    : 'border-b border-stroke dark:border-strokedark'
+                }`}
+              >
+                <td className="p-2.5 lg:p-4 sm:pl-12 pl-5 font-extrabold">
+                  {index + 1}
+                </td>
+                <td className="p-2.5 lg:p-4 !pl-10 capitalize">
+                  {user.fullName}
+                </td>
+                <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
+                <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">{user.email}</td>
+                <td className="p-2.5 lg:p-4 !pl-5">{user.message}</td>
+                <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
+                  {formatDate(user.created_at)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </DefaultLayout>
   );

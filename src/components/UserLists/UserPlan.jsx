@@ -35,8 +35,8 @@ const UserPlan = () => {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex justify-between">
-          <h1 className="text-lg sm:text-2xl font-semibold text-black dark:text-white">
+        <div className="flex flex-wrap-reverse gap-3 justify-between">
+          <h1 className="text-base sm:text-2xl font-semibold text-black dark:text-white">
             User Plan Purchase - {user?.email}
           </h1>
           <div className="flex justify-center items-center">

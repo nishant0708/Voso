@@ -58,7 +58,7 @@ const ProductTable = () => {
           <h1 className=" text-3xl font-medium text-black dark:text-white">
             Products {products.length}
           </h1>
-          <button onClick={() => window.location.href = '/products'} style={{ position: "absolute", right: "9%", top: "20%" }} className="flex text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+          <button onClick={() => window.location.href = '/products'} className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
             <FaCircleArrowLeft size={14} />
             Back
           </button>

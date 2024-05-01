@@ -41,6 +41,7 @@ const TableOne = () => {
         ) : error ? (
           <div>Error: {error.message}</div>
         ) : topUsers.length > 0 ? (
+          <div className='overflow-x-auto'>
           <table className="w-full">
             <thead className="font-extrabold text-center whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
               <tr>
@@ -81,6 +82,7 @@ const TableOne = () => {
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <div className="text-danger text-base">No User Found</div>
         )}

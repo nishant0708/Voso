@@ -54,7 +54,7 @@ const Gallery_table = () => {
 
   return (
     <DefaultLayout>
-      <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
+      <div className=" w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
         <div className="px-0 sm:px-3 mb-10 flex justify-between items-center">
           <h1 className=" text-3xl font-medium text-black dark:text-white">
             Products {gallery.length}
@@ -68,6 +68,7 @@ const Gallery_table = () => {
             Back
           </button>
         </div>
+        <div className='overflow-x-auto'>
         <table
           style={{
             textAlign: 'left',
@@ -236,6 +237,7 @@ const Gallery_table = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </DefaultLayout>
   );

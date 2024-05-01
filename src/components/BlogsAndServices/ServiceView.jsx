@@ -89,6 +89,7 @@ const ServiceView = () => {
             Back
           </button>
         </div>
+        <div className='overflow-x-auto'>
         <table className="w-full text-sm">
           <thead className="font-extrabold text-[13px] text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
             <tr>
@@ -148,6 +149,7 @@ const ServiceView = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </DefaultLayout>
   );

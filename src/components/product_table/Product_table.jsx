@@ -81,6 +81,7 @@ const ProductTable = () => {
             Back
           </button>
         </div>
+        <div className='overflow-x-auto'>
         <table
         className='dark:text-white'
           style={{
@@ -235,6 +236,7 @@ const ProductTable = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </DefaultLayout>
   );

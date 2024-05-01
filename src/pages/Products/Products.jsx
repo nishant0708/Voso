@@ -126,7 +126,7 @@ const Products = () => {
 
   return (
     <DefaultLayout>
-      <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className=" w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="mb-10 flex justify-between items-center">
           <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
             Products List
@@ -149,8 +149,8 @@ const Products = () => {
             <MdOutlineKeyboardDoubleArrowRight />
           </button>
         </div>
-
-        <table className="w-full text-sm">
+      <div className='overflow-x-auto'>
+        <table className=" w-full text-sm">
           <thead className="font-extrabold text-center">
             <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
               <th className="p-2.5 lg:p-4 sm:!pl-14 pl-3">#</th>
@@ -268,6 +268,7 @@ const Products = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </DefaultLayout>
   );

@@ -200,6 +200,7 @@ const UserTable = () => {
           <MdOutlineKeyboardDoubleArrowRight />
         </button>
       </div>
+      <div className='overflow-x-auto'>
 
       <table className="w-full text-sm">
         <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
@@ -335,6 +336,7 @@ const UserTable = () => {
             )} */}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

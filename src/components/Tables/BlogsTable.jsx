@@ -149,7 +149,7 @@ const BlogsTable = () => {
           <MdOutlineKeyboardDoubleArrowRight />
         </button>
       </div>
-
+<div className='overflow-x-auto'>
       <table className="w-full text-sm">
         <thead className="font-extrabold text-center">
           <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
@@ -211,6 +211,7 @@ const BlogsTable = () => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

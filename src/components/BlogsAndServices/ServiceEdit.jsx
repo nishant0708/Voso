@@ -9,12 +9,18 @@ import {
   fetchServiceById,
   updateServiceById,
 } from '../../Redux/slicer/blogSlice';
+import ImageCropper from '../../utils/cropImage';
 
 const ServiceEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { serviceId } = useParams();
   const { service } = useSelector((state) => state.blogs);
+  const [imgcrop, setimgcrop] = useState('');
+
+  const setimg = (file) => {
+    setimgcrop(file);
+  };
 
   useEffect(() => {
     dispatch(fetchServiceById({ serviceId }));
@@ -73,12 +79,7 @@ const ServiceEdit = () => {
       serviceName: formData.serviceName,
       servicePrice: formData.servicePrice,
       serviceDescription: formData.serviceDescription,
-      serviceImage:
-        showAddUrl === true
-          ? selectedImage === null
-            ? renderImage(service.service_image)
-            : selectedImage
-          : formData.serviceImage,
+      serviceImage: showAddUrl === true ? imgcrop : formData.serviceImage,
       serviceUrl: formData.serviceUrl,
     };
 
@@ -158,46 +159,14 @@ const ServiceEdit = () => {
               Add url
             </p>
             <div className="relative mt-[10px]  ">
-              <div className="relative ">
-                <div className="flex">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="galleryInput" // Assign an id to the file input
-                    onChange={handleFileSelect}
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    name="galleryImage"
-                    id="galleryImage"
-                    placeholder="Browse or input image URL"
-                    value=""
-                    onChange={handleGalleryUrlChange} // Handle the change event
-                    className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      document.getElementById('galleryInput').click()
-                    } // Trigger click event on file input
-                    className="absolute top-[2%] right-[0%] z-40 w-[100px] h-[39px] bg-[#E9ECEF] "
-                  >
-                    Browse
-                  </button>
-                </div>
-                {(selectedImage || service.service_image) && (
-                  <img
-                    className="w-[200px] h-[200px] mt-6 mx-1 "
-                    src={
-                      selectedImage
-                        ? URL.createObjectURL(selectedImage)
-                        : renderImage(service.service_image)
-                    }
-                    alt="Gallery Image"
-                  />
-                )}
-              </div>
+              <ImageCropper
+                setimg={setimg}
+                src={renderImage(service.service_image)}
+                maxHeight={300}
+                maxWidth={300}
+                minHeight={50}
+                minWidth={50}
+              />
             </div>
           </div>
           <div className={`w-full ${showAddUrl ? 'hidden' : 'block'}`}>

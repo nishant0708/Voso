@@ -15,14 +15,18 @@ const Product_Edit = () => {
   const navigate = useNavigate();
   const { product, status, error } = useSelector((state) => state.Editproduct);
   const [imageUrl, setimageUrl] = useState('');
- 
+  const [imgcrop, setimgcrop] = useState('');
+
+  const setimg = (file) => {
+    setimgcrop(file);
+  };
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
+    // if (imageUrl.startsWith('https://')) {
+    //   return imageUrl;
+    // } else {
+    return `${BACKEND_URL_PRODUCT}${imageUrl}`;
+    // }
   };
   const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {
@@ -44,7 +48,6 @@ const Product_Edit = () => {
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [productUrl, setProductUrl] = useState('');
-  
 
   const [showAddUrl, setShowAddUrl] = useState(true);
   console.log(product);
@@ -62,17 +65,16 @@ const Product_Edit = () => {
 
   //updating details
   const handleUpdateProduct = () => {
-    console.log("kk: ", imageUrl);
-    console.log("l: ",showAddUrl );
     const updatedProductData = {
       productId: product._id,
       productName: productName,
       productPrice: productPrice,
       productDescription: productDescription,
-      productImage:
-      showAddUrl === true ? (selectedImage === null
-        ? renderImage(product.product_image)
-        : selectedImage) : imageUrl ,
+      // productImage:
+      // showAddUrl === true ? (selectedImage === null
+      //   ? renderImage(product.product_image)
+      //   : selectedImage) : imageUrl ,
+      productImage: showAddUrl === true ? imgcrop : imageUrl,
       productUrl: productUrl,
     };
 
@@ -91,7 +93,6 @@ const Product_Edit = () => {
   return (
     <DefaultLayout>
       <div className="px-0 sm:px-3 mb-10 flex justify-between items-center">
-        
         <h1 className="mb-1 text-3xl font-medium text-black dark:text-white">
           Product Edit
         </h1>
@@ -99,7 +100,6 @@ const Product_Edit = () => {
           onClick={() =>
             (window.location.href = `/products/product_list/${product.userId}`)
           }
-          
           className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
         >
           <FaCircleArrowLeft size={14} />
@@ -170,9 +170,9 @@ const Product_Edit = () => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <a className='text-meta-5 dark:lightblue'
+                <a
+                  className="text-meta-5 dark:lightblue"
                   style={{
-                    
                     cursor: 'pointer',
 
                     textDecoration: isHovered ? 'underline' : 'none',
@@ -200,59 +200,14 @@ const Product_Edit = () => {
               </span>
             </label>
             <div style={{ position: 'relative', marginTop: '10px' }}>
-              <div className="relative">
-                <div className="flex">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="galleryInput" // Assign an id to the file input
-                    onChange={handleFileSelect}
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    name="galleryImage"
-                    id="galleryImage"
-                    placeholder="Browse or input image URL"
-                    value=""
-                    onChange={handleGalleryUrlChange} // Handle the change event
-                    className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      document.getElementById('galleryInput').click()
-                    } // Trigger click event on file input
-                    style={{
-                      position: 'absolute',
-                      zIndex: '40',
-                      width: '100px',
-                      height: '40px',
-                      background: '#E9ECEF',
-                      top: '2%',
-                      right: '0%',
-                    }}
-                  >
-                    Browse
-                  </button>
-                </div>
-                {(selectedImage || product.product_image) && (
-                  <img
-                    style={{
-                      width: '200px',
-                      height: '200px',
-                      marginTop: '25px',
-                      transform: 'translateX(20px)',
-                    }}
-                    src={
-                      selectedImage
-                        ? URL.createObjectURL(selectedImage)
-                        : renderImage(product.product_image)
-                    }
-                    alt="Gallery Image"
-                  />
-                )}
-              </div>
+              <ImageCropper
+                setimg={setimg}
+                src={renderImage(product.product_image)}
+                maxHeight={300}
+                maxWidth={300}
+                minHeight={50}
+                minWidth={50}
+              />
             </div>
           </div>
           <div
@@ -289,9 +244,6 @@ const Product_Edit = () => {
                 Change to upload Image
               </p>
             </div>
-          </div>
-          <div>
-            <ImageCropper/>
           </div>
 
           <div style={{ width: '100%' }}>

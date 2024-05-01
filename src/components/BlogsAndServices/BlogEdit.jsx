@@ -6,12 +6,18 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/quillEditor';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
+import ImageCropper from '../../utils/cropImage';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogId } = useParams();
   const { blog } = useSelector((state) => state.blogs);
+  const [imgcrop, setimgcrop] = useState(null);
+
+  const setimg = (file) => {
+    setimgcrop(file);
+  };
 
   useEffect(() => {
     dispatch(fetchBlogById({ blogId }));
@@ -64,8 +70,7 @@ const BlogEdit = () => {
       blogId: blog._id,
       title: formData.title,
       content: formData.content,
-      bannerImg:
-        selectedImage === null ? renderImage(blog.bannerImage) : selectedImage,
+      bannerImg: imgcrop === null ? renderImage(blog.bannerImage) : imgcrop,
     };
 
     dispatch(updateBlogById(data))
@@ -115,7 +120,7 @@ const BlogEdit = () => {
               </span>
             </label>
             <div className="relative">
-              <div className="relative ">
+              {/* <div className="relative ">
                 <div className="flex">
                   <input
                     type="file"
@@ -154,6 +159,16 @@ const BlogEdit = () => {
                     alt="Gallery Image"
                   />
                 )}
+              </div> */}
+              <div className="relative mt-[10px]  ">
+                <ImageCropper
+                  setimg={setimg}
+                  src={renderImage(blog.bannerImage)}
+                  maxHeight={300}
+                  maxWidth={300}
+                  minHeight={50}
+                  minWidth={50}
+                />
               </div>
             </div>
           </div>

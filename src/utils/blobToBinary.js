@@ -6,6 +6,8 @@ const convertBlobUrlToBlob = async (blobUrl) => {
 
 export const convertIntoFile = async (croppedImageUrl) => {
   const blob = await convertBlobUrlToBlob(croppedImageUrl);
+  console.log("blob: ", blob);
   const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+  console.log(":file2: ", file);
   return file;
 };

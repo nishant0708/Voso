@@ -83,17 +83,19 @@ const UserEdit = () => {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-black dark:text-white">
             User Update
           </h1>
-          <button
-            onClick={() => navigate(-1)}
-            className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
-          >
-            <FaListUl />
-            <span>List</span>
-          </button>
+          <div className="w-fit">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex gap-3 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+            >
+              <FaListUl />
+              <span>List</span>
+            </button>
+          </div>
         </div>
         {/* <!-- Contact Form --> */}
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

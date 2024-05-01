@@ -18,16 +18,36 @@ const UserSocial = () => {
 
   useEffect(() => {
     setFormData({
-      Facebook: userSEO?.social_media?.filter((prev) => prev.name === "Facebook")[0]?.url || '',
-      Twitter: userSEO?.social_media?.filter((prev) => prev.name === "Twitter")[0]?.url || '',
-      Instagram: userSEO?.social_media?.filter((prev) => prev.name === "Instagram")[0]?.url || '',
-      LinkedIn: userSEO?.social_media?.filter((prev) => prev.name === "LinkedIn")[0]?.url || '',
-      YouTube: userSEO?.social_media?.filter((prev) => prev.name === "YouTube")[0]?.url || '',
-      WhatsApp: userSEO?.social_media?.filter((prev) => prev.name === "WhatsApp")[0]?.url || '',
-      Amazon: userSEO?.social_media?.filter((prev) => prev.name === "Amazon")[0]?.url || '',
-      Flipkart: userSEO?.social_media?.filter((prev) => prev.name === "Flipkart")[0]?.url || '',
-      Swiggy: userSEO?.social_media?.filter((prev) => prev.name === "Swiggy")[0]?.url || '',
-      Zomato: userSEO?.social_media?.filter((prev) => prev.name === "Zomato")[0]?.url || '',
+      Facebook:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Facebook')[0]
+          ?.url || '',
+      Twitter:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Twitter')[0]
+          ?.url || '',
+      Instagram:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Instagram')[0]
+          ?.url || '',
+      LinkedIn:
+        userSEO?.social_media?.filter((prev) => prev.name === 'LinkedIn')[0]
+          ?.url || '',
+      YouTube:
+        userSEO?.social_media?.filter((prev) => prev.name === 'YouTube')[0]
+          ?.url || '',
+      WhatsApp:
+        userSEO?.social_media?.filter((prev) => prev.name === 'WhatsApp')[0]
+          ?.url || '',
+      Amazon:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Amazon')[0]
+          ?.url || '',
+      Flipkart:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Flipkart')[0]
+          ?.url || '',
+      Swiggy:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Swiggy')[0]
+          ?.url || '',
+      Zomato:
+        userSEO?.social_media?.filter((prev) => prev.name === 'Zomato')[0]
+          ?.url || '',
     });
   }, [userSEO]);
 
@@ -55,21 +75,32 @@ const UserSocial = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserSocial({formData, email:userSEO?.userId?.email, mobile:userSEO?.userId?.mobile, userId}));
+    dispatch(
+      updateUserSocial({
+        formData,
+        email: userSEO?.userId?.email,
+        mobile: userSEO?.userId?.mobile,
+        userId,
+      }),
+    );
   };
 
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-black dark:text-white">Social Media Information</h1>
-          <div className='w-fit'><button
-            onClick={() => navigate(-1)}
-            className="flex gap-2 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
-          >
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button></div>
+          <h1 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">
+            Social Media Information
+          </h1>
+          <div className="w-fit">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex gap-2 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+            >
+              <FaCircleArrowLeft size={14} />
+              Back
+            </button>
+          </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>

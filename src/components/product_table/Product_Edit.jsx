@@ -7,6 +7,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/quillEditor';
+import ImageCropper from '../../utils/cropImage';
 
 const Product_Edit = () => {
   const dispatch = useDispatch();
@@ -288,6 +289,9 @@ const Product_Edit = () => {
                 Change to upload Image
               </p>
             </div>
+          </div>
+          <div>
+            <ImageCropper/>
           </div>
 
           <div style={{ width: '100%' }}>

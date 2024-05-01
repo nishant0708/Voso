@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Button, Box, Grid } from '@mui/material';
-import { getCroppedImg } from 'utils/getCropedImage.js';
+import { getCroppedImg } from './getCropedImage';
 
 const ImageCropper = ({ src, setImageUrlSetter, maxHeight, maxWidth, minHeight, minWidth }) => {
   const ImageRef = useRef(null);

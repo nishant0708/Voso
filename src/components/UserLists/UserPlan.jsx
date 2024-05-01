@@ -35,14 +35,14 @@ const UserPlan = () => {
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex justify-between">
-          <h1 className="text-lg sm:text-2xl font-semibold text-black dark:text-white">
+        <div className="flex flex-wrap-reverse gap-3 justify-between">
+          <h1 className="text-base sm:text-2xl font-semibold text-black dark:text-white">
             User Plan Purchase - {user?.email}
           </h1>
           <div className="flex justify-center items-center">
             <button
               onClick={() => navigate(-1)}
-              className="flex gap-3 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+              className="flex gap-3 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
             >
               <FaListUl />
               <span>List</span>

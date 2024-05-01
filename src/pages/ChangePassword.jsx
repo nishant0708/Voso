@@ -37,7 +37,7 @@ const ChangePassword = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Change Password" />
       <div className="p-7 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <h2 className="mt-5 text-center text-title-md2 font-semibold text-black dark:text-white">
+        <h2 className="mt-0 sm:mt-3 text-center text-title-md2 font-semibold text-black dark:text-white">
           Login to your account
         </h2>
         <form onSubmit={handleSubmit}>

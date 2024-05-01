@@ -73,23 +73,32 @@ const UserBusiness = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserBusiness({formData, email: userSEO?.userId?.email, mobile: userSEO?.userId?.mobile, userId}));
+    dispatch(
+      updateUserBusiness({
+        formData,
+        email: userSEO?.userId?.email,
+        mobile: userSEO?.userId?.mobile,
+        userId,
+      }),
+    );
   };
 
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold text-black dark:text-white">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">
             Business Information
           </h1>
-          <button
-            onClick={() => navigate(-1)}
-            className="flex gap-2 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
-          >
-            <FaCircleArrowLeft size={14} />
-            Back
-          </button>
+          <div className="w-fit">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex gap-2 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+            >
+              <FaCircleArrowLeft size={14} />
+              Back
+            </button>
+          </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <form onSubmit={handleSubmit}>

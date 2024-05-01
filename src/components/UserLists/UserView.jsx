@@ -54,7 +54,7 @@ const UserView = () => {
           </h1>
           <button
             onClick={() => navigate(-1)}
-            className="flex gap-2 justify-center items-center py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+            className="flex gap-2 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
           >
             <FaCircleArrowLeft size={14} />
             Back

@@ -132,8 +132,10 @@ const ServiceEdit = () => {
           </div>
         </div>
         <div className="w-full mb-5">
+          <label className="text-black dark:text-white">
+            Service Description
+          </label>
           <QuillEditor
-            label="Service Description"
             name="serviceDescription"
             value={formData.serviceDescription}
             onChange={handleOnChange}
@@ -202,20 +204,24 @@ const ServiceEdit = () => {
             <label className="text-black dark:text-white w-full">
               Service Image Url
             </label>
-            <div className="relative">
-              <input
-                id="serviceImage"
-                name="serviceImage"
-                className="relative z-20 h-10 mt-1.5 text-sm dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                value={formData.serviceImage}
-                onChange={handleOnChange}
-              ></input>
-              <button
-                className="w-fit text-sm py-2 px-3 cursor-pointer ml-[10px] whitespace-nowrap z-40 absolute top-[14%] right-[0%]  border rounded-md border-[#727CF5] text-[#727CF5] bg-white hover:text-white hover:bg-[#727CF5]"
-                onClick={() => setShowAddUrl((prev) => !prev)}
-              >
-                Change to upload Image
-              </button>
+            <div className="relative flex flex-col">
+              <div>
+                <input
+                  id="serviceImage"
+                  name="serviceImage"
+                  className="sm:relative z-20 h-10 mt-1.5 text-sm dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  value={formData.serviceImage}
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div>
+                <button
+                  className="w-fit text-sm py-2 px-3 cursor-pointer sm:ml-[10px] whitespace-nowrap z-40 sm:absolute top-[14%] right-[0%]  border rounded-md border-[#727CF5] text-[#727CF5] bg-white hover:text-white hover:bg-[#727CF5]"
+                  onClick={() => setShowAddUrl((prev) => !prev)}
+                >
+                  Change to upload Image
+                </button>
+              </div>
             </div>
           </div>
           <div className="w-full">
@@ -226,8 +232,8 @@ const ServiceEdit = () => {
               onChange={handleOnChange}
               value={formData.serviceUrl}
               id="serviceUrl"
-              className="mt-6 relative z-20 h-10 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-            ></input>
+              className="mt-2 relative z-20 h-10 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+            />
           </div>
         </div>
         <button

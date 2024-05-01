@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
@@ -14,13 +14,14 @@ const Gallery_edit = () => {
   const { gallery, status, error } = useSelector((state) => state.Editgallery);
   const [selectedOption, setSelectedOption] = useState(gallery.itemType); // Initial selected option
   const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
-  const [galleryUrl, setGalleryUrl] = useState(gallery.url || ''); 
+  const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
   const [imgcrop, setimgcrop] = useState('');
 
   useEffect(() => {
     dispatch(fetchgalleryedit({ productId }));
   }, []);
 
+  const navigate=useNavigate();
   // Set the initial selected option once the gallery is loaded
   useEffect(() => {
     setSelectedOption(gallery.itemType);
@@ -62,11 +63,19 @@ const Gallery_edit = () => {
       id: productId,
     };
     // Dispatch the updateGalleryUrl action with the data payload
-    dispatch(updateGalleryUrl(data));
+    dispatch(updateGalleryUrl(data))
+    .then(() => {
+      alert('Operation Successful');
+     window.location.reload();
+      
+    })
+    .catch((error) => {
+      alert(`Error updating product: ${error.message}`);
+    });
   };
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
+    if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
@@ -134,42 +143,7 @@ const Gallery_edit = () => {
                 Gallery Image (200x200 px)
               </label>
               <div className="relative">
-                {/* <div className="flex">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="galleryInput" // Assign an id to the file input
-                    onChange={handleFileSelect}
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    name="galleryImage"
-                    id="galleryImage"
-                    placeholder="Browse or input image URL"
-                    value={galleryUrl}
-                    onChange={handleGalleryUrlChange} // Handle the change event
-                    className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      document.getElementById('galleryInput').click()
-                    } // Trigger click event on file input
-                    style={{
-                      position: 'absolute',
-                      zIndex: '40',
-                      width: '100px',
-                      height: '40px',
-                      background: 'gre#d3cece',
-                      top: '2%',
-                      right: '0%',
-                    }}
-                  >
-                    Browse
-                  </button>
-                </div> */}
-                <div style={{ position:"relative" }}>
+                <div style={{ position: 'relative' }}>
                   <ImageCropper
                     setimg={setimg}
                     src={renderImage(galleryUrl)}
@@ -179,22 +153,6 @@ const Gallery_edit = () => {
                     minWidth={50}
                   />
                 </div>
-                {/* {(selectedImage || gallery.url) && (
-                  // <img
-                  //   style={{
-                  //     width: '200px',
-                  //     height: '200px',
-                  //     marginTop: '25px',
-                  //     transform: 'translateX(20px)',
-                  //   }}
-                  //   src={
-                  //     selectedImage
-                  //       ? URL.createObjectURL(selectedImage)
-                  //       : renderImage(gallery.url)
-                  //   }
-                  //   alt="Gallery Image"
-                  // />
-                )} */}
               </div>
             </div>
           )}

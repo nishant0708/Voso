@@ -40,7 +40,7 @@ const Product_Edit = () => {
       setProductDescription(product.product_description);
       setimageUrl(product.product_image);
       setProductUrl(product.product_url);
-      console.log('1');
+     
     }
   }, [product]);
 
@@ -50,7 +50,7 @@ const Product_Edit = () => {
   const [productUrl, setProductUrl] = useState('');
 
   const [showAddUrl, setShowAddUrl] = useState(true);
-  console.log(product);
+  
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
@@ -164,7 +164,7 @@ const Product_Edit = () => {
               display: showAddUrl ? 'block' : 'none',
             }}
           >
-            <label class="text-black dark:text-white">
+            <label class="text-black dark:text-white leading-[28px]">
               Product Image (200 X 200 px){' '}
               <span
                 onMouseEnter={() => setIsHovered(true)}

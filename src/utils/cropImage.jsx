@@ -55,7 +55,7 @@ const ImageCropper = ({
   }, []);
   const handleConfirmCrop = async () => {
     const file = await convertIntoFile(CroppedImageUrl);
-    console.log('file: ', file);
+
     setimg(file);
     setImageSrc(null);
   };

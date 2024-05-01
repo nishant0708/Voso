@@ -17,7 +17,7 @@ const ServiceView = () => {
   }, [dispatch, userId]);
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
+    if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;

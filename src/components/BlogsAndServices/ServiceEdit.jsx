@@ -54,23 +54,14 @@ const ServiceEdit = () => {
   };
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
+    if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
   };
-  const [selectedImage, setSelectedImage] = useState(null);
+
   const [showAddUrl, setShowAddUrl] = useState(true);
-
-  const handleGalleryUrlChange = (event) => {
-    setGalleryUrl(event.target.value);
-  };
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-  };
 
   //updating details
   const handleUpdateService = () => {
@@ -158,7 +149,7 @@ const ServiceEdit = () => {
             >
               Add url
             </p>
-            <div className="relative mt-[10px]  ">
+            <div className="relative mt-[10px]">
               <ImageCropper
                 setimg={setimg}
                 src={renderImage(service.service_image)}

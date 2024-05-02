@@ -6,20 +6,20 @@ import { AxiosInstance } from '../../utils/intercept'; // Import your custom Axi
 export const updateGallerySlice = createSlice({
   name: 'updateGallery',
   initialState: {
-    loading: false,
+    isLoading: false,
     error: null,
   },
   reducers: {
     updateGalleryStart: (state) => {
-      state.loading = true;
+      state.isLoading = true;
       state.error = null;
     },
     updateGallerySuccess: (state) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = null;
     },
     updateGalleryFailure: (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = action.payload;
     },
   },

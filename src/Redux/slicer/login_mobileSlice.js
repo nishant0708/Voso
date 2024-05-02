@@ -4,47 +4,54 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const sendOTP = createAsyncThunk(
   'login_mobile/sendOTP',
   async (mobileNo) => {
-    const response = await fetch("https://api.vosovyapar.com/api/a1/user/sendOtpMobile", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await fetch(
+      'https://api.vosovyapar.com/api/a1/user/sendOtpMobile',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobile: mobileNo }),
       },
-      body: JSON.stringify({ mobile: mobileNo })
-    });
+    );
     if (response.ok) {
       return await response.json();
     } else {
       const errorData = await response.json();
       throw new Error(errorData.message);
     }
-  }
+  },
 );
 
 // Define an async thunk for verifying OTP
 export const verifyOTP = createAsyncThunk(
   'login_mobile/verifyOTP',
   async ({ mobileNo, otp }) => {
-    const response = await fetch("https://api.vosovyapar.com/api/a1/user/verifyMobileOTP", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await fetch(
+      'https://api.vosovyapar.com/api/a1/user/verifyMobileOTP',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobile: mobileNo, otp }),
       },
-      body: JSON.stringify({ mobile: mobileNo, otp })
-    });
+    );
     if (response.ok) {
       return await response.json();
     } else {
       const errorData = await response.json();
       throw new Error(errorData.message);
     }
-  }
+  },
 );
 
 // Define the initial state
 const initialState = {
+  isLoading: false,
   sendingOTP: false,
   verifyingOTP: false,
-  error: null
+  error: null,
 };
 
 // Create the slice
@@ -56,22 +63,27 @@ const login_mobileSlice = createSlice({
     builder
       .addCase(sendOTP.pending, (state) => {
         state.sendingOTP = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(sendOTP.fulfilled, (state) => {
         state.sendingOTP = false;
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(sendOTP.rejected, (state, action) => {
         state.sendingOTP = false;
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(verifyOTP.pending, (state) => {
         state.verifyingOTP = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.verifyingOTP = false;
+        state.isLoading = false;
         state.error = null;
         // Store access token and user data in localStorage
         const { accessToken, vosoVyaparUser } = action.payload;
@@ -80,9 +92,10 @@ const login_mobileSlice = createSlice({
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.verifyingOTP = false;
+        state.isLoading = false;
         state.error = action.error.message;
       });
-  }
+  },
 });
 
 export default login_mobileSlice.reducer;

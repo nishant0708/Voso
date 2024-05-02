@@ -37,7 +37,7 @@ const Profile = () => {
             alt="profile cover"
             className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
           />
-          <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
+          {/* <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
             <label
               htmlFor="cover"
               className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-90 xsm:px-4"
@@ -74,7 +74,7 @@ const Profile = () => {
               </span>
               <span>Edit</span>
             </label>
-          </div>
+          </div> */}
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-13 md:-mt-18 h-22 w-full max-w-22 rounded-full bg-white/20 p-1 backdrop-blur sm:h-32 sm:max-w-32 sm:p-3">
@@ -84,7 +84,7 @@ const Profile = () => {
                 src={userimg}
                 alt="profile"
               />
-              <label
+              {/* <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
               >
@@ -115,7 +115,7 @@ const Profile = () => {
                   id="profile"
                   className="sr-only"
                 />
-              </label>
+              </label> */}
             </div>
           </div>
           <div className="mt-1">

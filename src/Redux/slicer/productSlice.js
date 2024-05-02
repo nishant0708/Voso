@@ -3,26 +3,29 @@ import { AxiosInstance } from '../../utils/intercept';
 
 const initialState = {
   products: [],
- 
-  status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
+  isLoading: false,
+  status: 'idle',
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchProducts = createAsyncThunk('products', async ({userId}) => {
-  try {
+export const fetchProducts = createAsyncThunk(
+  'products',
+  async ({ userId }) => {
+    try {
       const response = await AxiosInstance.post(`product/getProduct/`, {
-        params:{
-          id:userId,
-        }  
+        params: {
+          id: userId,
+        },
       });
-      // console.log('USER PRODUCT API Response:', response.data);
+      // //console.log('USER PRODUCT API Response:', response.data);
       return response.data;
-  } catch (error) {
-      console.error('Error fetching in USER API:', error);
+    } catch (error) {
+      //console.error('Error fetching in USER API:', error);
       throw error;
-  }
-});
+    }
+  },
+);
 
 const productSlice = createSlice({
   name: 'products',
@@ -35,18 +38,20 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products = action.payload.data; // Set fetched data to state.todos
+        state.isLoading = false;
+        state.products = action.payload.data;
         state.pageData = action.payload.meta;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },
 });
 
- 
 export default productSlice.reducer;

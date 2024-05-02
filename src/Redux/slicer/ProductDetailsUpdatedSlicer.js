@@ -3,7 +3,7 @@ import { AxiosInstance } from '../../utils/intercept'; // Import your custom Axi
 
 // Define the initial state for the slice
 const initialState = {
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -14,17 +14,17 @@ const productDetailsUpdatedSlice = createSlice({
   reducers: {
     // Reducer to set loading state and clear error
     updateProductDetailsStart: (state) => {
-      state.loading = true;
+      state.isLoading = true;
       state.error = null;
     },
     // Reducer to set loading state to false and clear error
     updateProductDetailsSuccess: (state) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = null;
     },
     // Reducer to set loading state to false and update error state
     updateProductDetailsFailure: (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = action.payload;
     },
   },
@@ -52,11 +52,15 @@ export const updateProductDetails = (data) => async (dispatch) => {
     formData.append('product_url', data.productUrl);
 
     // Make API call using AxiosInstance
-    const response = await AxiosInstance.post('/product/updateProduct', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const response = await AxiosInstance.post(
+      '/product/updateProduct',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    });
+    );
 
     // Dispatch success action with response data
     dispatch(updateProductDetailsSuccess(response.data));

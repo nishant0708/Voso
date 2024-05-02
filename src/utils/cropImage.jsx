@@ -1,10 +1,8 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-// import { Button, Box, Grid } from '@mui/material';
 import { getCroppedImg } from './getCropedImage';
 import { convertIntoFile } from './blobToBinary';
-// import { Button } from '@mui/material';
 
 const ImageCropper = ({
   setimg,
@@ -24,10 +22,12 @@ const ImageCropper = ({
     height: 50,
     aspect: 1,
   });
+
   const [CroppedImageUrl, setCroppedImageUrl] = useState(null);
   useEffect(() => {
     setCroppedImageUrl(src);
   }, [src]);
+
   const onSelectImage = useCallback((e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -53,12 +53,14 @@ const ImageCropper = ({
       setCroppedImageUrl(croppedImageUrl);
     }
   }, []);
+
   const handleConfirmCrop = async () => {
     const file = await convertIntoFile(CroppedImageUrl);
 
     setimg(file);
     setImageSrc(null);
   };
+
   return (
     <>
       <label htmlFor="crop-image">
@@ -67,21 +69,13 @@ const ImageCropper = ({
             accept="image/*"
             id="crop-image"
             type="file"
-            style={{ display: 'none' }}
             onChange={onSelectImage}
+            className="hidden"
           />
           <p className="h-full w-full flex items-center">Upload Image</p>
           <button
             onClick={() => document.getElementById('crop-image').click()}
-            style={{
-              position: 'absolute',
-              zIndex: '40',
-              width: '100px',
-              height: '40px',
-              background: '#E9ECEF',
-              top: '0%',
-              right: '0%',
-            }}
+            className="absolute top-[0%] right-[0%] z-40 w-[100px] h-[40px] bg-[#E9ECEF] dark:bg-form-strokedark "
           >
             Upload
           </button>

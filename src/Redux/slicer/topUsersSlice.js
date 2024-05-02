@@ -1,31 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
- 
 
 // Define the initial state
 const initialState = {
   topUsers: [],
-  status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
+  status: 'idle',
+  isLoading: false,
   error: null,
 };
 
 // Define the asynchronous thunk for fetching todos
-export const fetchTopUsers = createAsyncThunk('topUsers', async ({limit, page}) => {
-  try {
+export const fetchTopUsers = createAsyncThunk(
+  'topUsers',
+  async ({ limit, page }) => {
+    try {
       const response = await AxiosInstance.post(`user/topUsers/`, {
-        params:{
-          limit:limit,
-          page:page,
-        }  
+        params: {
+          limit: limit,
+          page: page,
+        },
       });
-      // console.log('TOP USERS API Response:', response.data);
+      // //console.log('TOP USERS API Response:', response.data);
       return response.data.data;
-  } catch (error) {
-      console.error('Error fetching todos:', error);
+    } catch (error) {
+      //console.error('Error fetching todos:', error);
       throw error;
-  }
-});
-
+    }
+  },
+);
 
 // Define the todos slice
 const todosSlice = createSlice({
@@ -39,18 +41,19 @@ const todosSlice = createSlice({
     builder
       .addCase(fetchTopUsers.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchTopUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.topUsers = action.payload; // Set fetched data to state.todos
-       
+        state.isLoading = false;
+        state.topUsers = action.payload;
       })
       .addCase(fetchTopUsers.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },
 });
 
- 
 export default todosSlice.reducer;

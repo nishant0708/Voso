@@ -6,12 +6,18 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/quillEditor';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
+import ImageCropper from '../../utils/cropImage';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogId } = useParams();
   const { blog } = useSelector((state) => state.blogs);
+  const [imgcrop, setimgcrop] = useState(null);
+
+  const setimg = (file) => {
+    setimgcrop(file);
+  };
 
   useEffect(() => {
     dispatch(fetchBlogById({ blogId }));
@@ -41,21 +47,11 @@ const BlogEdit = () => {
   };
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
+    if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleGalleryUrlChange = (event) => {
-    setGalleryUrl(event.target.value);
-  };
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
   };
 
   //updating details
@@ -64,8 +60,7 @@ const BlogEdit = () => {
       blogId: blog._id,
       title: formData.title,
       content: formData.content,
-      bannerImg:
-        selectedImage === null ? renderImage(blog.bannerImage) : selectedImage,
+      bannerImg: imgcrop === null ? renderImage(blog.bannerImage) : imgcrop,
     };
 
     dispatch(updateBlogById(data))
@@ -105,7 +100,7 @@ const BlogEdit = () => {
               className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             />
           </div>
-          <div className="relative w-full">
+          <div className="w-full">
             <label class="text-black dark:text-white md:whitespace-nowrap">
               Banner Image (200 X 200 px){' '}
               <span>
@@ -114,47 +109,15 @@ const BlogEdit = () => {
                 </a>
               </span>
             </label>
-            <div className="relative">
-              <div className="relative ">
-                <div className="flex">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="galleryInput" // Assign an id to the file input
-                    onChange={handleFileSelect}
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    name="galleryImage"
-                    id="galleryImage"
-                    placeholder="Browse or input image URL"
-                    value=""
-                    onChange={handleGalleryUrlChange} // Handle the change event
-                    className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      document.getElementById('galleryInput').click()
-                    } // Trigger click event on file input
-                    className="absolute top-[2%] right-[0%] z-40 w-[100px] h-[39px] bg-[#E9ECEF] "
-                  >
-                    Browse
-                  </button>
-                </div>
-                {(selectedImage || blog.bannerImage) && (
-                  <img
-                    className="w-[200px] h-[200px] mt-6 mx-1 "
-                    src={
-                      selectedImage
-                        ? URL.createObjectURL(selectedImage)
-                        : renderImage(blog.bannerImage)
-                    }
-                    alt="Gallery Image"
-                  />
-                )}
-              </div>
+            <div className="relative mt-[6px]">
+              <ImageCropper
+                setimg={setimg}
+                src={renderImage(blog?.bannerImage)}
+                maxHeight={300}
+                maxWidth={300}
+                minHeight={50}
+                minWidth={50}
+              />
             </div>
           </div>
         </div>

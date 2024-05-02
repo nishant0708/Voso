@@ -17,7 +17,7 @@ const ProductTable = () => {
   }, [dispatch, userId]);
 
   const renderImage = (imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
+    if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
@@ -107,7 +107,7 @@ const ProductTable = () => {
                     : 'border-b border-stroke dark:border-strokedark'
                 }`}
               >
-                <td className="p-2.5 w-[280px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
+                <td className="p-2.5 w-[300px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
                   <a href={blog.blog}>
                     <span>
                       <img

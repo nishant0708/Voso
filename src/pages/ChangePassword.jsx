@@ -57,7 +57,7 @@ const ChangePassword = () => {
                 onChange={handleOnChange}
                 placeholder="Enter your old password"
                 required={true}
-                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-1.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="mb-3 w-full sm:w-7/12 text-sm">
@@ -75,7 +75,7 @@ const ChangePassword = () => {
                 onChange={handleOnChange}
                 placeholder="Enter your new password"
                 required={true}
-                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-1.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="mb-3 w-full sm:w-7/12 text-sm">
@@ -93,14 +93,14 @@ const ChangePassword = () => {
                 onChange={handleOnChange}
                 placeholder="Enter your confirm password"
                 required={true}
-                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="w-full mt-1 text-sm rounded border-[1.5px] border-stroke bg-transparent py-1.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
             </div>
 
-            <div className="text-sm flex justify-center items-center gap-5">
+            <div className="flex justify-center items-center gap-5">
               <button
                 type="submit"
-                className="flex gap-3 justify-center items-center py-1.5 px-5 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
+                className="flex gap-3 justify-center items-center py-1.5 px-8 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
               >
                 Update
               </button>

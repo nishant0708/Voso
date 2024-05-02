@@ -6,7 +6,8 @@ const initialState = {
   services: [],
   service: {},
   blog: {},
-  status: 'idle', // Possible statuses: 'idle', 'loading', 'succeeded', 'failed'
+  status: 'idle',
+  isLoading: false,
   error: null,
 };
 
@@ -18,10 +19,10 @@ export const fetchBlogs = createAsyncThunk('fetchBlogs', async ({ userId }) => {
         id: userId,
       },
     });
-    // console.log('USER BLOG API Response:', response.data);
+    // //console.log('USER BLOG API Response:', response.data);
     return response.data.data;
   } catch (error) {
-    console.error('Error fetching in USER API:', error);
+    //console.error('Error fetching in USER API:', error);
     throw error;
   }
 });
@@ -35,10 +36,10 @@ export const fetchServices = createAsyncThunk(
           id: userId,
         },
       });
-      // console.log('USER SERVICE API Response:', response.data);
+      // //console.log('USER SERVICE API Response:', response.data);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -53,10 +54,10 @@ export const fetchServiceById = createAsyncThunk(
           id: serviceId,
         },
       });
-      // console.log('USER SERVICE ID API Response:', response.data);
+      // //console.log('USER SERVICE ID API Response:', response.data);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -71,10 +72,10 @@ export const fetchBlogById = createAsyncThunk(
           id: blogId,
         },
       });
-      // console.log('USER BLOG ID API Response:', response.data);
+      // //console.log('USER BLOG ID API Response:', response.data);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -101,10 +102,10 @@ export const updateServiceById = createAsyncThunk(
           },
         },
       );
-      // console.log('USER SERVICE ID UPDATE API Response:', response.data);
+      // //console.log('USER SERVICE ID UPDATE API Response:', response.data);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -125,10 +126,10 @@ export const updateBlogById = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-      // console.log('USER BLOG ID UPDATE API Response:', response.data);
+      // //console.log('USER BLOG ID UPDATE API Response:', response.data);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -164,72 +165,91 @@ const blogSlice = createSlice({
     builder
       .addCase(fetchBlogs.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchBlogs.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.blogs = action.payload; // Set fetched data to state.todos
+        state.isLoading = false;
+        state.blogs = action.payload;
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(fetchServices.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchServices.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.services = action.payload; // Set fetched data to state.todos
+        state.isLoading = false;
+        state.services = action.payload;
       })
       .addCase(fetchServices.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(fetchServiceById.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchServiceById.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.service = action.payload; // Set fetched data to state.todos
+        state.isLoading = false;
+        state.service = action.payload;
       })
       .addCase(fetchServiceById.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(fetchBlogById.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchBlogById.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.blog = action.payload; // Set fetched data to state.todos
+        state.isLoading = false;
+        state.blog = action.payload;
       })
       .addCase(fetchBlogById.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateServiceById.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateServiceById.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.isLoading = false;
         state.service = action.payload;
       })
       .addCase(updateServiceById.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateBlogById.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateBlogById.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.isLoading = false;
         state.blog = action.payload;
       })
       .addCase(updateBlogById.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(toggleServiceFeature.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(toggleServiceFeature.fulfilled, (state) => {
         state.status = 'succeeded';

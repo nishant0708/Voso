@@ -3,7 +3,7 @@ export const getCroppedImg = async (image, crop, fileName) => {
   const ctx = canvas.getContext('2d');
 
   if (!ctx) {
-    console.error('Canvas context is invalid');
+    //console.error('Canvas context is invalid');
     return null;
   }
 
@@ -18,7 +18,7 @@ export const getCroppedImg = async (image, crop, fileName) => {
   return new Promise((resolve) => {
     canvas.toBlob((blob) => {
       if (!blob) {
-        console.error('Canvas is empty');
+        //console.error('Canvas is empty');
         return;
       }
       blob.name = fileName;

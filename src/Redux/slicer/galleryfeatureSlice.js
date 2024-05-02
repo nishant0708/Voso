@@ -4,28 +4,30 @@ import { AxiosInstance } from '../../utils/intercept'; // Assuming AxiosInstance
 // Async thunk to toggle product feature status
 export const togglegalleryFeature = createAsyncThunk(
   'togglegalleryFeature',
-  async ( {productId,userId,isActive}
-  ) => {
+  async ({ productId, userId, isActive }) => {
     try {
-        console.log("enter");
-      const response = await AxiosInstance.post('gallery/assignFeaturedGallery', {
-       id:productId,
-        is_featured: !isActive,
-        userId:userId,
-      });
+      const response = await AxiosInstance.post(
+        'gallery/assignFeaturedGallery',
+        {
+          id: productId,
+          is_featured: !isActive,
+          userId: userId,
+        },
+      );
 
       return response.data; // Assuming the response contains relevant data
     } catch (error) {
       throw error;
     }
-  }
+  },
 );
 
 // Slice definition
 const galleryFeatureSlice = createSlice({
   name: 'galleryFeature',
   initialState: {
-    status: 'idle', // loading, succeeded, failed
+    status: 'idle',
+    isLoading: false,
     error: null,
   },
   reducers: {
@@ -35,17 +37,21 @@ const galleryFeatureSlice = createSlice({
     builder
       .addCase(togglegalleryFeature.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(togglegalleryFeature.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(togglegalleryFeature.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message || 'Failed to toggle product feature status';
+        state.isLoading = false;
+        state.error =
+          action.error.message || 'Failed to toggle product feature status';
       });
   },
 });
 
 // Export actions and reducer
-export const { } = galleryFeatureSlice.actions; // Add additional actions if needed
+export const {} = galleryFeatureSlice.actions; // Add additional actions if needed
 export default galleryFeatureSlice.reducer;

@@ -5,6 +5,7 @@ import { BACKEND_URL } from '../../url/url';
 
 const initialState = {
   status: 'idle',
+  isLoading: false,
   error: null,
 };
 
@@ -26,12 +27,12 @@ export const updateUserDetails = createAsyncThunk(
         mobile: formData.mobile,
         _id: userId,
       });
-      // console.log('USER DETAILS UPDATE API Response:', response.data);
+      // //console.log('USER DETAILS UPDATE API Response:', response.data);
       toast.success('User Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -46,12 +47,12 @@ export const updateUserPlan = createAsyncThunk(
         email: email,
         planId: plan === 'Yearly' ? 12 : plan === 'Half-Yearly' ? 6 : 3,
       });
-      // console.log('USER PLAN UPDATE API Response:', response.data);
+      // //console.log('USER PLAN UPDATE API Response:', response.data);
       toast.success('Plan Purchased Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -71,12 +72,12 @@ export const updateUserSEO = createAsyncThunk(
         siteTitle: formData.siteTitle,
         _id: userId,
       });
-      // console.log('USER SEO UPDATE API Response:', response.data);
+      // //console.log('USER SEO UPDATE API Response:', response.data);
       toast.success('SEO Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -118,12 +119,12 @@ export const updateUserBusiness = createAsyncThunk(
         mobile: mobile,
         _id: userId,
       });
-      // console.log('USER BUSINESS UPDATE API Response:', response.data);
+      // //console.log('USER BUSINESS UPDATE API Response:', response.data);
       toast.success('Business Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -142,12 +143,12 @@ export const updateUserSocial = createAsyncThunk(
         mobile: mobile,
         _id: userId,
       });
-      // console.log('USER SOCIAL UPDATE API Response:', response.data);
+      // //console.log('USER SOCIAL UPDATE API Response:', response.data);
       toast.success('Social Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -162,12 +163,12 @@ export const userChangePassword = createAsyncThunk(
         oldPassword: oldPassword,
         password: newPassword,
       });
-      // console.log('USER CHANGE PASSWORD API Response:', response.data);
+      // //console.log('USER CHANGE PASSWORD API Response:', response.data);
       toast.success('Password Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      console.error('Error fetching in USER API:', error);
+      //console.error('Error fetching in USER API:', error);
       throw error;
     }
   },
@@ -184,62 +185,80 @@ const updateDetailsSlice = createSlice({
     builder
       .addCase(updateUserDetails.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateUserDetails.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(updateUserDetails.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateUserPlan.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateUserPlan.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(updateUserPlan.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateUserSEO.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateUserSEO.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(updateUserSEO.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateUserBusiness.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateUserBusiness.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(updateUserBusiness.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(updateUserSocial.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(updateUserSocial.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(updateUserSocial.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       })
       .addCase(userChangePassword.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(userChangePassword.fulfilled, (state) => {
         state.status = 'succeeded';
+        state.isLoading = false;
       })
       .addCase(userChangePassword.rejected, (state, action) => {
         state.status = 'failed';
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },

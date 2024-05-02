@@ -248,8 +248,7 @@ const ToggleSwitch = ({ isActive,productId,userId }) => {
   
 
   const handleToggle = () => {
-    console.log(productId,userId,isActive);
-    
+
     dis(toggleProductFeature({productId,userId,isActive})).then(()=>{setIsToggled(!isToggled),  window.location.reload()} )
     
     

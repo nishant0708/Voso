@@ -38,7 +38,7 @@ const Forgot = () => {
           setShowLabel(true);
         })
         .catch((error) => {
-          console.error('Error sending OTP:', error);
+          //console.error('Error sending OTP:', error);
           // Handle error
         });
     } else {

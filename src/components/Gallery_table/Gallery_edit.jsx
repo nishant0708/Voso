@@ -12,6 +12,7 @@ const Gallery_edit = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { gallery, status, error } = useSelector((state) => state.Editgallery);
+  const { isLoading } = useSelector((state) => state.Editgallery);
   const [selectedOption, setSelectedOption] = useState(gallery.itemType); // Initial selected option
   const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
   const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
@@ -21,7 +22,7 @@ const Gallery_edit = () => {
     dispatch(fetchgalleryedit({ productId }));
   }, []);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   // Set the initial selected option once the gallery is loaded
   useEffect(() => {
     setSelectedOption(gallery.itemType);
@@ -64,14 +65,13 @@ const Gallery_edit = () => {
     };
     // Dispatch the updateGalleryUrl action with the data payload
     dispatch(updateGalleryUrl(data))
-    .then(() => {
-      alert('Operation Successful');
-     window.location.reload();
-      
-    })
-    .catch((error) => {
-      alert(`Error updating product: ${error.message}`);
-    });
+      .then(() => {
+        alert('Operation Successful');
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert(`Error updating product: ${error.message}`);
+      });
   };
 
   const renderImage = (imageUrl) => {

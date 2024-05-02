@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userChangePassword } from '../Redux/slicer/updateDetailsSlice';
 import toast from 'react-hot-toast';
 
 const ChangePassword = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('userData'));
+  const { isLoading } = useSelector((state) => state.updateDetails);
 
   const initialFormData = {
     oldPassword: '',
@@ -30,7 +31,13 @@ const ChangePassword = () => {
       toast.error("New Password and Confirm Password don't match");
       return;
     }
-    dispatch(userChangePassword({ userId: user.id, oldPassword:formData.oldPassword, newPassword:formData.newPassword }));
+    dispatch(
+      userChangePassword({
+        userId: user.id,
+        oldPassword: formData.oldPassword,
+        newPassword: formData.newPassword,
+      }),
+    );
   };
 
   return (
@@ -99,6 +106,7 @@ const ChangePassword = () => {
 
             <div className="flex justify-center items-center gap-5">
               <button
+                disabled={isLoading}
                 type="submit"
                 className="flex gap-3 justify-center items-center py-1.5 px-8 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"
               >

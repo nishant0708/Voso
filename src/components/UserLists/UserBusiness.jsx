@@ -16,6 +16,7 @@ const UserBusiness = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
+  const { isLoading } = useSelector((state) => state.updateDetails);
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -539,6 +540,7 @@ const UserBusiness = () => {
 
               <div className="mt-5 text-sm flex justify-center">
                 <button
+                  disabled={isLoading}
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-[#727cf5] hover:bg-primary py-1 px-5 font-medium text-gray"
                 >

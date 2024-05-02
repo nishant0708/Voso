@@ -24,8 +24,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     } else {
       let errorFields = [];
       for (const [key, value] of Object.entries(formState)) {
-        console.log(key);
-        console.log(value);
         if (!value) {
           errorFields.push(key == 'id' ? 'Bond ID' : key);
         } else {
@@ -36,24 +34,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           }
         }
       }
-      console.log(errorFields);
       setErrors(errorFields);
       return false;
     }
   };
 
   const handleChange = (e) => {
-    console.log(formState.criterion);
-    console.log(e.target.name);
-    console.log(e.target.name == 'para' && e.target.value == 'rating');
-    console.log(formState.criterion > 1 && formState.criterion < 4);
-    console.log(e.target.value);
-    console.log(
-      e.target.name == 'para' &&
-        e.target.value == 'rating' &&
-        formState.criterion > 1 &&
-        formState.criterion < 4,
-    );
     if (
       e.target.name == 'para' &&
       e.target.value == 'rating' &&
@@ -63,7 +49,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       setFormState({ ...formState, ['criterion']: 0 });
     }
 
-    console.log(formState.criterion);
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -169,12 +154,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                     {formState.criterion == 0
                       ? 'goes down by'
                       : formState.criterion == 1
-                      ? 'goes up by'
-                      : formState.criterion == 2
-                      ? 'is smaller than'
-                      : formState.criterion == 3
-                      ? 'is greater than'
-                      : 'is equal to'}
+                        ? 'goes up by'
+                        : formState.criterion == 2
+                          ? 'is smaller than'
+                          : formState.criterion == 3
+                            ? 'is greater than'
+                            : 'is equal to'}
                   </span>
                   <select
                     className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"
@@ -242,15 +227,15 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                       formState.type == 0
                         ? 'bg-[#04b20c]'
                         : formState.type == 1
-                        ? 'bg-[#eab90f]'
-                        : 'bg-[#e13f32]'
+                          ? 'bg-[#eab90f]'
+                          : 'bg-[#e13f32]'
                     } m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke py-1.5 px-2.5 text-white font-medium dark:border-strokedark`}
                   >
                     {formState.type == 0
                       ? 'Info'
                       : formState.type == 1
-                      ? 'Warning'
-                      : 'Alert'}
+                        ? 'Warning'
+                        : 'Alert'}
                   </span>
                   <select
                     className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"

@@ -1,0 +1,34 @@
+/* toggle.css */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px; /* make it round */
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px; /* width of the slider */
+  height: 16px; /* height of the slider */
+  border-radius: 50%; /* make it round */
+  background-color: white;
+  transition: 0.4s;
+}
+
+.active .slider {
+  transform: translateX(18px); /* move it to the right */
+}
+
+.toggle-switch.active {
+  background-color: blue; /* change background color when switch is on */
+}
+
+/* Additional styles for text */
+.toggle-text {
+  margin-left: 8px;
+}

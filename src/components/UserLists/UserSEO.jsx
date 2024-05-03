@@ -12,6 +12,7 @@ const UserSEO = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
+  const { isLoading } = useSelector((state) => state.updateDetails);
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -162,6 +163,7 @@ const UserSEO = () => {
               </div>
               <div className="flex justify-center">
                 <button
+                  disabled={isLoading}
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-[#727cf5] py-1 px-5 font-medium text-gray hover:bg-primary"
                 >

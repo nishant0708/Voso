@@ -14,6 +14,7 @@ const Product_Edit = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { product, status, error } = useSelector((state) => state.Editproduct);
+  const { isLoading } = useSelector((state) => state.updateProdct);
   const [imageUrl, setimageUrl] = useState('');
   const [imgcrop, setimgcrop] = useState('');
 
@@ -40,7 +41,6 @@ const Product_Edit = () => {
       setProductDescription(product.product_description);
       setimageUrl(product.product_image);
       setProductUrl(product.product_url);
-     
     }
   }, [product]);
 
@@ -50,7 +50,7 @@ const Product_Edit = () => {
   const [productUrl, setProductUrl] = useState('');
 
   const [showAddUrl, setShowAddUrl] = useState(true);
-  
+
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
@@ -263,6 +263,7 @@ const Product_Edit = () => {
         </div>
 
         <button
+          disabled={isLoading}
           style={{ position: 'relative' }}
           onClick={handleUpdateProduct}
           className="mt-[20px] w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"

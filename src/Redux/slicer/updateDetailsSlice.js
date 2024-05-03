@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
 import toast from 'react-hot-toast';
-import { BACKEND_URL } from '../../url/url';
 
 const initialState = {
   status: 'idle',
@@ -29,6 +28,7 @@ export const updateUserDetails = createAsyncThunk(
       });
       // //console.log('USER DETAILS UPDATE API Response:', response.data);
       toast.success('User Updated Successfully');
+      window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -74,6 +74,7 @@ export const updateUserSEO = createAsyncThunk(
       });
       // //console.log('USER SEO UPDATE API Response:', response.data);
       toast.success('SEO Updated Successfully');
+      window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -121,6 +122,7 @@ export const updateUserBusiness = createAsyncThunk(
       });
       // //console.log('USER BUSINESS UPDATE API Response:', response.data);
       toast.success('Business Updated Successfully');
+      window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);

@@ -7,36 +7,6 @@ const initialState = {
   error: null,
 };
 
-// Create a Redux slice named productDetailsUpdatedSlice
-const productDetailsUpdatedSlice = createSlice({
-  name: 'productDetailsUpdated',
-  initialState,
-  reducers: {
-    // Reducer to set loading state and clear error
-    updateProductDetailsStart: (state) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    // Reducer to set loading state to false and clear error
-    updateProductDetailsSuccess: (state) => {
-      state.isLoading = false;
-      state.error = null;
-    },
-    // Reducer to set loading state to false and update error state
-    updateProductDetailsFailure: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-  },
-});
-
-// Export action creators
-export const {
-  updateProductDetailsStart,
-  updateProductDetailsSuccess,
-  updateProductDetailsFailure,
-} = productDetailsUpdatedSlice.actions;
-
 // Thunk action creator to update product details
 export const updateProductDetails = (data) => async (dispatch) => {
   dispatch(updateProductDetailsStart()); // Dispatch the start action
@@ -69,6 +39,36 @@ export const updateProductDetails = (data) => async (dispatch) => {
     dispatch(updateProductDetailsFailure(error.message));
   }
 };
+
+// Create a Redux slice named productDetailsUpdatedSlice
+const productDetailsUpdatedSlice = createSlice({
+  name: 'productDetailsUpdated',
+  initialState,
+  reducers: {
+    // Reducer to set loading state and clear error
+    updateProductDetailsStart: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    // Reducer to set loading state to false and clear error
+    updateProductDetailsSuccess: (state) => {
+      state.isLoading = false;
+      state.error = null;
+    },
+    // Reducer to set loading state to false and update error state
+    updateProductDetailsFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
+// Export action creators
+export const {
+  updateProductDetailsStart,
+  updateProductDetailsSuccess,
+  updateProductDetailsFailure,
+} = productDetailsUpdatedSlice.actions;
 
 // Export the reducer
 export default productDetailsUpdatedSlice.reducer;

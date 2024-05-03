@@ -13,6 +13,7 @@ const UserEdit = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { user } = useSelector((state) => state.userDetails);
+  const { isLoading } = useSelector((state) => state.updateDetails);
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
@@ -524,6 +525,7 @@ const UserEdit = () => {
               </div>
               <div className="mt-7 text-sm flex justify-center items-center gap-5">
                 <button
+                  disabled={isLoading}
                   type="submit"
                   className="flex justify-center items-center gap-1.5 rounded bg-success py-1 px-3 font-medium text-gray hover:bg-opacity-90"
                 >

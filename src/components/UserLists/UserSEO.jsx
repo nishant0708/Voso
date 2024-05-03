@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
 import { updateUserSEO } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserSEO = () => {

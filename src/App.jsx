@@ -20,7 +20,7 @@ import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
-import Products from './pages/Products/products';
+import Products from './pages/Products/Products';
 import Product_table from './components/product_table/Product_table';
 import UserView from './components/UserLists/UserView';
 import UserPageEdit from './components/UserLists/UserPageEdit';
@@ -174,7 +174,7 @@ function App() {
           element={
             <>
               <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              {hasToken ? <Product_Edit/> : <Navigate to="/auth/signin" />}
+              {hasToken ? <Product_Edit /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
@@ -225,16 +225,15 @@ function App() {
             </>
           }
         />
-         <Route
+        <Route
           path="/products/Galleryedit/:productId"
           element={
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              {hasToken ? <Gallery_edit/> : <Navigate to="/auth/signin" />}
+              {hasToken ? <Gallery_edit /> : <Navigate to="/auth/signin" />}
             </>
           }
         />
-
 
         <Route
           path="/user/settings"

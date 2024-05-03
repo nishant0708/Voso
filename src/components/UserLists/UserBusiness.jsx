@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { BACKEND_URL } from '../../url/url';
 import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
 
 const UserBusiness = () => {
   const dispatch = useDispatch();

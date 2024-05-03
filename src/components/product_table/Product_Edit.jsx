@@ -6,7 +6,7 @@ import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSl
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 
 const Product_Edit = () => {

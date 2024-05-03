@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
-import QuillEditor from '../../utils/quillEditor';
+import QuillEditor from '../../utils/QuillEditor';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import ImageCropper from '../../utils/cropImage';
 

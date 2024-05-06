@@ -23,11 +23,11 @@ const Product_Edit = () => {
   };
 
   const renderImage = (imageUrl) => {
-    // if (imageUrl.startsWith('https://')) {
-    //   return imageUrl;
-    // } else {
+    if (imageUrl?.startsWith('https://')) {
+      return imageUrl;
+    } else {
     return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    // }
+    }
   };
   const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {

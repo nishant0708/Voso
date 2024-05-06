@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
-import QuillEditor from '../../utils/quillEditor';
-import ImageCropper from '../../utils/cropImage';
+import QuillEditor from '../../utils/QuillEditor';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import TagInput from './TagInput';
 

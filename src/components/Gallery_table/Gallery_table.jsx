@@ -168,7 +168,7 @@ const Gallery_table = () => {
                   }}
                 >
                   <span>
-                    <a href="">
+                    {/* <a href=""> */}
                       {' '}
                       <img
                         style={{
@@ -180,7 +180,7 @@ const Gallery_table = () => {
                         alt="Product"
                         src={renderImage(product?.url)}
                       />
-                    </a>
+                    {/* </a> */}
                   </span>
                   {/* {product.product_name} */}
                 </td>
@@ -248,7 +248,15 @@ const ToggleSwitch = ({ isActive,productId,userId }) => {
   const dis = useDispatch()
   const handleToggle = () => {
   
-    dis(togglegalleryFeature({productId,userId,isActive})).then(()=>{setIsToggled(!isToggled),  window.location.reload()} )
+    dis(togglegalleryFeature({ productId, userId, isActive })) // Dispatch the action
+    .then(() => {
+      setIsToggled(!isToggled); // Update state
+      window.location.reload(); // Reload the page (consider alternative approaches for UX)
+    })
+    .catch((error) => {
+      console.error('Error toggling gallery feature:', error);
+      // Handle any errors (e.g., show a message to the user)
+    });
   };
 
   return (

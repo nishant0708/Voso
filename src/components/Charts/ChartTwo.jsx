@@ -1,4 +1,3 @@
-import { ApexOptions } from 'apexcharts';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
@@ -16,7 +15,6 @@ const options = {
       enabled: false,
     },
   },
-
   responsive: [
     {
       breakpoint: 1536,
@@ -42,7 +40,6 @@ const options = {
   dataLabels: {
     enabled: false,
   },
-
   xaxis: {
     categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
   },
@@ -52,7 +49,6 @@ const options = {
     fontFamily: 'Satoshi',
     fontWeight: 500,
     fontSize: '14px',
-
     markers: {
       radius: 99,
     },
@@ -75,12 +71,9 @@ const ChartTwo = () => {
       },
     ],
   });
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+
+  // Remove this line, as it doesn't serve any purpose
+  // handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">

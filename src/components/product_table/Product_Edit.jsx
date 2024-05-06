@@ -13,7 +13,7 @@ const Product_Edit = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { product, status, error } = useSelector((state) => state.Editproduct);
+  const { product } = useSelector((state) => state.Editproduct);
   const { isLoading } = useSelector((state) => state.updateProdct);
   const [imageUrl, setimageUrl] = useState('');
   const [imgcrop, setimgcrop] = useState('');
@@ -29,7 +29,7 @@ const Product_Edit = () => {
     return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
   };
-  const [selectedImage, setSelectedImage] = useState(null);
+
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
   }, []);
@@ -54,14 +54,14 @@ const Product_Edit = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
-  const handleGalleryUrlChange = (event) => {
-    setGalleryUrl(event.target.value);
-  };
+  // const handleGalleryUrlChange = (event) => {
+  //   setGalleryUrl(event.target.value);
+  // };
 
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file); // Update the selected image state
-  };
+  // const handleFileSelect = (e) => {
+  //   const file = e.target.files[0];
+  //   setSelectedImage(file); // Update the selected image state
+  // };
 
   //updating details
   const handleUpdateProduct = () => {

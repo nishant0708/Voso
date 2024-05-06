@@ -115,7 +115,7 @@ const ServiceView = () => {
                   <a href={service.service_img}>
                     <span>
                       <img
-                        className="bg-red-500 w-[7vh] h-[7vh] rounded-[50%]"
+                        className="bg-red-500 w-[7vh] h-[7vh] rounded-[50%]" 
                         src={renderImage(service?.service_image)}
                       />
                     </span>
@@ -160,9 +160,12 @@ const ToggleSwitch = ({ serviceId, isActive, userId }) => {
   const dispatch = useDispatch();
 
   const handleToggle = () => {
-    if (confirm('Do you confirm?') === true) {
+    const confirmAction = window.confirm('Do you confirm?');
+    
+    if (confirmAction) {
       dispatch(toggleServiceFeature({ serviceId, userId, isActive })).then(() => {
-        setIsToggled(!isToggled), window.location.reload();
+        setIsToggled(!isToggled);
+        window.location.reload(); // This will force reload the page; consider if it's necessary
       });
     }
   };

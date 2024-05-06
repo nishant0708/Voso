@@ -1,6 +1,6 @@
 import {React,  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -188,7 +188,7 @@ const ProductTable = () => {
                         width: '7vh',
                         height: '7vh',
                         borderRadius: '50%',
-                      }}
+                      } } alt=''
                       src={renderImage(product?.product_image)}
                     />
                   </span></a>
@@ -249,7 +249,10 @@ const ToggleSwitch = ({ isActive,productId,userId }) => {
 
   const handleToggle = () => {
 
-    dis(toggleProductFeature({productId,userId,isActive})).then(()=>{setIsToggled(!isToggled),  window.location.reload()} )
+    dis(toggleProductFeature({productId,userId,isActive})).then(()=>{
+      setIsToggled(!isToggled);
+       window.location.reload();
+    } )
     
     
   };

@@ -37,6 +37,7 @@ import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
 import Gallery_edit from './components/Gallery_table/Gallery_edit';
 import Product_Edit from './components/product_table/Product_Edit';
 import News_page from './pages/news_page/News_page';
+import News_page_table from './pages/news_page/News_page_table';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -280,6 +281,15 @@ function App() {
             <>
               <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               {hasToken ? <News_page /> : <Navigate to="/auth/signin" />}
+            </>
+          }
+        />
+            <Route
+          path="/page_table"
+          element={
+            <>
+              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              {hasToken ? <News_page_table /> : <Navigate to="/auth/signin" />}
             </>
           }
         />

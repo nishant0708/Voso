@@ -65,13 +65,13 @@ const Gallery_edit = () => {
     };
     // Dispatch the updateGalleryUrl action with the data payload
     dispatch(updateGalleryUrl(data))
-      .then(() => {
-        alert('Operation Successful');
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
-      });
+  .then(() => {
+    alert('Operation Successful');
+    window.location.href = `/products/Gallery/${gallery.userId}`;
+  })
+  .catch((error) => {
+    alert(`Error updating product: ${error.message}`);
+  });
   };
 
   const renderImage = (imageUrl) => {

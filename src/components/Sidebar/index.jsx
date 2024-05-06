@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import { FaChromecast } from 'react-icons/fa';
+import { FaFileAlt } from 'react-icons/fa';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -515,6 +516,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </NavLink>
               </li>
               {/* <!-- Menu Item Settings --> */}
+
+              <li>
+                <NavLink
+                  to="/page"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-0 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                    <FaFileAlt className="text-md sm:text-md" />
+                 Pages
+                </NavLink>
+              </li>
             </ul>
           </div>
 
@@ -524,7 +537,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               OTHERS
             </h3> */}
 
-            <ul className="mb-6 flex flex-col gap-1.5">
+            <ul className="flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
               {/* <li>
                 <NavLink
@@ -566,6 +579,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </NavLink>
               </li> */}
               {/* <!-- Menu Item Chart --> */}
+           
 
               {/* <!-- Menu Item Ui Elements --> */}
               <SidebarLinkGroup

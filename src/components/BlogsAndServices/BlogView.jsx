@@ -6,6 +6,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import formatDate from '../../utils/formatDate';
+import Loader from '../../common/Loader';
 
 const ProductTable = () => {
   const navigate = useNavigate();
@@ -27,9 +28,7 @@ const ProductTable = () => {
 
   if (status === 'loading') {
     return (
-      <div className="text-2xl flex justify-center items-center">
-        Loading...
-      </div>
+   <Loader/>
     );
   }
 

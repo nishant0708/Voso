@@ -8,6 +8,7 @@ import '../product_table/toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
 import formatDate from '../../utils/formatDate';
+import Loader from '../../common/Loader';
 
 const GalleryTable = () => {
   const { userId } = useParams();
@@ -32,7 +33,7 @@ const GalleryTable = () => {
   const { gallery, status, error } = useSelector((state) => state.Gallery);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (status === 'failed') {

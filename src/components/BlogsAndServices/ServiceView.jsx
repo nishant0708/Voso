@@ -9,6 +9,7 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import formatDate from '../../utils/formatDate';
+import Loader from '../../common/Loader';
 
 const ServiceView = () => {
   const navigate = useNavigate();
@@ -30,9 +31,7 @@ const ServiceView = () => {
 
   if (status === 'loading') {
     return (
-      <div className="text-2xl flex justify-center items-center">
-        Loading...
-      </div>
+      <Loader/>
     );
   }
 

@@ -8,6 +8,7 @@ import './toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { toggleProductFeature } from '../../Redux/slicer/productFeatureSlice';
 import formatDate from '../../utils/formatDate';
+import Loader from '../../common/Loader';
 
 const ProductTable = () => {
   const { userId } = useParams();
@@ -30,7 +31,7 @@ const ProductTable = () => {
   const { products, status, error } = useSelector((state) => state.Product);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (status === 'failed') {

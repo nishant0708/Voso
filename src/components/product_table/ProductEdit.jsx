@@ -212,20 +212,8 @@ const ProductEdit = () => {
               <p
                 onMouseEnter={() => setbutIsHovered(true)}
                 onMouseLeave={() => setbutIsHovered(false)}
-                style={{
-                  width: 'max-content',
-                  border: '2px solid #727CF5',
-                  color: isbutHovered ? 'white' : '#727CF5',
-                  padding: '8px 15px',
-                  marginLeft: '10px',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  zIndex: '40',
-                  position: 'absolute',
-                  top: '13%',
-                  right: '0%',
-                  backgroundColor: isbutHovered ? '#727CF5' : 'white',
-                }}
+                className="w-fit text-sm py-2 px-3 cursor-pointer sm:ml-[10px] whitespace-nowrap z-40 sm:absolute top-[14%] right-[0%]  border rounded-md border-[#727CF5] text-[#727CF5] bg-white hover:text-white hover:bg-[#727CF5]"
+               
                 onClick={() => setShowAddUrl((prev) => !prev)}
               >
                 Change to upload Image

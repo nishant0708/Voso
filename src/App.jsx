@@ -31,6 +31,7 @@ import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
 import UserBusiness from './components/UserLists/UserBusiness';
 import GalleryTable from './components/Gallery_table/GalleryTable';
+import GalleryEdit from './components/Gallery_table/GalleryEdit';
 import ChangePassword from './pages/ChangePassword';
 import Blogs from './pages/Blogs';
 import BlogView from './components/BlogsAndServices/BlogView';
@@ -239,15 +240,15 @@ function App() {
               </>
             }
           />
-          {/* <Route
+          <Route
           path="/products/Galleryedit/:productId"
           element={
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <Gallery_edit />
+               <GalleryEdit />
             </>
           }
-        /> */}
+        />
 
           <Route
             path="/user/settings"

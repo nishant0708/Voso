@@ -19,7 +19,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Forgot from './pages/Authentication/Forgot';
-import SignInMobile from './pages/Authentication/SignInMobile';
+
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
@@ -43,6 +43,7 @@ import NewsPage from './pages/news_page/NewsPage';
 import NewsPageTable from './pages/news_page/NewsPageTable';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
+import SignInMobile from './pages/Authentication/SignInMobile';
 
 
 function App() {
@@ -70,12 +71,12 @@ function App() {
     if (accessibleRoutes.includes(pathname)) {
       return;
     }
-  }, [accessToken, navigate, pathname]);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     checkAccessToken();
-  }, [checkAccessToken]);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -330,7 +331,7 @@ function App() {
             path="/auth/sign_in_with_mobile"
             element={
               <>
-                <SignInMobile />
+               <SignInMobile/>
               </>
             }
           />

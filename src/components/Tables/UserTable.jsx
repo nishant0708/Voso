@@ -22,8 +22,12 @@ const UserTable = () => {
   const navigate = useNavigate();
   const { users, pageData } = useSelector((state) => state.usersList);
 
+  const handlepop = (val) => {
+    setActive(val);
+  };
+
   const ref = useRef(null);
-  useOnClickOutside(ref, (index) => clickHandler(index));
+  useOnClickOutside(ref, handlepop);
 
   const limit = 20;
   const [page, setPage] = useState(1);
@@ -70,12 +74,9 @@ const UserTable = () => {
     }
   };
 
-  const [active, setActive] = useState(Array(users.length).fill(false));
-  const clickHandler = (index) => {
-    const newArray = new Array(users.length).fill(false);
-    newArray[index] = active[index];
-    newArray[index] = !newArray[index];
-    setActive(newArray);
+  const [active, setActive] = useState(null);
+  const handlePopup = (id) => {
+    setActive(id);
   };
 
   const totalPages = Math.ceil(pageData.total / limit);
@@ -248,12 +249,11 @@ const UserTable = () => {
                   <p className="cursor-pointer">
                     <TbDotsVertical
                       size={22}
-                      onClick={() => clickHandler(index)}
+                      onClick={() => handlePopup(user?._id)}
                     />
                   </p>
-                  {active[index] && (
+                  {active === user?._id && (
                     <div
-                      onClick={(e) => e.stopPropagation()}
                       ref={ref}
                       className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                     >

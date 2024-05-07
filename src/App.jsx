@@ -71,7 +71,7 @@ function App() {
     if (accessibleRoutes.includes(pathname)) {
       return;
     }
-  }, []);
+  }, [accessToken, navigate, pathname]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

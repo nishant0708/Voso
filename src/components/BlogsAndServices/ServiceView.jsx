@@ -7,7 +7,8 @@ import {
 } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { BACKEND_URL_PRODUCT } from '../../url/url'; // Assuming you only need BACKEND_URL_PRODUCT
+import { BACKEND_URL_PRODUCT } from '../../url/url';
+import formatDate from '../../utils/formatDate';
 
 const ServiceView = () => {
   const navigate = useNavigate();
@@ -25,20 +26,6 @@ const ServiceView = () => {
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
   };
 
   if (status === 'loading') {

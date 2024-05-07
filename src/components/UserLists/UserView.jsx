@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchUserDetails } from '../../Redux/slicer/userDetails';
+import formatDate from '../../utils/formatDate';
 
 const UserView = () => {
   const dispatch = useDispatch();
@@ -14,24 +15,6 @@ const UserView = () => {
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
   }, [dispatch, userId]);
-
-  const formatDate = (dateString) => {
-    const options = {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      'en-US',
-      options,
-    );
-    return formattedDate;
-  };
 
   const format = (dateString) => {
     const date = new Date(dateString);

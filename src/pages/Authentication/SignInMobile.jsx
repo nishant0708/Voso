@@ -1,50 +1,55 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { sendOTP, verifyOTP } from '../../Redux/slicer/login_mobileSlice';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
+import toast from 'react-hot-toast';
 
-const SignInMobile = () => {
+const Sign_in_mobile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [showLabel, setShowLabel] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
 
-  const handleClick = async () => {
+  const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
-      try {
-        const actionResult = await dispatch(sendOTP(mobileNo));
-        if (sendOTP.fulfilled.match(actionResult)) {
-          setShowLabel(true);
-        } else if (sendOTP.rejected.match(actionResult)) {
-          const errorMessage =
-            actionResult.error.message || 'Unknown error occurred.';
-          alert('Error sending OTP: ' + errorMessage);
-        }
-      } catch (error) {
-        alert('Error sending OTP: ' + error.message);
-      }
+      dispatch(sendOTP(mobileNo))
+        .then((actionResult) => {
+          if (sendOTP.fulfilled.match(actionResult)) {
+            setShowLabel(true);
+          } else if (sendOTP.rejected.match(actionResult)) {
+            const errorMessage =
+              actionResult.error.message || 'Unknown error occurred.';
+            toast(errorMessage);
+          }
+        })
+        .catch((error) => {
+          toast.error('Error sending OTP: ' + error.message);
+        });
     } else {
       alert('Please enter a valid 10-digit mobile number.');
     }
-  };
+  }, [mobileNo, dispatch, setShowLabel]);
 
-  const handleVerify = () => {
+  const handleVerify = useCallback(() => {
     dispatch(verifyOTP({ mobileNo, otp }))
-      .then((action) => {
-        if (verifyOTP.fulfilled.match(action)) {
+      .then((res) => {
+        if (res.payload && res.payload.success) {
+          // Store access token and user data in localStorage
+          localStorage.setItem('userData', JSON.stringify(res.payload.vosoVyaparUser));
+          localStorage.setItem('accessToken', res.payload.accessToken);
           navigate('/');
-        } else if (verifyOTP.rejected.match(action)) {
-          alert('Error verifying OTP: ' + action.error.message);
+        } else {
+          toast.error('Error verifying OTP');
         }
       })
       .catch((error) => {
-        alert('Error verifying OTP: ' + error.message);
+        toast.error('Error verifying OTP: ' + error.message);
       });
-  };
-
+  }, [dispatch, mobileNo, otp, navigate]);
   const handleMobileNoChange = (e) => {
     const inputValue = e.target.value;
     const numericValue = inputValue.replace(/\D/g, '');
@@ -259,12 +264,12 @@ const SignInMobile = () => {
                       display: showLabel ? 'block' : 'none',
                       cursor: 'pointer',
                     }}
+                    onClick={handleClick} className="text-primary"
                   >
-                    {' '}
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <a href="#" onClick={sendOTP} className="text-primary">
+                    
+                   
                       Resend OTP
-                    </a>
+                   
                   </p>
                 </div>
                 <input

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginViaPassword } from '../../Redux/slicer/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,20 +7,31 @@ import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // to get data from redux store
+  const {isLoading} = useSelector((state) => state.auth);
+
+  //  to handle state of sign in
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const navigate = useNavigate();
-  const handleSubmit = (event) => {
+
+
+  // to handle sign in functionlaity
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    dispatch(loginViaPassword({ email, password }));
-  };
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/');
-    }
-  }, [isLoggedIn, navigate]);
+    dispatch(loginViaPassword({ email, password })).then((res) => {
+      if (res?.payload?.success) {
+        localStorage.setItem(
+          'userData',
+          JSON.stringify(res?.payload?.vosoVyaparUser),
+        );
+        localStorage.setItem('accessToken', res?.payload?.accessToken);
+        navigate('/');
+      }
+    });
+  },[dispatch,email,navigate,password])
 
   return (
     <div className="overflow-hidden">
@@ -264,6 +275,7 @@ const SignIn = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
+                    disabled={isLoading}
                     value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
@@ -275,12 +287,12 @@ const SignIn = () => {
                       <img
                         className="hidden dark:block w-8"
                         src={mobile_logo_dark}
-                        alt="darkImg"
+                        alt=''
                       />
                       <img
                         className="dark:hidden w-8"
                         src={mobile_logo_light}
-                        alt="lightImg"
+                        alt=''
                       />
                       Sign in with Mobile
                     </span>

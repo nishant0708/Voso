@@ -1,69 +1,78 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
+import React, { useCallback, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { sendOTP, verifyOTP } from '../../Redux/slicer/login_mobileSlice';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
-
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
-import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
+import toast from 'react-hot-toast';
 
-import SignIn_Layout from '../../layout/Sign_in_Layout';
-import Sidebar from '../../components/Sidebar';
+const Sign_in_mobile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const Forgot = () => {
   const [showLabel, setShowLabel] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
+  const [otp, setOTP] = useState('');
 
-  // Function to send OTP via API call
-  const sendOTP = async (mobileNo) => {
-    // Place your API call here to send OTP
-    // For example:
-    // const response = await fetch('your_api_endpoint', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ mobileNo }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // });
-    // const data = await response.json();
-    // return data;
-  };
-
-  const handleClick = () => {
+  
+  const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
-      // Call API to send OTP
-      sendOTP(mobileNo)
-        .then(() => {
-          setShowLabel(true);
+      dispatch(sendOTP(mobileNo))
+        .then((actionResult) => {
+          if (sendOTP.fulfilled.match(actionResult)) {
+            setShowLabel(true);
+          } else if (sendOTP.rejected.match(actionResult)) {
+            const errorMessage =
+              actionResult.error.message || 'Unknown error occurred.';
+            toast(errorMessage);
+          }
         })
         .catch((error) => {
-          //console.error('Error sending OTP:', error);
-          // Handle error
+          toast.error('Error sending OTP: ' + error.message);
         });
     } else {
       alert('Please enter a valid 10-digit mobile number.');
     }
-  };
+  }, [mobileNo, dispatch, setShowLabel]);
+
+  const handleVerify = useCallback(() => {
+    dispatch(verifyOTP({ mobileNo, otp }))
+      .then((res) => {
+        if (res.payload && res.payload.success) {
+          // Store access token and user data in localStorage
+          localStorage.setItem('userData', JSON.stringify(res.payload.vosoVyaparUser));
+          localStorage.setItem('accessToken', res.payload.accessToken);
+          navigate('/');
+        } else {
+          toast.error('Error verifying OTP');
+        }
+      })
+      .catch((error) => {
+        toast.error('Error verifying OTP: ' + error.message);
+      });
+  }, [dispatch, mobileNo, otp, navigate]);
   const handleMobileNoChange = (e) => {
     const inputValue = e.target.value;
-    // Validate input to allow only numeric values
-    const numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+    const numericValue = inputValue.replace(/\D/g, '');
     setMobileNo(numericValue);
+  };
+
+  const handleOTPChange = (e) => {
+    setOTP(e.target.value);
   };
 
   return (
     <div className="overflow-hidden">
-      <div className=" h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className=" flex flex-wrap items-center translate-y-[5%]">
+      <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
-                  className="w-96  hidden dark:block"
+                  className="w-96 hidden dark:block"
                   src={voso_logo}
                   alt="Logo"
-                ></img>
+                />
                 <span className="flex justify-center items-center gap-1.5 ">
                   <img
                     className="w-20 dark:hidden"
@@ -75,11 +84,9 @@ const Forgot = () => {
                   </p>
                 </span>
               </Link>
-
               <p className="2xl:px-20 text-[22px]">
                 Welcome! Log in to your account.
               </p>
-
               <span className="mt-15 inline-block">
                 <svg
                   width="350"
@@ -204,14 +211,12 @@ const Forgot = () => {
               </span>
             </div>
           </div>
-
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Forgot Password?</span>
+            <span className="mb-1.5 block font-medium">Forgot Password?</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Reset Your Password
               </h2>
-
               <form>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
@@ -219,38 +224,35 @@ const Forgot = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type="tel" // Change type to "tel" for mobile number input
+                      type="text"
                       placeholder="Mobile No.*"
                       value={mobileNo}
                       onChange={handleMobileNoChange}
                       readOnly={showLabel}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
-
                     <span className="absolute right-4 top-4">
-                      <img className="w-8" src={mobile_logo_light} />
+                      <img
+                        className="w-8"
+                        src={mobile_logo_light}
+                        alt="Mobile icon"
+                      />
                     </span>
                   </div>
                 </div>
-
                 <div
                   className=""
                   style={{ display: showLabel ? 'block' : 'none' }}
                 >
-                  <label className="  block font-medium text-black dark:text-white">
+                  <label className="block font-medium text-black dark:text-white">
                     Verify Your OTP:
                   </label>
                   <div className="relative">
                     <input
-                      type="password"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Backspace' || e.key === 'Enter') return;
-                        // Restrict input to numeric characters only
-                        if (!/[0-9]/.test(e.key)) {
-                          e.preventDefault();
-                        }
-                      }}
+                      type="text"
                       placeholder="Enter OTP*"
+                      value={otp}
+                      onChange={handleOTPChange}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                   </div>
@@ -259,18 +261,32 @@ const Forgot = () => {
                   className="mb-6 text-right"
                   style={{ display: showLabel ? 'block' : 'none' }}
                 >
-                  <p>
-                    <Link to="" className="text-primary">
+                  <p
+                    style={{
+                      display: showLabel ? 'block' : 'none',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleClick} className="text-primary"
+                  >
+                    
+                   
                       Resend OTP
-                    </Link>
+                   
                   </p>
                 </div>
-
                 <input
-                  type="button" // Change type to "button"
-                  onClick={handleClick} // Call handleClick function on button click
+                  type="button"
+                  onClick={handleClick}
                   value="Submit"
                   className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  style={{ display: showLabel ? 'none' : 'block' }}
+                />
+                <input
+                  type="button"
+                  onClick={handleVerify}
+                  value="Verify OTP"
+                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  style={{ display: showLabel ? 'block' : 'none' }}
                 />
               </form>
               <Link to="/auth/signin">
@@ -303,4 +319,4 @@ const Forgot = () => {
   );
 };
 
-export default Forgot;
+export default Sign_in_mobile;

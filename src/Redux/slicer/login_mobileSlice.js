@@ -1,49 +1,35 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosInstance } from '../../utils/intercept';
 
 // Define an async thunk for sending OTP
 export const sendOTP = createAsyncThunk(
   'login_mobile/sendOTP',
   async (mobileNo) => {
-    const response = await fetch(
-      'https://api.vosovyapar.com/api/a1/user/sendOtpMobile',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ mobile: mobileNo }),
-      },
-    );
-    if (response.ok) {
-      return await response.json();
-    } else {
-      const errorData = await response.json();
-      throw new Error(errorData.message);
+    try {
+      const response = await AxiosInstance.post('user/sendOtpMobile', {
+        mobile: mobileNo,
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
     }
-  },
+  }
 );
 
 // Define an async thunk for verifying OTP
 export const verifyOTP = createAsyncThunk(
   'login_mobile/verifyOTP',
   async ({ mobileNo, otp }) => {
-    const response = await fetch(
-      'https://api.vosovyapar.com/api/a1/user/verifyMobileOTP',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ mobile: mobileNo, otp }),
-      },
-    );
-    if (response.ok) {
-      return await response.json();
-    } else {
-      const errorData = await response.json();
-      throw new Error(errorData.message);
+    try {
+      const response = await AxiosInstance.post('user/verifyMobileOTP', {
+        mobile: mobileNo,
+        otp,
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
     }
-  },
+  }
 );
 
 // Define the initial state
@@ -85,10 +71,7 @@ const login_mobileSlice = createSlice({
         state.verifyingOTP = false;
         state.isLoading = false;
         state.error = null;
-        // Store access token and user data in localStorage
-        const { accessToken, vosoVyaparUser } = action.payload;
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('userData', JSON.stringify(vosoVyaparUser));
+       
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.verifyingOTP = false;

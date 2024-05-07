@@ -7,6 +7,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import '../product_table/toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
+import formatDate from '../../utils/formatDate';
 
 const GalleryTable = () => {
   const { userId } = useParams();
@@ -22,20 +23,6 @@ const GalleryTable = () => {
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
   };
 
   useEffect(() => {

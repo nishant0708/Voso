@@ -5,6 +5,7 @@ import { fetchBlogs } from '../../Redux/slicer/blogSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import formatDate from '../../utils/formatDate';
 
 const ProductTable = () => {
   const navigate = useNavigate();
@@ -22,20 +23,6 @@ const ProductTable = () => {
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
   };
 
   if (status === 'loading') {

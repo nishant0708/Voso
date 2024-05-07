@@ -16,6 +16,7 @@ import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import formatDate from '../../utils/formatDate';
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -43,24 +44,6 @@ const UserTable = () => {
   useEffect(() => {
     callFetchUsers(limit, page);
   }, [callFetchUsers, limit, page]);
-
-  const formatDate = (dateString) => {
-    const options = {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      'en-US',
-      options,
-    );
-    return formattedDate;
-  };
 
   const calculateDays = (user) => {
     if (user.subscription && user.subscription.endDate) {

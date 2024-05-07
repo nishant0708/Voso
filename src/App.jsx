@@ -13,7 +13,6 @@ import Calendar from './pages/Calendar';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
-
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
@@ -72,7 +71,7 @@ function App() {
     if (accessibleRoutes.includes(pathname)) {
       return;
     }
-  }, []);
+  }, [accessToken, navigate, pathname]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

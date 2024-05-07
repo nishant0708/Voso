@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
 import userimg from '../../images/icon/icons8-user-40.png';
+import formatDate from '../../utils/formatDate';
+
 const TableOne = () => {
   const dispatch = useDispatch();
   const limit = 10;
@@ -12,23 +14,6 @@ const TableOne = () => {
     dispatch(fetchTopUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
-  const formatDate = (dateString) => {
-    const options = {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      'en-US',
-      options,
-    );
-    return formattedDate;
-  };
   return (
     <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">

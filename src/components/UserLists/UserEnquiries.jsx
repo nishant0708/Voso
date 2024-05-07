@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchEnquiriesList } from '../../Redux/slicer/userList';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import formatDate from '../../utils/formatDate';
 
 const UserEnquiries = () => {
   const dispatch = useDispatch();
@@ -24,24 +25,6 @@ const UserEnquiries = () => {
   useEffect(() => {
     callFetchUsers(limit, page, userId);
   }, [callFetchUsers, limit, page, userId]);
-
-  const formatDate = (dateString) => {
-    const options = {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      'en-US',
-      options,
-    );
-    return formattedDate;
-  };
 
   return (
     <DefaultLayout>

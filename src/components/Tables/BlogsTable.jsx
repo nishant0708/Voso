@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
@@ -15,8 +15,12 @@ const BlogsTable = () => {
   const navigate = useNavigate();
   const { users, pageData } = useSelector((state) => state.usersList);
 
+  const handlepop = (val) => {
+    setActive(val);
+  };
+
   const ref = useRef(null);
-  useOnClickOutside(ref, (index) => clickHandler(index));
+  useOnClickOutside(ref, handlepop);
 
   const limit = 20;
   const [page, setPage] = useState(1);
@@ -25,12 +29,9 @@ const BlogsTable = () => {
     dispatch(fetchUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
-  const [active, setActive] = useState(Array(users.length).fill(false));
-  const clickHandler = (index) => {
-    const newArray = new Array(users.length).fill(false);
-    newArray[index] = active[index];
-    newArray[index] = !newArray[index];
-    setActive(newArray);
+  const [active, setActive] = useState(null);
+  const handlePopup = (id) => {
+    setActive(id);
   };
 
   const totalPages = Math.ceil(pageData.total / limit);
@@ -181,32 +182,28 @@ const BlogsTable = () => {
                   <p className="cursor-pointer">
                     <TbDotsVertical
                       size={22}
-                      onClick={() => clickHandler(index)}
+                      onClick={() => handlePopup(user?._id)}
                     />
                   </p>
-                  {active[index] && (
+                  {active === user?._id && (
                     <div
                       ref={ref}
                       className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                     >
-                      <div
-                        onClick={() => navigate(`/blogs/blogView/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaCircleUser className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Blogs List</span>
-                      </div>
-                      <div
-                        onClick={() =>
-                          navigate(`/blogs/serviceView/${user._id}`)
-                        }
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaRupeeSign className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">
-                          Services List
-                        </span>
-                      </div>
+                      <Link to={`/blogs/blogView/${user._id}`}>
+                        <div className="flex gap-3 cursor-pointer items-center">
+                          <FaCircleUser className="text-sm sm:text-md" />
+                          <span className="text-xs sm:text-sm">Blogs List</span>
+                        </div>
+                      </Link>
+                      <Link to={`/blogs/serviceView/${user._id}`}>
+                        <div className="flex gap-3 cursor-pointer items-center">
+                          <FaRupeeSign className="text-sm sm:text-md" />
+                          <span className="text-xs sm:text-sm">
+                            Services List
+                          </span>
+                        </div>
+                      </Link>
                     </div>
                   )}
                 </td>

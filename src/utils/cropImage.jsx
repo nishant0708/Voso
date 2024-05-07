@@ -38,20 +38,22 @@ const ImageCropper = ({
     }
   }, []);
 
-  const onCropComplete = useCallback((crop) => {
-    makeClientCrop(ImageRef.current, crop, setCroppedImageUrl);
-  }, []);
-
-  const onCropChange = useCallback((crop) => {
-    setCrop(crop);
-  }, []);
-
   const makeClientCrop = useCallback(async (image, crop) => {
     if (image && crop.width && crop.height) {
       const croppedImageUrl = await getCroppedImg(image, crop, 'newFile.jpeg');
-      const file = await convertIntoFile(croppedImageUrl);
       setCroppedImageUrl(croppedImageUrl);
     }
+  }, []);
+
+  const onCropComplete = useCallback(
+    (crop) => {
+      makeClientCrop(ImageRef.current, crop, setCroppedImageUrl);
+    },
+    [makeClientCrop],
+  );
+
+  const onCropChange = useCallback((crop) => {
+    setCrop(crop);
   }, []);
 
   const handleConfirmCrop = async () => {

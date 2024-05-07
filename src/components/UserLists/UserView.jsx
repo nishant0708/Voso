@@ -13,7 +13,7 @@ const UserView = () => {
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   const formatDate = (dateString) => {
     const options = {

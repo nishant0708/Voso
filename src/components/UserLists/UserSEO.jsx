@@ -16,7 +16,7 @@ const UserSEO = () => {
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     setFormData({

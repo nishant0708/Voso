@@ -12,7 +12,7 @@ const UserPageEdit = () => {
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   return (
     <DefaultLayout>

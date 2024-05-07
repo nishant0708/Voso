@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import userimg from '../../images/icon/icons8-user-40.png';
-import UserOne from '../../images/user/user-01.png';
 
 const DropdownUser = () => {
   const user = JSON.parse(localStorage.getItem('userData'));

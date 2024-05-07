@@ -1,35 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import { AxiosInstance } from '../../utils/intercept';
+import toast from 'react-hot-toast';
 export const loginViaPassword = createAsyncThunk(
   'auth/loginViaPassword',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }) => {
     try {
-      const response = await fetch(
-        'https://api.vosovyapar.com/api/u1/user/loginViaPassword',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        },
-      );
-
-      if (!response.ok) {
-        const responseData = await response.json();
-        return rejectWithValue(responseData.message);
-      } else {
-        const data = await response.json();
-        const accessToken = data.accessToken;
-        localStorage.setItem('userData', JSON.stringify(data.vosoVyaparUser));
-        localStorage.setItem('accessToken', accessToken);
-        return data.vosoVyaparUser;
-      }
+      const response = await AxiosInstance.post(`user/loginViaPassword`,  
+        { email, password }
+       );
+       if(response.data?.success) { return response.data;}
+     
     } catch (error) {
-      //console.error("Error:", error);
-      return rejectWithValue(
-        'An error occurred while signing in. Please try again later.',
-      );
+       toast.error(error.response.data?.message);
+       
     }
   },
 );
@@ -40,7 +23,6 @@ export const authSlice = createSlice({
     user: null,
     error: null,
     isLoading: false,
-    isLoggedIn: false,
   },
   reducers: {
     // Other reducers here if needed
@@ -53,13 +35,11 @@ export const authSlice = createSlice({
       })
       .addCase(loginViaPassword.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.user = action.payload;
       })
       .addCase(loginViaPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        window.alert(action.payload);
       });
   },
 });

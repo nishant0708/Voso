@@ -13,7 +13,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId: userData.id }));
-  }, [userData.id]);
+  }, [dispatch, userData.id]);
 
   const format = (dateString) => {
     const date = new Date(dateString);

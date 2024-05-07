@@ -1,4 +1,4 @@
-export default [
+const BusinessSegment = [
   {
     value: 'agriculture',
     name: 'Agriculture/Farming',
@@ -116,3 +116,5 @@ export default [
     name: 'Travel and Tourism',
   },
 ];
+
+export default BusinessSegment;

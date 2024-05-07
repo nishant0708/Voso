@@ -1,7 +1,6 @@
-import react, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
-import userimg from '../images/icon/icons8-user-40.png';
 import { fetchUserDetails } from '../Redux/slicer/userDetails';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +11,7 @@ const Settings = () => {
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId: userData.id }));
-  }, [userData.id]);
+  }, [dispatch, userData.id]);
 
   const format = (dateString) => {
     const date = new Date(dateString);

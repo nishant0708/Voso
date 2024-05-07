@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
@@ -8,21 +8,18 @@ import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
 import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice'; // Import the updateGalleryUrl action creator
 import ImageCropper from '../../utils/cropImage';
 
-const Gallery_edit = () => {
+const GalleryEdit = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const { gallery, status, error } = useSelector((state) => state.Editgallery);
-  const { isLoading } = useSelector((state) => state.Editgallery);
+  const { gallery } = useSelector((state) => state.Editgallery);
   const [selectedOption, setSelectedOption] = useState(gallery.itemType); // Initial selected option
-  const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
   const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
   const [imgcrop, setimgcrop] = useState('');
 
   useEffect(() => {
     dispatch(fetchgalleryedit({ productId }));
-  }, []);
+  }, [dispatch, productId]);
 
-  const navigate = useNavigate();
   // Set the initial selected option once the gallery is loaded
   useEffect(() => {
     setSelectedOption(gallery.itemType);
@@ -36,12 +33,6 @@ const Gallery_edit = () => {
   // Function to handle option change
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-  };
-
-  // Function to handle file selection
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file); // Update the selected image state
   };
 
   // Function to handle gallery URL change
@@ -65,13 +56,13 @@ const Gallery_edit = () => {
     };
     // Dispatch the updateGalleryUrl action with the data payload
     dispatch(updateGalleryUrl(data))
-  .then(() => {
-    alert('Operation Successful');
-    window.location.href = `/products/Gallery/${gallery.userId}`;
-  })
-  .catch((error) => {
-    alert(`Error updating product: ${error.message}`);
-  });
+      .then(() => {
+        alert('Operation Successful');
+        window.location.href = `/products/Gallery/${gallery.userId}`;
+      })
+      .catch((error) => {
+        alert(`Error updating product: ${error.message}`);
+      });
   };
 
   const renderImage = (imageUrl) => {
@@ -84,7 +75,7 @@ const Gallery_edit = () => {
 
   return (
     <DefaultLayout>
-      <div class="px-0 sm:px-3 mb-10 flex justify-between items-center">
+      <div className="px-0 sm:px-3 mb-10 flex justify-between items-center">
         <h1 className=" text-3xl font-medium text-black dark:text-white">
           Gallery Update
         </h1>
@@ -201,4 +192,4 @@ const Gallery_edit = () => {
   );
 };
 
-export default Gallery_edit;
+export default GalleryEdit;

@@ -9,7 +9,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 
-const Product_Edit = () => {
+const ProductEdit = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -26,13 +26,13 @@ const Product_Edit = () => {
     if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
-    return `${BACKEND_URL_PRODUCT}${imageUrl}`;
+      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
   };
 
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
-  }, []);
+  }, [dispatch, productId]);
 
   useEffect(() => {
     if (product) {
@@ -54,15 +54,6 @@ const Product_Edit = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
-  // const handleGalleryUrlChange = (event) => {
-  //   setGalleryUrl(event.target.value);
-  // };
-
-  // const handleFileSelect = (e) => {
-  //   const file = e.target.files[0];
-  //   setSelectedImage(file); // Update the selected image state
-  // };
-
   //updating details
   const handleUpdateProduct = () => {
     const updatedProductData = {
@@ -70,22 +61,16 @@ const Product_Edit = () => {
       productName: productName,
       productPrice: productPrice,
       productDescription: productDescription,
-      // productImage:
-      // showAddUrl === true ? (selectedImage === null
-      //   ? renderImage(product.product_image)
-      //   : selectedImage) : imageUrl ,
       productImage: showAddUrl === true ? imgcrop : imageUrl,
       productUrl: productUrl,
     };
 
     dispatch(updateProductDetails(updatedProductData))
       .then(() => {
-        // Show success message to the user
         alert('Operation Successful');
         navigate('/products');
       })
       .catch((error) => {
-        // Handle error by showing an alert with the error message
         alert(`Error updating product: ${error.message}`);
       });
   };
@@ -150,7 +135,7 @@ const Product_Edit = () => {
           />
         </div>
         <div
-          class="lg:flex"
+          className="lg:flex"
           style={{
             justifyContent: 'space-between',
             gap: '2%',
@@ -164,13 +149,15 @@ const Product_Edit = () => {
               display: showAddUrl ? 'block' : 'none',
             }}
           >
-            <label class="text-black dark:text-white leading-[28px]">
+            <label className="text-black dark:text-white leading-[28px]">
               Product Image (200 X 200 px){' '}
               <span
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <a
+                  href="https://www.remove.bg/"
+                  target="blank"
                   className="text-meta-5 dark:lightblue"
                   style={{
                     cursor: 'pointer',
@@ -275,4 +262,4 @@ const Product_Edit = () => {
   );
 };
 
-export default Product_Edit;
+export default ProductEdit;

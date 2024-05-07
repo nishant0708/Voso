@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBlogs } from '../../Redux/slicer/blogSlice';
@@ -87,53 +87,56 @@ const ProductTable = () => {
             Back
           </button>
         </div>
-        <div className='overflow-x-auto'>
-        <table className="w-full text-sm">
-          <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-            <tr>
-              <th className="p-3 lg:p-4 pl-5 sm:!pl-14">TITLE</th>
-              <th className="p-3 lg:p-4 !pl-5">ACTIVE</th>
-              <th className="p-3 lg:p-4 !pl-13">CREATED AT</th>
-              <th className="p-3 lg:p-4 !pl-5">ACTION</th>
-            </tr>
-          </thead>
-          <tbody className="text-black dark:text-white text-left whitespace-nowrap">
-            {blogs.map((blog, index) => (
-              <tr
-                key={blog._id}
-                className={`${
-                  index === blogs.length - 1
-                    ? ''
-                    : 'border-b border-stroke dark:border-strokedark'
-                }`}
-              >
-                <td className="p-2.5 w-[300px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
-                  <a href={blog.blog}>
-                    <span>
-                      <img
-                        className="w-[7vh] h-[7vh] rounded-[50%]"
-                        src={renderImage(blog?.bannerImage)}
-                      />
-                    </span>
-                  </a>
-                  {blog.title}
-                </td>
-                <td className="p-2.5 lg:p-4 !pl-5">
-                  {blog.is_active ? 'Active' : 'Inactive'}
-                </td>
-                <td className="p-2.5 lg:p-4 !pl-13">{formatDate(blog.created_at)}</td>
-                <td className="p-2.5 lg:p-4 !pl-5">
-                  <p
-                    onClick={() => navigate(`/blogs/blogEdit/${blog._id}`)}
-                    className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700"
-                  >
-                    Blog Edit
-                  </p>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+              <tr>
+                <th className="p-3 lg:p-4 pl-5 sm:!pl-14">TITLE</th>
+                <th className="p-3 lg:p-4 !pl-5">ACTIVE</th>
+                <th className="p-3 lg:p-4 !pl-13">CREATED AT</th>
+                <th className="p-3 lg:p-4 !pl-5">ACTION</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-black dark:text-white text-left whitespace-nowrap">
+              {blogs.map((blog, index) => (
+                <tr
+                  key={blog._id}
+                  className={`${
+                    index === blogs.length - 1
+                      ? ''
+                      : 'border-b border-stroke dark:border-strokedark'
+                  }`}
+                >
+                  <td className="p-2.5 w-[300px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
+                    <a href={blog.blog}>
+                      <span>
+                        <img
+                          className="w-[7vh] h-[7vh] rounded-[50%]"
+                          src={renderImage(blog?.bannerImage)}
+                          alt="blogImg"
+                        />
+                      </span>
+                    </a>
+                    {blog.title}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-5">
+                    {blog.is_active ? 'Active' : 'Inactive'}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-13">
+                    {formatDate(blog.created_at)}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-5">
+                    <p
+                      onClick={() => navigate(`/blogs/blogEdit/${blog._id}`)}
+                      className="w-fit whitespace-nowrap py-1 px-3 text-center bg-green-600 text-white rounded-3xl cursor-pointer hover:bg-green-700"
+                    >
+                      Blog Edit
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </DefaultLayout>

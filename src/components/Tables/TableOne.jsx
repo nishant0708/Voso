@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
 import userimg from '../../images/icon/icons8-user-40.png';
@@ -7,8 +7,8 @@ const TableOne = () => {
   const limit = 10;
   const page = 1;
   const { topUsers, loading, error } = useSelector((state) => state.topUsers);
+
   useEffect(() => {
-    // Dispatch the fetchTopUsers action when the component mounts
     dispatch(fetchTopUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
@@ -41,47 +41,47 @@ const TableOne = () => {
         ) : error ? (
           <div>Error: {error.message}</div>
         ) : topUsers.length > 0 ? (
-          <div className='overflow-x-auto'>
-          <table className="w-full">
-            <thead className="font-extrabold text-center whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-              <tr>
-                <th className="p-2.5 lg:p-5 !pl-7">NAME</th>
-                <th className="p-2.5 lg:p-5 !pl-22">MOBILE</th>
-                <th className="p-2.5 lg:p-5 !pl-12">EMAIL</th>
-                <th className="p-2.5 lg:p-5 !pl-8">PLAN</th>
-                <th className="p-2.5 lg:p-5 !pl-8 pr-8">CREATED AT</th>
-              </tr>
-            </thead>
-            <tbody className="text-center text-black dark:text-white whitespace-nowrap">
-              {topUsers.map((user, index) => (
-                <tr
-                  className={`${
-                    index === topUsers.length - 1
-                      ? ''
-                      : 'border-b border-stroke dark:border-strokedark'
-                  }`}
-                  key={user._id}
-                >
-                  <td className="p-2.5 lg:p-5 !pl-5 flex items-center gap-1">
-                    <img
-                      src={userimg}
-                      alt="Profile"
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <p>{user.first_name}</p>
-                  </td>
-                  <td className="p-2.5 lg:p-5 !pl-22">{user.mobile}</td>
-                  <td className="p-2.5 lg:p-5 !pl-12 text-meta-3">
-                    {user.email}
-                  </td>
-                  <td className="p-2.5 lg:p-5 !pl-8">NA</td>
-                  <td className="p-2.5 lg:p-5 !pl-8 pr-8 text-meta-5">
-                    {formatDate(user.created_at)}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="font-extrabold text-center whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+                <tr>
+                  <th className="p-2.5 lg:p-5 !pl-7">NAME</th>
+                  <th className="p-2.5 lg:p-5 !pl-22">MOBILE</th>
+                  <th className="p-2.5 lg:p-5 !pl-12">EMAIL</th>
+                  <th className="p-2.5 lg:p-5 !pl-8">PLAN</th>
+                  <th className="p-2.5 lg:p-5 !pl-8 pr-8">CREATED AT</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="text-center text-black dark:text-white whitespace-nowrap">
+                {topUsers.map((user, index) => (
+                  <tr
+                    className={`${
+                      index === topUsers.length - 1
+                        ? ''
+                        : 'border-b border-stroke dark:border-strokedark'
+                    }`}
+                    key={user._id}
+                  >
+                    <td className="p-2.5 lg:p-5 !pl-5 flex items-center gap-1">
+                      <img
+                        src={userimg}
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full"
+                      />
+                      <p>{user.first_name}</p>
+                    </td>
+                    <td className="p-2.5 lg:p-5 !pl-22">{user.mobile}</td>
+                    <td className="p-2.5 lg:p-5 !pl-12 text-meta-3">
+                      {user.email}
+                    </td>
+                    <td className="p-2.5 lg:p-5 !pl-8">NA</td>
+                    <td className="p-2.5 lg:p-5 !pl-8 pr-8 text-meta-5">
+                      {formatDate(user.created_at)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ) : (
           <div className="text-danger text-base">No User Found</div>

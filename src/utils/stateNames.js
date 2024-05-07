@@ -1,4 +1,4 @@
-export default [
+const States = [
   {
     value: 'Andhra Pradesh',
     name: 'Andhra Pradesh',
@@ -112,3 +112,5 @@ export default [
     name: 'West Bengal',
   },
 ];
+
+export default States;

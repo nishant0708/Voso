@@ -3,7 +3,7 @@ import {
   Route,
   Routes,
   useLocation,
-  Navigate,
+  
   useNavigate,
 } from 'react-router-dom';
 import './App.css';
@@ -21,18 +21,17 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Forgot from './pages/Authentication/Forgot';
-import Sign_in_mobile from './pages/Authentication/Sign_in_mobile';
+import Sign_in_mobile from './pages/Authentication/SignInMobile';
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
 import Products from './pages/Products/Products';
-import Product_table from './components/product_table/Product_table';
+import ProductTable from './components/product_table/ProductTable';
 import UserView from './components/UserLists/UserView';
 import UserPageEdit from './components/UserLists/UserPageEdit';
 import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
-import UserBusiness from './components/UserLists/UserBusiness';
-import Gallery_table from './components/Gallery_table/Gallery_table';
+import UserBusiness from './components/UserLists/UserBusiness'
 import ChangePassword from './pages/ChangePassword';
 import Blogs from './pages/Blogs';
 import BlogView from './components/BlogsAndServices/BlogView';
@@ -44,7 +43,8 @@ import News_page from './pages/news_page/News_page';
 import News_page_table from './pages/news_page/News_page_table';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
-
+import GalleryTable from './components/Gallery_table/GalleryTable';
+import GalleryEdit from './components/Gallery_table/GalleryEdit';
 
 function App() {
   const navigate = useNavigate();
@@ -190,7 +190,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Product_table />
+               <ProductTable/>
               </>
             }
           />
@@ -199,7 +199,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Product_Edit />
+                <Product_Edit/>
               </>
             }
           />
@@ -208,7 +208,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Gallery_table />
+               <GalleryTable/>
               </>
             }
           />
@@ -240,15 +240,15 @@ function App() {
               </>
             }
           />
-          {/* <Route
+          <Route
           path="/products/Galleryedit/:productId"
           element={
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <Gallery_edit />
+               <GalleryEdit/>
             </>
           }
-        /> */}
+        />
 
           <Route
             path="/user/settings"
@@ -330,7 +330,7 @@ function App() {
             path="/auth/sign_in_with_mobile"
             element={
               <>
-                <Sign_in_mobile />
+               <Sign_in_mobile/>
               </>
             }
           />

@@ -23,7 +23,7 @@ const BlogsTable = () => {
 
   useEffect(() => {
     dispatch(fetchUsers({ limit, page }));
-  }, [limit, page]);
+  }, [dispatch, limit, page]);
 
   const [active, setActive] = useState(Array(users.length).fill(false));
   const clickHandler = (index) => {
@@ -56,10 +56,8 @@ const BlogsTable = () => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 5; // Define the maximum visible page numbers
-    const startIndex = (page - 1) * limit + 1; // Calculate the starting index for the current page
 
     if (totalPages <= maxVisiblePages) {
-      // If total pages are less than or equal to the maximum visible pages
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(
           <span
@@ -74,7 +72,6 @@ const BlogsTable = () => {
         );
       }
     } else {
-      // If total pages are greater than maximum visible pages
       const leftBoundary = Math.max(1, page - Math.floor(maxVisiblePages / 2));
       const rightBoundary = Math.min(
         totalPages,
@@ -149,68 +146,74 @@ const BlogsTable = () => {
           <MdOutlineKeyboardDoubleArrowRight />
         </button>
       </div>
-<div className='overflow-x-auto'>
-      <table className="w-full text-sm">
-        <thead className="font-extrabold text-center">
-          <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-            <th className="p-2.5 lg:p-4 sm:!pl-14 pl-3">#</th>
-            <th className="p-2.5 lg:p-4 !pl-13">NAME</th>
-            <th className="p-2.5 lg:p-4 !pl-13">MOBILE</th>
-            <th className="p-2.5 lg:p-4 !pl-12">EMAIL</th>
-            <th className="p-2.5 lg:p-4 !pl-5">ACTION</th>
-          </tr>
-        </thead>
-        <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-          {users.map((user, index) => (
-            <tr
-              key={user._id}
-              className={`${
-                index === users.length - 1
-                  ? ''
-                  : 'border-b border-stroke dark:border-strokedark'
-              }`}
-            >
-              <td className="p-2.5 lg:p-4 sm:!pl-14 pl-3 font-extrabold">
-                {index + 1}
-              </td>
-              <td className="p-2.5 lg:p-4 !pl-13 capitalize">
-                {user.first_name + ' ' + user.last_name}
-              </td>
-              <td className="p-2.5 lg:p-4 !pl-13">{user.mobile}</td>
-              <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">{user?.email}</td>
-              <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
-                <p className="cursor-pointer">
-                  <TbDotsVertical
-                    size={22}
-                    onClick={() => clickHandler(index)}
-                  />
-                </p>
-                {active[index] && (
-                  <div
-                    ref={ref}
-                    className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
-                  >
-                    <div
-                      onClick={() => navigate(`/blogs/blogView/${user._id}`)}
-                      className="flex gap-3 cursor-pointer items-center"
-                    >
-                      <FaCircleUser className="text-sm sm:text-md" />
-                      <span className="text-xs sm:text-sm">Blogs List</span>
-                    </div>
-                    <div
-                      onClick={() => navigate(`/blogs/serviceView/${user._id}`)}
-                      className="flex gap-3 cursor-pointer items-center"
-                    >
-                      <FaRupeeSign className="text-sm sm:text-md" />
-                      <span className="text-xs sm:text-sm">Services List</span>
-                    </div>
-                  </div>
-                )}
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="font-extrabold text-center">
+            <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+              <th className="p-2.5 lg:p-4 sm:!pl-14 pl-3">#</th>
+              <th className="p-2.5 lg:p-4 !pl-13">NAME</th>
+              <th className="p-2.5 lg:p-4 !pl-13">MOBILE</th>
+              <th className="p-2.5 lg:p-4 !pl-12">EMAIL</th>
+              <th className="p-2.5 lg:p-4 !pl-5">ACTION</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+            {users.map((user, index) => (
+              <tr
+                key={user._id}
+                className={`${
+                  index === users.length - 1
+                    ? ''
+                    : 'border-b border-stroke dark:border-strokedark'
+                }`}
+              >
+                <td className="p-2.5 lg:p-4 sm:!pl-14 pl-3 font-extrabold">
+                  {index + 1}
+                </td>
+                <td className="p-2.5 lg:p-4 !pl-13 capitalize">
+                  {user.first_name + ' ' + user.last_name}
+                </td>
+                <td className="p-2.5 lg:p-4 !pl-13">{user.mobile}</td>
+                <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">
+                  {user?.email}
+                </td>
+                <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
+                  <p className="cursor-pointer">
+                    <TbDotsVertical
+                      size={22}
+                      onClick={() => clickHandler(index)}
+                    />
+                  </p>
+                  {active[index] && (
+                    <div
+                      ref={ref}
+                      className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                    >
+                      <div
+                        onClick={() => navigate(`/blogs/blogView/${user._id}`)}
+                        className="flex gap-3 cursor-pointer items-center"
+                      >
+                        <FaCircleUser className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">Blogs List</span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          navigate(`/blogs/serviceView/${user._id}`)
+                        }
+                        className="flex gap-3 cursor-pointer items-center"
+                      >
+                        <FaRupeeSign className="text-sm sm:text-md" />
+                        <span className="text-xs sm:text-sm">
+                          Services List
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

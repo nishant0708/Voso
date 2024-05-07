@@ -24,7 +24,7 @@ const ServiceEdit = () => {
 
   useEffect(() => {
     dispatch(fetchServiceById({ serviceId }));
-  }, []);
+  }, [dispatch, serviceId]);
 
   useEffect(() => {
     setFormData({
@@ -135,10 +135,14 @@ const ServiceEdit = () => {
         </div>
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-5">
           <div className={`relative w-full ${showAddUrl ? 'block' : 'hidden'}`}>
-            <label class="text-black dark:text-white md:whitespace-nowrap">
+            <label className="text-black dark:text-white md:whitespace-nowrap">
               Service Image (200 X 200 px){' '}
               <span>
-                <a className="text-meta-5 text-sm cursor-pointer hover:underline">
+                <a
+                  href="https://www.remove.bg/"
+                  target="blank"
+                  className="text-meta-5 text-sm cursor-pointer hover:underline"
+                >
                   Click here to remove background
                 </a>
               </span>

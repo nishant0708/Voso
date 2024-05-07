@@ -53,5 +53,4 @@ const galleryFeatureSlice = createSlice({
 });
 
 // Export actions and reducer
-export const {} = galleryFeatureSlice.actions; // Add additional actions if needed
 export default galleryFeatureSlice.reducer;

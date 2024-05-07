@@ -15,7 +15,7 @@ const UserSocial = () => {
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     setFormData({

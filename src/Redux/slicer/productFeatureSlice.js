@@ -53,5 +53,4 @@ const productFeatureSlice = createSlice({
 });
 
 // Export actions and reducer
-export const {} = productFeatureSlice.actions; // Add additional actions if needed
 export default productFeatureSlice.reducer;

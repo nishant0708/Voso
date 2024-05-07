@@ -1,11 +1,7 @@
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginViaPassword } from '../../Redux/slicer/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
@@ -14,9 +10,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const error = useSelector((state) => state.auth.error);
-  const isLoggedIn=useSelector((state)=>state.auth.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,7 +18,7 @@ const SignIn = () => {
   };
   React.useEffect(() => {
     if (isLoggedIn) {
-      navigate('/'); // Navigate to the home page if the user is logged in
+      navigate('/');
     }
   }, [isLoggedIn, navigate]);
 
@@ -35,17 +29,29 @@ const SignIn = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img className="w-96 hidden dark:block" src={voso_logo} alt="Logo"></img>
+                <img
+                  className="w-96 hidden dark:block"
+                  src={voso_logo}
+                  alt="Logo"
+                ></img>
                 <span className="flex justify-center items-center gap-1.5 ">
-                  <img className="w-20 dark:hidden" src={voso_logo} alt="Logo" />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">Voso Vyapar</p>
+                  <img
+                    className="w-20 dark:hidden"
+                    src={voso_logo}
+                    alt="Logo"
+                  />
+                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
+                    Voso Vyapar
+                  </p>
                 </span>
               </Link>
 
-              <p className="2xl:px-20 text-[22px]">Welcome! Log in to your account.</p>
+              <p className="2xl:px-20 text-[22px]">
+                Welcome! Log in to your account.
+              </p>
 
               <span className="mt-15 inline-block">
-              <svg
+                <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"
@@ -177,7 +183,9 @@ const SignIn = () => {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">Email</label>
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Email
+                  </label>
                   <div className="relative">
                     <input
                       type="email"
@@ -209,7 +217,9 @@ const SignIn = () => {
                 </div>
 
                 <div className="">
-                  <label className=" block font-medium text-black dark:text-white">Password</label>
+                  <label className=" block font-medium text-black dark:text-white">
+                    Password
+                  </label>
                   <div className="relative">
                     <input
                       type="password"
@@ -262,8 +272,16 @@ const SignIn = () => {
                 <Link to="/auth/sign_in_with_mobile">
                   <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                     <span className="flex justify-center items-center gap-1">
-                      <img className="hidden dark:block w-8" src={mobile_logo_dark} />
-                      <img className="dark:hidden w-8" src={mobile_logo_light} />
+                      <img
+                        className="hidden dark:block w-8"
+                        src={mobile_logo_dark}
+                        alt="darkImg"
+                      />
+                      <img
+                        className="dark:hidden w-8"
+                        src={mobile_logo_light}
+                        alt="lightImg"
+                      />
                       Sign in with Mobile
                     </span>
                   </button>

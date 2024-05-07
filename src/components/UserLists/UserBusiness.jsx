@@ -20,7 +20,7 @@ const UserBusiness = () => {
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     setFormData({

@@ -17,7 +17,7 @@ const UserPlan = () => {
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
-  }, [userId]);
+  }, [dispatch, userId]);
 
   const [plan, setPlan] = useState('');
   const handleOnChange = (e) => {

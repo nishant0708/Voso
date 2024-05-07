@@ -21,7 +21,7 @@ const BlogEdit = () => {
 
   useEffect(() => {
     dispatch(fetchBlogById({ blogId }));
-  }, []);
+  }, [dispatch, blogId]);
 
   useEffect(() => {
     setFormData({
@@ -101,10 +101,14 @@ const BlogEdit = () => {
             />
           </div>
           <div className="w-full">
-            <label class="text-black dark:text-white md:whitespace-nowrap">
+            <label className="text-black dark:text-white md:whitespace-nowrap">
               Banner Image (200 X 200 px){' '}
               <span>
-                <a className="text-meta-5 text-sm cursor-pointer hover:underline">
+                <a
+                  href="https://www.remove.bg/"
+                  target="blank"
+                  className="text-meta-5 text-sm cursor-pointer hover:underline"
+                >
                   Click here to remove background
                 </a>
               </span>

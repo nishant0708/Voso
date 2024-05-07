@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
 import voso_logo from '../../images/logo/vosovyapar_icon.png';
-
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
-import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
-
-import SignIn_Layout from '../../layout/Sign_in_Layout';
-import Sidebar from '../../components/Sidebar';
 
 const Forgot = () => {
   const [showLabel, setShowLabel] = useState(false);
@@ -39,7 +31,6 @@ const Forgot = () => {
         })
         .catch((error) => {
           //console.error('Error sending OTP:', error);
-          // Handle error
         });
     } else {
       alert('Please enter a valid 10-digit mobile number.');
@@ -63,7 +54,7 @@ const Forgot = () => {
                   className="w-96  hidden dark:block"
                   src={voso_logo}
                   alt="Logo"
-                ></img>
+                />
                 <span className="flex justify-center items-center gap-1.5 ">
                   <img
                     className="w-20 dark:hidden"
@@ -228,7 +219,11 @@ const Forgot = () => {
                     />
 
                     <span className="absolute right-4 top-4">
-                      <img className="w-8" src={mobile_logo_light} />
+                      <img
+                        className="w-8"
+                        src={mobile_logo_light}
+                        alt="lightLogo"
+                      />
                     </span>
                   </div>
                 </div>

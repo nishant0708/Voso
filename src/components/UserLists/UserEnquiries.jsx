@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -9,19 +9,21 @@ const UserEnquiries = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { users, loading, error } = useSelector((state) => state.usersList);
+  const { users } = useSelector((state) => state.usersList);
   const limit = 10;
   const page = 1;
 
-  const callFetchUsers = (limit, page, userId) => {
-    dispatch(fetchEnquiriesList({ limit, page, userId }));
-    return;
-  };
+  const callFetchUsers = useCallback(
+    (limit, page, userId) => {
+      dispatch(fetchEnquiriesList({ limit, page, userId }));
+      return;
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
-    // Dispatch the fetchUsers action when the component mounts
     callFetchUsers(limit, page, userId);
-  }, [limit, page, userId]);
+  }, [callFetchUsers, limit, page, userId]);
 
   const formatDate = (dateString) => {
     const options = {
@@ -56,44 +58,46 @@ const UserEnquiries = () => {
             Back
           </button>
         </div>
-    <div className='overflow-x-auto'>
-        <table className="w-full text-sm">
-          <thead className="font-extrabold text-center">
-            <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-              <th className="p-2.5 lg:p-4 sm:pl-12 pl-5">#</th>
-              <th className="p-2.5 lg:p-4 !pl-10">NAME</th>
-              <th className="p-2.5 lg:p-4 !pl-10">MOBILE</th>
-              <th className="p-2.5 lg:p-4 !pl-8">EMAIL</th>
-              <th className="p-2.5 lg:p-4 !pl-5">DESCRIPTION</th>
-              <th className="p-2.5 lg:p-4 !pl-8 pr-5">CREATED AT</th>
-            </tr>
-          </thead>
-          <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-            {users.map((user, index) => (
-              <tr
-                key={user._id}
-                className={`${
-                  index === users.length - 1
-                    ? ''
-                    : 'border-b border-stroke dark:border-strokedark'
-                }`}
-              >
-                <td className="p-2.5 lg:p-4 sm:pl-12 pl-5 font-extrabold">
-                  {index + 1}
-                </td>
-                <td className="p-2.5 lg:p-4 !pl-10 capitalize">
-                  {user.fullName}
-                </td>
-                <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
-                <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">{user.email}</td>
-                <td className="p-2.5 lg:p-4 !pl-5">{user.message}</td>
-                <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
-                  {formatDate(user.created_at)}
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="font-extrabold text-center">
+              <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
+                <th className="p-2.5 lg:p-4 sm:pl-12 pl-5">#</th>
+                <th className="p-2.5 lg:p-4 !pl-10">NAME</th>
+                <th className="p-2.5 lg:p-4 !pl-10">MOBILE</th>
+                <th className="p-2.5 lg:p-4 !pl-8">EMAIL</th>
+                <th className="p-2.5 lg:p-4 !pl-5">DESCRIPTION</th>
+                <th className="p-2.5 lg:p-4 !pl-8 pr-5">CREATED AT</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+              {users.map((user, index) => (
+                <tr
+                  key={user._id}
+                  className={`${
+                    index === users.length - 1
+                      ? ''
+                      : 'border-b border-stroke dark:border-strokedark'
+                  }`}
+                >
+                  <td className="p-2.5 lg:p-4 sm:pl-12 pl-5 font-extrabold">
+                    {index + 1}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-10 capitalize">
+                    {user.fullName}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
+                  <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">
+                    {user.email}
+                  </td>
+                  <td className="p-2.5 lg:p-4 !pl-5">{user.message}</td>
+                  <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
+                    {formatDate(user.created_at)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </DefaultLayout>

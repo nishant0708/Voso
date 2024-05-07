@@ -14,7 +14,6 @@ const Sign_in_mobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
 
-  
   const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
       dispatch(sendOTP(mobileNo))
@@ -31,7 +30,7 @@ const Sign_in_mobile = () => {
           toast.error('Error sending OTP: ' + error.message);
         });
     } else {
-     toast('Please enter a valid 10-digit mobile number.');
+      toast('Please enter a valid 10-digit mobile number.');
     }
   }, [mobileNo, dispatch, setShowLabel]);
 
@@ -213,9 +212,8 @@ const Sign_in_mobile = () => {
           </div>
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-            <span className="mb-1.5 block font-medium">Forgot Password?</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Reset Your Password
+                Sign In to Voso Vyapar
               </h2>
               <form>
                 <div className="mb-4">

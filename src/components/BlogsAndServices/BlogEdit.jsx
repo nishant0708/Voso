@@ -7,6 +7,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import ImageCropper from '../../utils/cropImage';
+import toast from 'react-hot-toast';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
@@ -65,11 +66,11 @@ const BlogEdit = () => {
 
     dispatch(updateBlogById(data))
       .then(() => {
-        alert('Operation Successful');
+        toast('Operation Successful');
         navigate(`/blogs/blogView/${blog.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+        toast(`Error updating product: ${error.message}`);
       });
   };
 

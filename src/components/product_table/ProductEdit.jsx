@@ -8,6 +8,7 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
+import toast from 'react-hot-toast';
 
 const ProductEdit = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,13 @@ const ProductEdit = () => {
   const { isLoading } = useSelector((state) => state.updateProdct);
   const [imageUrl, setimageUrl] = useState('');
   const [imgcrop, setimgcrop] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+  const [productUrl, setProductUrl] = useState('');
+  const [showAddUrl, setShowAddUrl] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isbutHovered, setbutIsHovered] = useState(false)
 
   const setimg = (file) => {
     setimgcrop(file);
@@ -44,15 +52,7 @@ const ProductEdit = () => {
     }
   }, [product]);
 
-  const [productName, setProductName] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [productUrl, setProductUrl] = useState('');
-
-  const [showAddUrl, setShowAddUrl] = useState(true);
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [isbutHovered, setbutIsHovered] = useState(false);
+;
 
   //updating details
   const handleUpdateProduct = () => {
@@ -67,11 +67,11 @@ const ProductEdit = () => {
 
     dispatch(updateProductDetails(updatedProductData))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         navigate('/products');
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
   };
 

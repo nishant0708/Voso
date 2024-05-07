@@ -7,6 +7,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
 import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice'; // Import the updateGalleryUrl action creator
 import ImageCropper from '../../utils/cropImage';
+import toast from 'react-hot-toast';
 
 const GalleryEdit = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const GalleryEdit = () => {
   useEffect(() => {
     dispatch(fetchgalleryedit({ productId }));
   }, [dispatch, productId]);
+
 
   // Set the initial selected option once the gallery is loaded
   useEffect(() => {
@@ -57,11 +59,11 @@ const GalleryEdit = () => {
     // Dispatch the updateGalleryUrl action with the data payload
     dispatch(updateGalleryUrl(data))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         window.location.href = `/products/Gallery/${gallery.userId}`;
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
   };
 

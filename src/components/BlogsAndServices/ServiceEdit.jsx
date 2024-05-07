@@ -10,6 +10,7 @@ import {
   updateServiceById,
 } from '../../Redux/slicer/blogSlice';
 import ImageCropper from '../../utils/cropImage';
+import toast from 'react-hot-toast';
 
 const ServiceEdit = () => {
   const dispatch = useDispatch();
@@ -76,11 +77,11 @@ const ServiceEdit = () => {
 
     dispatch(updateServiceById(data))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         navigate(`/blogs/serviceView/${service.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
   };
 

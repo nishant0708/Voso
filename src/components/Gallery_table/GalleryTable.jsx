@@ -140,7 +140,7 @@ const GalleryTable = () => {
             <tbody>
               {gallery?.map((product) => (
                 <tr
-                  key={product._id}
+                  key={product.id}
                   style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
                 >
                   <td

@@ -6,7 +6,7 @@ import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import toast from 'react-hot-toast';
 
-const Sign_in_mobile = () => {
+const SignInMobile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -317,4 +317,4 @@ const Sign_in_mobile = () => {
   );
 };
 
-export default Sign_in_mobile;
+export default SignInMobile;

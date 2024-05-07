@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Route,
   Routes,
   useLocation,
-  
   useNavigate,
 } from 'react-router-dom';
 import './App.css';
@@ -21,7 +20,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Forgot from './pages/Authentication/Forgot';
-import Sign_in_mobile from './pages/Authentication/SignInMobile';
+
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
@@ -31,46 +30,49 @@ import UserView from './components/UserLists/UserView';
 import UserPageEdit from './components/UserLists/UserPageEdit';
 import UserEnquiries from './components/UserLists/UserEnquiries';
 import UserSEO from './components/UserLists/UserSEO';
-import UserBusiness from './components/UserLists/UserBusiness'
+import UserBusiness from './components/UserLists/UserBusiness';
+import GalleryTable from './components/Gallery_table/GalleryTable';
+import GalleryEdit from './components/Gallery_table/GalleryEdit';
 import ChangePassword from './pages/ChangePassword';
 import Blogs from './pages/Blogs';
 import BlogView from './components/BlogsAndServices/BlogView';
 import ServiceView from './components/BlogsAndServices/ServiceView';
 import BlogEdit from './components/BlogsAndServices/BlogEdit';
 import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
-import Product_Edit from './components/product_table/Product_Edit';
-import News_page from './pages/news_page/News_page';
-import News_page_table from './pages/news_page/News_page_table';
+import ProductEdit from './components/product_table/ProductEdit';
+import NewsPage from './pages/news_page/NewsPage';
+import NewsPageTable from './pages/news_page/NewsPageTable';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
-import GalleryTable from './components/Gallery_table/GalleryTable';
-import GalleryEdit from './components/Gallery_table/GalleryEdit';
+import SignInMobile from './pages/Authentication/SignInMobile';
+
 
 function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
   const accessToken = localStorage.getItem('accessToken');
+
   // Mock function to check if the user has an access token
-  const checkAccessToken = () => {
-    console.log("ll");
+  const checkAccessToken = useCallback(() => {
     if (!accessToken || accessToken === undefined || accessToken === null || isTokenExpired(accessToken)) {
   
       localStorage.clear();
       navigate('/auth/signin');
       return;
     }
+
     const accessibleRoutes = [
       '/auth/signin',
       '/auth/forgot',
       '/auth/sign_in_with_mobile',
     ];
+
     // If the route is in the accessible routes list, return early
     if (accessibleRoutes.includes(pathname)) {
-      console.log("pp");
       return;
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -190,7 +192,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <ProductTable/>
+                <ProductTable />
               </>
             }
           />
@@ -199,7 +201,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Products| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Product_Edit/>
+                <ProductEdit />
               </>
             }
           />
@@ -208,7 +210,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <GalleryTable/>
+                <GalleryTable />
               </>
             }
           />
@@ -245,7 +247,7 @@ function App() {
           element={
             <>
               <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <GalleryEdit/>
+               <GalleryEdit />
             </>
           }
         />
@@ -292,7 +294,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <News_page />
+                <NewsPage />
               </>
             }
           />
@@ -301,7 +303,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <News_page_table />
+                <NewsPageTable />
               </>
             }
           />
@@ -330,7 +332,7 @@ function App() {
             path="/auth/sign_in_with_mobile"
             element={
               <>
-               <Sign_in_mobile/>
+               <SignInMobile/>
               </>
             }
           />

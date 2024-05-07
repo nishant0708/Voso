@@ -43,6 +43,8 @@ import Product_Edit from './components/product_table/Product_Edit';
 import News_page from './pages/news_page/News_page';
 import News_page_table from './pages/news_page/News_page_table';
 import Error from './common/Loader/Error';
+import isTokenExpired from './utils/isTokenExpired';
+
 
 function App() {
   const navigate = useNavigate();
@@ -52,8 +54,8 @@ function App() {
   // Mock function to check if the user has an access token
   const checkAccessToken = () => {
     console.log("ll");
-    if (!accessToken || accessToken === undefined || accessToken === null) {
-      console.log("gvhgjgj");
+    if (!accessToken || accessToken === undefined || accessToken === null || isTokenExpired(accessToken)) {
+  
       localStorage.clear();
       navigate('/auth/signin');
       return;

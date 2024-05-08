@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import userimg from '../../images/icon/icons8-user-40.png';
 
 const DropdownUser = () => {
   const user = JSON.parse(localStorage.getItem('userData'));
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
@@ -34,7 +33,7 @@ const DropdownUser = () => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     // Clear access token from local storage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userData');
@@ -42,7 +41,7 @@ const DropdownUser = () => {
     localStorage.removeItem('color-theme');
     // Redirect to sign-in page
     window.location.href = '/auth/signin';
-  };
+  }, []);
 
   return (
     <div className="relative">

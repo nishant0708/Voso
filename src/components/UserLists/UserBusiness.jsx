@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import businessSegmentData from '../../utils/businessSegmentData';
 import stateNames from '../../utils/stateNames';
+import QuillEditor from '../../utils/QuillEditor';
+import { BACKEND_URL } from '../../url/url';
+import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
+import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { toast } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
-import { BACKEND_URL } from '../../url/url';
-import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
-import QuillEditor from '../../utils/QuillEditor';
 
 const UserBusiness = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,24 @@ const UserBusiness = () => {
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const [formData, setFormData] = useState({
+    domainName: '',
+    profileImage: '',
+    coverImage: '',
+    businessName: '',
+    businessSegment: '',
+    description: '',
+    address1: '',
+    address2: '',
+    city: '',
+    pincode: '',
+    state: '',
+    locationURL: '',
+    company: '',
+    designation: '',
+    businessPan: '',
+    businessGST: '',
+  });
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -44,45 +62,27 @@ const UserBusiness = () => {
     });
   }, [userSEO]);
 
-  const initialFormData = {
-    domainName: '',
-    profileImage: '',
-    coverImage: '',
-    businessName: '',
-    businessSegment: '',
-    description: '',
-    address1: '',
-    address2: '',
-    city: '',
-    pincode: '',
-    state: '',
-    locationURL: '',
-    company: '',
-    designation: '',
-    businessPan: '',
-    businessGST: '',
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      updateUserBusiness({
-        formData,
-        email: userSEO?.userId?.email,
-        mobile: userSEO?.userId?.mobile,
-        userId,
-      }),
-    );
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(
+        updateUserBusiness({
+          formData,
+          email: userSEO?.userId?.email,
+          mobile: userSEO?.userId?.mobile,
+          userId,
+        }),
+      );
+    },
+    [dispatch, formData, userSEO, userId],
+  );
 
   return (
     <DefaultLayout>

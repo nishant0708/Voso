@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
@@ -14,47 +14,45 @@ const BlogsTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, pageData } = useSelector((state) => state.usersList);
-
-  const handlepop = (val) => {
-    setActive(val);
-  };
-
-  const ref = useRef(null);
-  useOnClickOutside(ref, handlepop);
-
   const limit = 20;
   const [page, setPage] = useState(1);
+  const [active, setActive] = useState(null);
+  const ref = useRef(null);
+  const totalPages = Math.ceil(pageData.total / limit);
+
+  const handlepop = useCallback((val) => {
+    setActive(val);
+  }, []);
+
+  useOnClickOutside(ref, handlepop);
 
   useEffect(() => {
     dispatch(fetchUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
-  const [active, setActive] = useState(null);
-  const handlePopup = (id) => {
+  const handlePopup = useCallback((id) => {
     setActive(id);
-  };
+  }, []);
 
-  const totalPages = Math.ceil(pageData.total / limit);
-
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = useCallback((pageNumber) => {
     setPage(pageNumber);
-  };
+  }, []);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (page === 1) {
       return;
     }
     setPage(page - 1);
-  };
+  }, [page]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (page === totalPages) {
       return;
     }
     setPage(page + 1);
-  };
+  }, [page, totalPages]);
 
-  const renderPageNumbers = () => {
+  const renderPageNumbers = useCallback(() => {
     const pageNumbers = [];
     const maxVisiblePages = 5; // Define the maximum visible page numbers
 
@@ -121,7 +119,7 @@ const BlogsTable = () => {
     }
 
     return pageNumbers;
-  };
+  }, [totalPages, page, handlePageChange]);
 
   return (
     <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

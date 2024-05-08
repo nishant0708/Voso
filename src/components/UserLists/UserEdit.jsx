@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
+import { fetchUserDetails } from '../../Redux/slicer/userDetails';
+import { updateUserDetails } from '../../Redux/slicer/updateDetailsSlice';
 import { FaListUl } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
-import { fetchUserDetails } from '../../Redux/slicer/userDetails';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserDetails } from '../../Redux/slicer/updateDetailsSlice';
 
 const UserEdit = () => {
   const dispatch = useDispatch();
@@ -14,12 +14,20 @@ const UserEdit = () => {
   const { userId } = useParams();
   const { user } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    gender: '',
+    email: '',
+    mobile: '',
+    isApproved: '',
+    isEmail: '',
+    isMobile: '',
+    isUnactive: '',
+  });
 
-  useEffect(() => {
-    dispatch(fetchUserDetails({ userId }));
-  }, [dispatch, userId]);
-
-  const format = (dateString) => {
+  const format = useCallback((dateString) => {
     const date = new Date(dateString);
 
     // Extract year, month, and day from the date object
@@ -29,7 +37,11 @@ const UserEdit = () => {
 
     // Construct the date string in "yyyy-MM-dd" format
     return `${year}-${month}-${day}`;
-  };
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchUserDetails({ userId }));
+  }, [dispatch, userId]);
 
   const setData = useCallback(() => {
     setFormData({
@@ -44,42 +56,30 @@ const UserEdit = () => {
       isMobile: user?.is_mobile_verified ? 'true' : 'false' || '',
       isUnactive: user?.is_inactive ? 'true' : 'false' || '',
     });
-  }, [user]);
+  }, [user, format]);
 
   useEffect(() => {
     setData();
   }, [setData, user]);
 
-  const initialFormData = {
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    gender: '',
-    email: '',
-    mobile: '',
-    isApproved: '',
-    isEmail: '',
-    isMobile: '',
-    isUnactive: '',
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(updateUserDetails({ formData, userId }));
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(updateUserDetails({ formData, userId }));
+    },
+    [dispatch, formData, userId],
+  );
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setData();
-  };
+  }, [setData]);
 
   return (
     <DefaultLayout>

@@ -6,7 +6,6 @@ const Breadcrumb = ({ pageName }) => {
       <h2 className="text-title-md2 font-semibold text-black dark:text-white">
         {pageName}
       </h2>
-
       <nav>
         <ol className="flex items-center gap-2">
           <li>

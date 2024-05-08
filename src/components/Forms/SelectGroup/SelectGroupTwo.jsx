@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 const SelectGroupTwo = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [isOptionSelected, setIsOptionSelected] = useState(false);
 
-  const changeTextColor = () => {
+  const changeTextColor = useCallback(() => {
     setIsOptionSelected(true);
-  };
+  }, []);
 
   return (
     <div>

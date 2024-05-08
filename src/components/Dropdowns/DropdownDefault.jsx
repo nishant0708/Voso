@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 const DropdownDefault = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef(null);
   const dropdown = useRef(null);
 

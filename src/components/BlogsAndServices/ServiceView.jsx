@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   fetchServices,
   toggleServiceFeature,
 } from '../../Redux/slicer/blogSlice';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import formatDate from '../../utils/formatDate';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const ServiceView = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userId } = useParams();
   const { services, status, error } = useSelector((state) => state.blogs);
 
@@ -20,13 +20,13 @@ const ServiceView = () => {
     dispatch(fetchServices({ userId }));
   }, [dispatch, userId]);
 
-  const renderImage = (imageUrl) => {
+  const renderImage = useCallback((imageUrl) => {
     if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
+  }, []);
 
   if (status === 'loading') {
     return (

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import QuillEditor from '../../utils/QuillEditor';
+import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserSEO } from '../../Redux/slicer/updateDetailsSlice';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const UserSEO = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,13 @@ const UserSEO = () => {
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const [formData, setFormData] = useState({
+    homeTitle: '',
+    siteTitle: '',
+    metaKeyword: '',
+    googleAnalytics: '',
+    description: '',
+  });
 
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
@@ -28,34 +35,27 @@ const UserSEO = () => {
     });
   }, [userSEO]);
 
-  const initialFormData = {
-    homeTitle: '',
-    siteTitle: '',
-    metaKeyword: '',
-    googleAnalytics: '',
-    description: '',
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      updateUserSEO({
-        formData,
-        email: userSEO?.userId?.email,
-        mobile: userSEO?.userId?.mobile,
-        userId,
-      }),
-    );
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(
+        updateUserSEO({
+          formData,
+          email: userSEO?.userId?.email,
+          mobile: userSEO?.userId?.mobile,
+          userId,
+        }),
+      );
+    },
+    [dispatch, formData, userId, userSEO],
+  );
 
   return (
     <DefaultLayout>

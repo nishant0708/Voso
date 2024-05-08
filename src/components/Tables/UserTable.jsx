@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import formatDate from '../../utils/formatDate';
 import { IoIosAddCircle } from 'react-icons/io';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { TbDotsVertical } from 'react-icons/tb';
@@ -15,23 +17,22 @@ import { FaEye } from 'react-icons/fa';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
-import formatDate from '../../utils/formatDate';
 
 const UserTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, pageData } = useSelector((state) => state.usersList);
-
-  const handlepop = (val) => {
-    setActive(val);
-  };
-
   const ref = useRef(null);
-  useOnClickOutside(ref, handlepop);
-
   const limit = 20;
   const [page, setPage] = useState(1);
+  const [active, setActive] = useState(null);
+  const totalPages = Math.ceil(pageData.total / limit);
+
+  const handlepop = useCallback((val) => {
+    setActive(val);
+  }, []);
+
+  useOnClickOutside(ref, handlepop);
 
   const callFetchUsers = useCallback(
     (limit, page) => {
@@ -45,7 +46,7 @@ const UserTable = () => {
     callFetchUsers(limit, page);
   }, [callFetchUsers, limit, page]);
 
-  const calculateDays = (user) => {
+  const calculateDays = useCallback((user) => {
     if (user.subscription && user.subscription.endDate) {
       const days = Math.ceil(
         (new Date(user.subscription.endDate) - new Date()) /
@@ -55,34 +56,31 @@ const UserTable = () => {
     } else {
       return 0;
     }
-  };
+  }, []);
 
-  const [active, setActive] = useState(null);
-  const handlePopup = (id) => {
+  const handlePopup = useCallback((id) => {
     setActive(id);
-  };
+  }, []);
 
-  const totalPages = Math.ceil(pageData.total / limit);
-
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = useCallback((pageNumber) => {
     setPage(pageNumber);
-  };
+  }, []);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (page === 1) {
       return;
     }
     setPage(page - 1);
-  };
+  }, [page]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (page === totalPages) {
       return;
     }
     setPage(page + 1);
-  };
+  }, [page, totalPages]);
 
-  const renderPageNumbers = () => {
+  const renderPageNumbers = useCallback(() => {
     const pageNumbers = [];
     const maxVisiblePages = 5; // Define the maximum visible page numbers
 
@@ -149,7 +147,7 @@ const UserTable = () => {
     }
 
     return pageNumbers;
-  };
+  }, [totalPages, page, handlePageChange]);
 
   return (
     <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

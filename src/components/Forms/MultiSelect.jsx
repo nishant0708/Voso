@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const MultiSelect = ({ id }) => {
   const [options, setOptions] = useState([]);
@@ -6,6 +6,21 @@ const MultiSelect = ({ id }) => {
   const [show, setShow] = useState(false);
   const dropdownRef = useRef(null);
   const trigger = useRef(null);
+
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!dropdownRef.current) return;
+      if (
+        !show ||
+        dropdownRef.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
+      setShow(false);
+    };
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
+  });
 
   useEffect(() => {
     const loadOptions = () => {
@@ -22,65 +37,55 @@ const MultiSelect = ({ id }) => {
         setOptions(newOptions);
       }
     };
-
     loadOptions();
   }, [id]);
 
-  const open = () => {
+  const open = useCallback(() => {
     setShow(true);
-  };
+  }, []);
 
-  const isOpen = () => {
+  const isOpen = useCallback(() => {
     return show === true;
-  };
+  }, [show]);
 
-  const select = (index, event) => {
-    const newOptions = [...options];
+  const select = useCallback(
+    (index, event) => {
+      const newOptions = [...options];
 
-    if (!newOptions[index].selected) {
-      newOptions[index].selected = true;
-      newOptions[index].element = event.currentTarget;
-      setSelected([...selected, index]);
-    } else {
+      if (!newOptions[index].selected) {
+        newOptions[index].selected = true;
+        newOptions[index].element = event.currentTarget;
+        setSelected([...selected, index]);
+      } else {
+        const selectedIndex = selected.indexOf(index);
+        if (selectedIndex !== -1) {
+          newOptions[index].selected = false;
+          setSelected(selected.filter((i) => i !== index));
+        }
+      }
+
+      setOptions(newOptions);
+    },
+    [options, selected],
+  );
+
+  const remove = useCallback(
+    (index) => {
+      const newOptions = [...options];
       const selectedIndex = selected.indexOf(index);
+
       if (selectedIndex !== -1) {
         newOptions[index].selected = false;
         setSelected(selected.filter((i) => i !== index));
+        setOptions(newOptions);
       }
-    }
+    },
+    [options, selected],
+  );
 
-    setOptions(newOptions);
-  };
-
-  const remove = (index) => {
-    const newOptions = [...options];
-    const selectedIndex = selected.indexOf(index);
-
-    if (selectedIndex !== -1) {
-      newOptions[index].selected = false;
-      setSelected(selected.filter((i) => i !== index));
-      setOptions(newOptions);
-    }
-  };
-
-  const selectedValues = () => {
+  const selectedValues = useCallback(() => {
     return selected.map((option) => options[option].value);
-  };
-
-  useEffect(() => {
-    const clickHandler = ({ target }) => {
-      if (!dropdownRef.current) return;
-      if (
-        !show ||
-        dropdownRef.current.contains(target) ||
-        trigger.current.contains(target)
-      )
-        return;
-      setShow(false);
-    };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
-  });
+  }, [options, selected]);
 
   return (
     <div className="relative z-50">

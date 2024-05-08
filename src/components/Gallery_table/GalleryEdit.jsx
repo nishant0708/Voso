@@ -7,6 +7,7 @@ import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
 import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice';
 import ImageCropper from '../../utils/cropImage';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 const GalleryEdit = () => {
   const dispatch = useDispatch();

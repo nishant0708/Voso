@@ -8,6 +8,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 const ProductEdit = () => {
   const dispatch = useDispatch();

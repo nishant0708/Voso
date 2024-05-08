@@ -7,6 +7,7 @@ import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();

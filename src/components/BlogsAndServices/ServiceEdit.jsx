@@ -10,6 +10,7 @@ import {
   updateServiceById,
 } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 const ServiceEdit = () => {
   const dispatch = useDispatch();

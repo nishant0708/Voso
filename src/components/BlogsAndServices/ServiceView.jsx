@@ -9,6 +9,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import formatDate from '../../utils/formatDate';
 import Loader from '../../common/Loader';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const ServiceView = () => {
   const dispatch = useDispatch();

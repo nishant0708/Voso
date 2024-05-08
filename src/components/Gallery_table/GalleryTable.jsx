@@ -8,6 +8,7 @@ import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
 import formatDate from '../../utils/formatDate';
 import Loader from '../../common/Loader';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const GalleryTable = () => {
   const dispatch = useDispatch();

@@ -8,6 +8,7 @@ import { fetchProducts } from '../../Redux/slicer/productSlice';
 import { toggleProductFeature } from '../../Redux/slicer/productFeatureSlice';
 import formatDate from '../../utils/formatDate';
 import Loader from '../../common/Loader';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const ProductTable = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchUsers } from '../../Redux/slicer/userList';
@@ -9,119 +9,51 @@ import { FaCircleUser } from 'react-icons/fa6';
 import { FaRupeeSign } from 'react-icons/fa';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
+import Pagination from '../../utils/Pagination';
+
 
 const BlogsTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { users, pageData } = useSelector((state) => state.usersList);
-
-  const handlepop = (val) => {
-    setActive(val);
-  };
-
-  const ref = useRef(null);
-  useOnClickOutside(ref, handlepop);
-
   const limit = 20;
   const [page, setPage] = useState(1);
+  const [active, setActive] = useState(null);
+  const ref = useRef(null);
+  const totalPages = Math.ceil(pageData.total / limit);
+
+  //handling click on 3 dots 
+  const handlepop = useCallback((val) => {
+    setActive(val);
+  }, []);
+
+  useOnClickOutside(ref, handlepop);
+
+  const handlePopup = useCallback((id) => {
+    setActive(id);
+  }, []);
+
+  //fetching user details
 
   useEffect(() => {
     dispatch(fetchUsers({ limit, page }));
   }, [dispatch, limit, page]);
 
-  const [active, setActive] = useState(null);
-  const handlePopup = (id) => {
-    setActive(id);
-  };
 
-  const totalPages = Math.ceil(pageData.total / limit);
-
+//handling page change for pagination
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
 
   const handlePrev = () => {
-    if (page === 1) {
-      return;
-    }
-    setPage(page - 1);
+    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
   };
 
   const handleNext = () => {
-    if (page === totalPages) {
-      return;
-    }
-    setPage(page + 1);
+    setPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : prevPage));
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const maxVisiblePages = 5; // Define the maximum visible page numbers
 
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(
-          <span
-            key={i}
-            className={`cursor-pointer ${
-              page === i ? 'text-primary bg-primary font-bold' : ''
-            }`}
-            onClick={() => handlePageChange(i)}
-          >
-            {i}
-          </span>,
-        );
-      }
-    } else {
-      const leftBoundary = Math.max(1, page - Math.floor(maxVisiblePages / 2));
-      const rightBoundary = Math.min(
-        totalPages,
-        leftBoundary + maxVisiblePages - 1,
-      );
-
-      if (leftBoundary > 1) {
-        pageNumbers.push(
-          <span
-            key={1}
-            className="cursor-pointer"
-            onClick={() => handlePageChange(1)}
-          >
-            1
-          </span>,
-        );
-        pageNumbers.push(<span key="leftDots">...</span>);
-      }
-
-      for (let i = leftBoundary; i <= rightBoundary; i++) {
-        pageNumbers.push(
-          <span
-            key={i}
-            className={`cursor-pointer ${
-              page === i ? 'text-primary text-center font-bold' : ''
-            }`}
-            onClick={() => handlePageChange(i)}
-          >
-            {i}
-          </span>,
-        );
-      }
-
-      if (rightBoundary < totalPages) {
-        pageNumbers.push(<span key="rightDots">...</span>);
-        pageNumbers.push(
-          <span
-            key={totalPages}
-            className="cursor-pointer"
-            onClick={() => handlePageChange(totalPages)}
-          >
-            {totalPages}
-          </span>,
-        );
-      }
-    }
-
-    return pageNumbers;
-  };
 
   return (
     <div className="overflow-x-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -142,7 +74,9 @@ const BlogsTable = () => {
         <button onClick={handlePrev}>
           <MdOutlineKeyboardDoubleArrowLeft />
         </button>
-        <div className="flex gap-5">{renderPageNumbers()}</div>
+        <div className="flex gap-5">
+        <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
+        </div>
         <button onClick={handleNext}>
           <MdOutlineKeyboardDoubleArrowRight />
         </button>

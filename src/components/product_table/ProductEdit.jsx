@@ -1,39 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchproductedit } from '../../Redux/slicer/productEditSlice';
-import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer'; // Import the updateProductDetails action
+import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
+import renderImage from '../../common/renderImage';
 
 const ProductEdit = () => {
   const dispatch = useDispatch();
-  const { productId } = useParams();
   const navigate = useNavigate();
+  const { productId } = useParams();
   const { product } = useSelector((state) => state.Editproduct);
   const { isLoading } = useSelector((state) => state.updateProdct);
+
   const [imageUrl, setimageUrl] = useState('');
   const [imgcrop, setimgcrop] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+  const [productUrl, setProductUrl] = useState('');
+  const [showAddUrl, setShowAddUrl] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isbutHovered, setbutIsHovered] = useState(false);
 
-  const setimg = (file) => {
-    setimgcrop(file);
-  };
-
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
-
+  //fetching product details by id 
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
   }, [dispatch, productId]);
 
+  //setting data 
   useEffect(() => {
     if (product) {
       setProductName(product.product_name);
@@ -44,18 +43,12 @@ const ProductEdit = () => {
     }
   }, [product]);
 
-  const [productName, setProductName] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [productUrl, setProductUrl] = useState('');
+  const setimg = useCallback((file) => {
+    setimgcrop(file);
+  }, []);
 
-  const [showAddUrl, setShowAddUrl] = useState(true);
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [isbutHovered, setbutIsHovered] = useState(false);
-
-  //updating details
-  const handleUpdateProduct = () => {
+  //updating details of product
+  const handleUpdateProduct = useCallback(() => {
     const updatedProductData = {
       productId: product._id,
       productName: productName,
@@ -67,13 +60,24 @@ const ProductEdit = () => {
 
     dispatch(updateProductDetails(updatedProductData))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         navigate('/products');
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
-  };
+  }, [
+    dispatch,
+    navigate,
+    product,
+    productName,
+    productPrice,
+    productDescription,
+    showAddUrl,
+    imgcrop,
+    imageUrl,
+    productUrl,
+  ]);
 
   return (
     <DefaultLayout>
@@ -212,20 +216,8 @@ const ProductEdit = () => {
               <p
                 onMouseEnter={() => setbutIsHovered(true)}
                 onMouseLeave={() => setbutIsHovered(false)}
-                style={{
-                  width: 'max-content',
-                  border: '2px solid #727CF5',
-                  color: isbutHovered ? 'white' : '#727CF5',
-                  padding: '8px 15px',
-                  marginLeft: '10px',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  zIndex: '40',
-                  position: 'absolute',
-                  top: '13%',
-                  right: '0%',
-                  backgroundColor: isbutHovered ? '#727CF5' : 'white',
-                }}
+                className="w-fit text-sm py-2 px-3 cursor-pointer sm:ml-[10px] whitespace-nowrap z-40 sm:absolute top-[14%] right-[0%]  border rounded-md border-[#727CF5] text-[#727CF5] bg-white hover:text-white hover:bg-[#727CF5]"
+               
                 onClick={() => setShowAddUrl((prev) => !prev)}
               >
                 Change to upload Image

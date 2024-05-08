@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 import formatDate from '../../utils/formatDate';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const UserView = () => {
   const dispatch = useDispatch();
@@ -12,13 +12,9 @@ const UserView = () => {
   const { userId } = useParams();
   const { user } = useSelector((state) => state.userDetails);
 
-  useEffect(() => {
-    dispatch(fetchUserDetails({ userId }));
-  }, [dispatch, userId]);
-
+  // date formatter
   const format = (dateString) => {
     const date = new Date(dateString);
-
     // Extract year, month, and day from the date object
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
@@ -27,6 +23,11 @@ const UserView = () => {
     // Construct the date string in "yyyy-MM-dd" format
     return `${year}-${month}-${day}`;
   };
+
+  // calling api to fetch user details
+  useEffect(() => {
+    dispatch(fetchUserDetails({ userId }));
+  }, [dispatch, userId]);
 
   return (
     <DefaultLayout>

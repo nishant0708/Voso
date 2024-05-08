@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching products List
 export const fetchProducts = createAsyncThunk(
   'products',
   async ({ userId }) => {

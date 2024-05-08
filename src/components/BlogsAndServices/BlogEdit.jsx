@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
-import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import ImageCropper from '../../utils/cropImage';
+import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
+import renderImage from '../../common/renderImage';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
@@ -14,48 +15,41 @@ const BlogEdit = () => {
   const { blogId } = useParams();
   const { blog } = useSelector((state) => state.blogs);
   const [imgcrop, setimgcrop] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    bannerImg: '',
+    content: '',
+  });
 
-  const setimg = (file) => {
-    setimgcrop(file);
-  };
-
+  //calling api to fectch user blog
   useEffect(() => {
     dispatch(fetchBlogById({ blogId }));
   }, [dispatch, blogId]);
 
+  //setting image title and content
   useEffect(() => {
-    setFormData({
-      title: blog?.title || '',
-      bannerImg: blog?.bannerImage || '',
-      content: blog?.content || '',
-    });
+    if (blog)
+      setFormData({
+        title: blog?.title || '',
+        bannerImg: blog?.bannerImage || '',
+        content: blog?.content || '',
+      });
   }, [blog]);
 
-  const initialFormData = {
-    title: '',
-    bannerImg: '',
-    content: '',
-  };
+  const setimg = useCallback((file) => {
+    setimgcrop(file);
+  }, []);
 
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  //handling  data change
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
-
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
+  }, []);
 
   //updating details
-  const handleUpdateBlog = () => {
+  const handleUpdateBlog = useCallback(() => {
     const data = {
       blogId: blog._id,
       title: formData.title,
@@ -65,13 +59,13 @@ const BlogEdit = () => {
 
     dispatch(updateBlogById(data))
       .then(() => {
-        alert('Operation Successful');
+        toast('Operation Successful');
         navigate(`/blogs/blogView/${blog.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+        toast(`Error updating product: ${error.message}`);
       });
-  };
+  }, [dispatch, blog, formData, imgcrop, navigate]);
 
   return (
     <DefaultLayout>

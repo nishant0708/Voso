@@ -7,7 +7,7 @@ const initialState = {
   error: null,
 };
 
-// Thunk action creator to update product details
+// Thunk action creator to update product details on clicking Update
 export const updateProductDetails = (data) => async (dispatch) => {
   dispatch(updateProductDetailsStart()); // Dispatch the start action
 

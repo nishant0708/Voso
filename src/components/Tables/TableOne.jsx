@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
-import userimg from '../../images/icon/icons8-user-40.png';
 import formatDate from '../../utils/formatDate';
+import userimg from '../../images/icon/icons8-user-40.png';
 
 const TableOne = () => {
   const dispatch = useDispatch();
@@ -10,6 +10,7 @@ const TableOne = () => {
   const page = 1;
   const { topUsers, loading, error } = useSelector((state) => state.topUsers);
 
+  //calling api to fetch top 10 user
   useEffect(() => {
     dispatch(fetchTopUsers({ limit, page }));
   }, [dispatch, limit, page]);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import dataJSON from '../../public/data.json';
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
@@ -17,7 +17,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   );
   const [errors, setErrors] = useState([]);
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     if (formState.id && formState.value) {
       setErrors([]);
       return true;
@@ -25,10 +25,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       let errorFields = [];
       for (const [key, value] of Object.entries(formState)) {
         if (!value) {
-          errorFields.push(key == 'id' ? 'Bond ID' : key);
+          errorFields.push(key === 'id' ? 'Bond ID' : key);
         } else {
-          if (key == 'id') {
-            if (!(Object.keys(dataJSON).includes(value) || value == 'ALL')) {
+          if (key === 'id') {
+            if (!(Object.keys(dataJSON).includes(value) || value === 'ALL')) {
               errorFields.push('INVALID_ID_' + value);
             }
           }
@@ -37,30 +37,32 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       setErrors(errorFields);
       return false;
     }
-  };
+  }, [formState]);
 
-  const handleChange = (e) => {
-    if (
-      e.target.name == 'para' &&
-      e.target.value == 'rating' &&
-      formState.criterion > 1 &&
-      formState.criterion < 4
-    ) {
-      setFormState({ ...formState, ['criterion']: 0 });
-    }
+  const handleChange = useCallback(
+    (e) => {
+      if (
+        e.target.name === 'para' &&
+        e.target.value === 'rating' &&
+        formState.criterion > 1 &&
+        formState.criterion < 4
+      ) {
+        setFormState({ ...formState });
+      }
+      setFormState({ ...formState, [e.target.name]: e.target.value });
+    },
+    [formState],
+  );
 
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    onSubmit(formState);
-
-    closeModal();
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+      onSubmit(formState);
+      closeModal();
+    },
+    [closeModal, formState, onSubmit, validateForm],
+  );
 
   return (
     <div
@@ -151,13 +153,13 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 <div className="relative z-20 w-full rounded border border-stroke p-1.5 pr-8 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
                   <div className="flex flex-wrap items-center"></div>
                   <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium dark:border-strokedark dark:bg-white/30">
-                    {formState.criterion == 0
+                    {formState.criterion === 0
                       ? 'goes down by'
-                      : formState.criterion == 1
+                      : formState.criterion === 1
                         ? 'goes up by'
-                        : formState.criterion == 2
+                        : formState.criterion === 2
                           ? 'is smaller than'
-                          : formState.criterion == 3
+                          : formState.criterion === 3
                             ? 'is greater than'
                             : 'is equal to'}
                   </span>
@@ -169,10 +171,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                   >
                     <option value="0">goes down by</option>
                     <option value="1">goes up by</option>
-                    {!(formState.para == 'rating') && (
+                    {!(formState.para === 'rating') && (
                       <option value="2">is smaller than</option>
                     )}
-                    {!(formState.para == 'rating') && (
+                    {!(formState.para === 'rating') && (
                       <option value="3">is greater than</option>
                     )}
 
@@ -224,16 +226,16 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                   <div className="flex flex-wrap items-center"></div>
                   <span
                     className={`${
-                      formState.type == 0
+                      formState.type === 0
                         ? 'bg-[#04b20c]'
-                        : formState.type == 1
+                        : formState.type === 1
                           ? 'bg-[#eab90f]'
                           : 'bg-[#e13f32]'
                     } m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke py-1.5 px-2.5 text-white font-medium dark:border-strokedark`}
                   >
-                    {formState.type == 0
+                    {formState.type === 0
                       ? 'Info'
-                      : formState.type == 1
+                      : formState.type === 1
                         ? 'Warning'
                         : 'Alert'}
                   </span>

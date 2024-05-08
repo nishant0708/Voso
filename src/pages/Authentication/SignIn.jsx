@@ -12,7 +12,7 @@ const SignIn = () => {
 
   // to get data from redux store
   const {isLoading} = useSelector((state) => state.auth);
-
+const [show,setShow]=useState(false);
   //  to handle state of sign in
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -233,7 +233,7 @@ const SignIn = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type="password"
+                      type={show ? "text": "password"}
                       placeholder="Enter your Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -241,7 +241,7 @@ const SignIn = () => {
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span className="absolute right-4 top-4"  onClick={()=>setShow(!show)}>
                       <svg
                         className="fill-current"
                         width="22"

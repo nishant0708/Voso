@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,15 +8,13 @@ import toast from 'react-hot-toast';
 const ChangePassword = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('userData'));
-  const { isLoading } = useSelector((state) => state.updateDetails);
-
   const initialFormData = {
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
   };
-
   const [formData, setFormData] = useState(initialFormData);
+  const { isLoading } = useSelector((state) => state.updateDetails);
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
@@ -25,21 +23,24 @@ const ChangePassword = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.newPassword !== formData.confirmPassword) {
-      toast.error("New Password and Confirm Password don't match");
-      return;
-    }
-    dispatch(
-      userChangePassword({
-        userId: user.id,
-        oldPassword: formData.oldPassword,
-        newPassword: formData.newPassword,
-      }),
-    );
-  };
-
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (formData.newPassword !== formData.confirmPassword) {
+        toast.error("New Password and Confirm Password don't match");
+        return;
+      }
+      dispatch(
+        userChangePassword({
+          userId: user.id,
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+        }),
+      );
+    },
+    [formData, dispatch, user],
+  );
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Change Password" />

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
+import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserSocial } from '../../Redux/slicer/updateDetailsSlice';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const UserSocial = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,20 @@ const UserSocial = () => {
   const { userId } = useParams();
   const { userSEO } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const [formData, setFormData] = useState({
+    Facebook: '',
+    Twitter: '',
+    Instagram: '',
+    LinkedIn: '',
+    YouTube: '',
+    WhatsApp: '',
+    Amazon: '',
+    Flipkart: '',
+    Swiggy: '',
+    Zomato: '',
+  });
 
+  // calling api to fetch user social details
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
   }, [dispatch, userId]);
@@ -52,39 +65,28 @@ const UserSocial = () => {
     });
   }, [userSEO]);
 
-  const initialFormData = {
-    Facebook: '',
-    Twitter: '',
-    Instagram: '',
-    LinkedIn: '',
-    YouTube: '',
-    WhatsApp: '',
-    Amazon: '',
-    Flipkart: '',
-    Swiggy: '',
-    Zomato: '',
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      updateUserSocial({
-        formData,
-        email: userSEO?.userId?.email,
-        mobile: userSEO?.userId?.mobile,
-        userId,
-      }),
-    );
-  };
+  // calling api to update user social details
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(
+        updateUserSocial({
+          formData,
+          email: userSEO?.userId?.email,
+          mobile: userSEO?.userId?.mobile,
+          userId,
+        }),
+      );
+    },
+    [dispatch, formData, userId, userSEO],
+  );
 
   return (
     <DefaultLayout>

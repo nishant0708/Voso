@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
+import ImageCropper from '../../utils/cropImage';
 import {
   fetchServiceById,
   updateServiceById,
 } from '../../Redux/slicer/blogSlice';
-import ImageCropper from '../../utils/cropImage';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
+import renderImage from '../../common/renderImage';
 
 const ServiceEdit = () => {
   const dispatch = useDispatch();
@@ -17,15 +18,21 @@ const ServiceEdit = () => {
   const { serviceId } = useParams();
   const { service } = useSelector((state) => state.blogs);
   const [imgcrop, setimgcrop] = useState('');
+  const [formData, setFormData] = useState({
+    serviceName: '',
+    servicePrice: '',
+    serviceDescription: '',
+    serviceUrl: '',
+    serviceImage: '',
+  });
+  const [showAddUrl, setShowAddUrl] = useState(true);
 
-  const setimg = (file) => {
-    setimgcrop(file);
-  };
-
+  //calling to fetch users service by id
   useEffect(() => {
     dispatch(fetchServiceById({ serviceId }));
   }, [dispatch, serviceId]);
 
+  //setting form data
   useEffect(() => {
     setFormData({
       serviceName: service?.service_name || '',
@@ -36,35 +43,19 @@ const ServiceEdit = () => {
     });
   }, [service]);
 
-  const initialFormData = {
-    serviceName: '',
-    servicePrice: '',
-    serviceDescription: '',
-    serviceUrl: '',
-    serviceImage: '',
+  const setimg = (file) => {
+    setimgcrop(file);
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
-
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
-
-  const [showAddUrl, setShowAddUrl] = useState(true);
+  }, []);
 
   //updating details
-  const handleUpdateService = () => {
+  const handleUpdateService = useCallback(() => {
     const data = {
       serviceId: service._id,
       serviceName: formData.serviceName,
@@ -76,13 +67,13 @@ const ServiceEdit = () => {
 
     dispatch(updateServiceById(data))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         navigate(`/blogs/serviceView/${service.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
-  };
+  }, [dispatch, navigate, service, formData, showAddUrl, imgcrop]);
 
   return (
     <DefaultLayout>

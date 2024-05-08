@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept'; // Assuming AxiosInstance is located in a utils folder
 
-// Async thunk to toggle product feature status
+// Async thunk to toggle Gallery Feature status
 export const togglegalleryFeature = createAsyncThunk(
   'togglegalleryFeature',
   async ({ productId, userId, isActive }) => {

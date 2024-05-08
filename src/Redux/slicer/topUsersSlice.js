@@ -9,7 +9,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching top Users of Month
 export const fetchTopUsers = createAsyncThunk(
   'topUsers',
   async ({ limit, page }) => {
@@ -20,17 +20,17 @@ export const fetchTopUsers = createAsyncThunk(
           page: page,
         },
       });
-      // //console.log('TOP USERS API Response:', response.data);
+     
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching todos:', error);
+    
       throw error;
     }
   },
 );
 
 // Define the todos slice
-const todosSlice = createSlice({
+const topUserSlice = createSlice({
   name: 'topUsers',
   initialState,
   reducers: {
@@ -56,4 +56,4 @@ const todosSlice = createSlice({
   },
 });
 
-export default todosSlice.reducer;
+export default topUserSlice.reducer;

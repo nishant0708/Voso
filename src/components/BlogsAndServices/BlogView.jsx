@@ -3,41 +3,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchBlogs } from '../../Redux/slicer/blogSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import formatDate from '../../utils/formatDate';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import Loader from '../../common/Loader';
+import renderImage from '../../common/renderImage';
 
 const ProductTable = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userId } = useParams();
   const { blogs, status, error } = useSelector((state) => state.blogs);
 
+  //fetching users list 
   useEffect(() => {
     dispatch(fetchBlogs({ userId }));
   }, [dispatch, userId]);
 
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
-
   if (status === 'loading') {
-    return (
-      <div className="text-2xl flex justify-center items-center">
-        Loading...
-      </div>
-    );
+    return <Loader />;
   }
 
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
 
-  if (blogs.length === 0) {
+  if (!blogs.length) {
     return (
       <DefaultLayout>
         <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

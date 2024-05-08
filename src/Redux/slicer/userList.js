@@ -9,7 +9,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching users
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
   async ({ limit, page }) => {
@@ -20,14 +20,16 @@ export const fetchUsers = createAsyncThunk(
           page: page,
         },
       });
-      // //console.log('USER API Response:', response.data);
+      
       return response.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },
 );
+
+//fetching data of userenquiry
 
 export const fetchEnquiriesList = createAsyncThunk(
   'users/fetchEnquiriesList',
@@ -40,10 +42,10 @@ export const fetchEnquiriesList = createAsyncThunk(
           page: page,
         },
       });
-      // //console.log('USER ENQUIRIES LIST API Response:', response.data);
+  
       return response.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },

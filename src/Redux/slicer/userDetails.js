@@ -9,7 +9,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching user Details
 export const fetchUserDetails = createAsyncThunk('user', async ({ userId }) => {
   try {
     const response = await AxiosInstance.post(`user/getDataById/`, {
@@ -17,14 +17,15 @@ export const fetchUserDetails = createAsyncThunk('user', async ({ userId }) => {
         id: userId,
       },
     });
-    // //console.log('USER DETAILS API Response:', response.data);
+   
     return response.data.data;
   } catch (error) {
-    //console.error('Error fetching in USER API:', error);
+
     throw error;
   }
 });
 
+// Define the asynchronous thunk for fetching seo edit 
 export const fetchUserSEODetails = createAsyncThunk(
   'userSEO',
   async ({ userId }) => {
@@ -34,10 +35,10 @@ export const fetchUserSEODetails = createAsyncThunk(
           id: userId,
         },
       });
-      // //console.log('USER SEO DETAILS API Response:', response.data);
+
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },

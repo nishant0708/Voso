@@ -6,6 +6,7 @@ const MonthlyUser = () => {
   const dispatch = useDispatch();
   const monthData = useSelector((state) => state.MonthCount.Month);
 
+  //calling api for fetching monthly user
   useEffect(() => {
     dispatch(fetchMonth());
   }, [dispatch]);

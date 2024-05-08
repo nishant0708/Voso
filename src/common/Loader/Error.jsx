@@ -1,6 +1,7 @@
 import React from 'react';
 import './error.css';
 
+// ERROR 404 page 
 const Error = () => {
   return (
     <div>

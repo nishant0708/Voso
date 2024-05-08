@@ -16,6 +16,8 @@ const GalleryEdit = () => {
   const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
   const [imgcrop, setimgcrop] = useState('');
 
+
+//fetching id details of gallery
   useEffect(() => {
     dispatch(fetchgalleryedit({ productId }));
   }, [dispatch, productId]);

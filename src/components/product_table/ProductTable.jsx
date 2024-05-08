@@ -17,6 +17,7 @@ const ProductTable = () => {
   const { products, status, error } = useSelector((state) => state.Product);
   const [hoveredButtons, setHoveredButtons] = useState({});
 
+  //fetching product list
   useEffect(() => {
     dispatch(fetchProducts({ userId }));
   }, [dispatch, userId]);

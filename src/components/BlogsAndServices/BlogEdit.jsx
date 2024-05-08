@@ -21,10 +21,12 @@ const BlogEdit = () => {
     content: '',
   });
 
+  //calling api to fectch user blog
   useEffect(() => {
     dispatch(fetchBlogById({ blogId }));
   }, [dispatch, blogId]);
 
+  //setting image title and content
   useEffect(() => {
     if (blog)
       setFormData({
@@ -38,6 +40,7 @@ const BlogEdit = () => {
     setimgcrop(file);
   }, []);
 
+  //handling  data change
   const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,

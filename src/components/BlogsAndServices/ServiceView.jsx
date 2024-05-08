@@ -17,6 +17,7 @@ const ServiceView = () => {
   const { userId } = useParams();
   const { services, status, error } = useSelector((state) => state.blogs);
 
+  //fetching services 
   useEffect(() => {
     dispatch(fetchServices({ userId }));
   }, [dispatch, userId]);

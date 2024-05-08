@@ -27,10 +27,12 @@ const ServiceEdit = () => {
   });
   const [showAddUrl, setShowAddUrl] = useState(true);
 
+  //calling to fetch users service by id
   useEffect(() => {
     dispatch(fetchServiceById({ serviceId }));
   }, [dispatch, serviceId]);
 
+  //setting form data
   useEffect(() => {
     setFormData({
       serviceName: service?.service_name || '',
@@ -60,7 +62,7 @@ const ServiceEdit = () => {
     }
   }, []);
 
-  //updating details
+  //updating details of data
   const handleUpdateService = useCallback(() => {
     const data = {
       serviceId: service._id,

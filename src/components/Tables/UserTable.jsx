@@ -29,12 +29,20 @@ const UserTable = () => {
   const [active, setActive] = useState(null);
   const totalPages = Math.ceil(pageData.total / limit);
 
+
+//handling click on 3 dots
   const handlepop = useCallback((val) => {
     setActive(val);
   }, []);
 
   useOnClickOutside(ref, handlepop);
 
+  const handlePopup = useCallback((id) => {
+    setActive(id);
+  }, []);
+
+
+//fetching users 
   const callFetchUsers = useCallback(
     (limit, page) => {
       dispatch(fetchUsers({ limit, page }));
@@ -47,6 +55,7 @@ const UserTable = () => {
     callFetchUsers(limit, page);
   }, [callFetchUsers, limit, page]);
 
+  //calculating reamining days column
   const calculateDays = useCallback((user) => {
     if (user.subscription && user.subscription.endDate) {
       const days = Math.ceil(
@@ -59,10 +68,7 @@ const UserTable = () => {
     }
   }, []);
 
-  const handlePopup = useCallback((id) => {
-    setActive(id);
-  }, []);
-
+//handling pagination 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };

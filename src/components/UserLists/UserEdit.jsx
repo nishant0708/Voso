@@ -27,6 +27,7 @@ const UserEdit = () => {
     isUnactive: '',
   });
 
+  //formating date
   const format = useCallback((dateString) => {
     const date = new Date(dateString);
 
@@ -39,10 +40,12 @@ const UserEdit = () => {
     return `${year}-${month}-${day}`;
   }, []);
 
+  //calling api to fetch user detals
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
   }, [dispatch, userId]);
 
+  //setting form data
   const setData = useCallback(() => {
     setFormData({
       firstName: user?.first_name || '',
@@ -58,16 +61,20 @@ const UserEdit = () => {
     });
   }, [user, format]);
 
+  //calling set data
   useEffect(() => {
     setData();
   }, [setData, user]);
 
+//handling changes
   const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
   }, []);
+
+  //handling submit button
 
   const handleSubmit = useCallback(
     (e) => {
@@ -76,7 +83,7 @@ const UserEdit = () => {
     },
     [dispatch, formData, userId],
   );
-
+//resetting form data
   const resetForm = useCallback(() => {
     setData();
   }, [setData]);

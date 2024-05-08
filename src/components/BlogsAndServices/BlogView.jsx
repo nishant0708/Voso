@@ -14,6 +14,7 @@ const ProductTable = () => {
   const { userId } = useParams();
   const { blogs, status, error } = useSelector((state) => state.blogs);
 
+  //fetching users list 
   useEffect(() => {
     dispatch(fetchBlogs({ userId }));
   }, [dispatch, userId]);

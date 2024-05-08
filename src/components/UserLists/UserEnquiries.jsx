@@ -13,7 +13,7 @@ const UserEnquiries = () => {
   const { users } = useSelector((state) => state.usersList);
   const limit = 10;
   const page = 1;
-
+//calling api to fetch user enquiry
   const callFetchUsers = useCallback(
     (limit, page, userId) => {
       dispatch(fetchEnquiriesList({ limit, page, userId }));
@@ -21,7 +21,7 @@ const UserEnquiries = () => {
     },
     [dispatch],
   );
-
+//calling api to fetch users
   useEffect(() => {
     callFetchUsers(limit, page, userId);
   }, [callFetchUsers, limit, page, userId]);

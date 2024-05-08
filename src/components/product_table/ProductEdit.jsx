@@ -27,10 +27,12 @@ const ProductEdit = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isbutHovered, setbutIsHovered] = useState(false);
 
+  //fetching product details by id 
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
   }, [dispatch, productId]);
 
+  //setting data 
   useEffect(() => {
     if (product) {
       setProductName(product.product_name);
@@ -53,7 +55,7 @@ const ProductEdit = () => {
     }
   }, []);
 
-  //updating details
+  //updating details of product
   const handleUpdateProduct = useCallback(() => {
     const updatedProductData = {
       productId: product._id,

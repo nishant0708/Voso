@@ -35,11 +35,12 @@ const UserBusiness = () => {
     businessPan: '',
     businessGST: '',
   });
-
+//calling api to fetch api details
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
   }, [dispatch, userId]);
 
+  //setting form data
   useEffect(() => {
     setFormData({
       domainName: userSEO?.domain || '',
@@ -62,12 +63,16 @@ const UserBusiness = () => {
     });
   }, [userSEO]);
 
+  //omchange
+
   const handleOnChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
   }, []);
+
+  //handling submit button
 
   const handleSubmit = useCallback(
     (e) => {

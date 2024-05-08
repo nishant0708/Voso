@@ -22,20 +22,25 @@ const BlogsTable = () => {
   const ref = useRef(null);
   const totalPages = Math.ceil(pageData.total / limit);
 
+  //handling click on 3 dots 
   const handlepop = useCallback((val) => {
     setActive(val);
   }, []);
 
   useOnClickOutside(ref, handlepop);
 
-  useEffect(() => {
-    dispatch(fetchUsers({ limit, page }));
-  }, [dispatch, limit, page]);
-
   const handlePopup = useCallback((id) => {
     setActive(id);
   }, []);
 
+  //fetching user details
+
+  useEffect(() => {
+    dispatch(fetchUsers({ limit, page }));
+  }, [dispatch, limit, page]);
+
+
+//handling page change for pagination
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };

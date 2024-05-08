@@ -31,14 +31,17 @@ const News_page_table = () => {
     if (imageUrl?.startsWith('https://')) {
       return imageUrl;
     } else {
-      return `${BACKEND_URL}${imageUrl}`;
+      return `${BACKEND_URL}news/${imageUrl}`;
     }
   };
   const handleDeleteNews = (id) => {
-    if (!id) {
-      toast.error('Somthing gone Wrong!.Please try again');
+    const value = window.confirm('Are you sure you want to delete this?');
+    if (value) {
+      if (!id) {
+        toast.error('Somthing gone Wrong!.Please try again');
+      }
+      dispatch(deleteNewsByIdApi(id));
     }
-    dispatch(deleteNewsByIdApi(id));
   };
   const formatDate = (dateString) => {
     const options = {
@@ -62,7 +65,7 @@ const News_page_table = () => {
         <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
           News List
         </h4>
-        <Link to={'/page'}>
+        <Link to={'/create-news'}>
           <button className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
             <FaCircleArrowLeft size={14} />
             News Create
@@ -127,7 +130,7 @@ const News_page_table = () => {
                       className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                     >
                       <div
-                        onClick={() => navigate(`/update/${news._id}`)}
+                        onClick={() => navigate(`/update-news/${news._id}`)}
                         className="flex gap-3 cursor-pointer items-center"
                       >
                         <FaCircleUser className="text-sm sm:text-md" />

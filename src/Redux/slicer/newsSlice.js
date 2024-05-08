@@ -41,7 +41,7 @@ export const getNewsApi = createAsyncThunk(
 
 export const getNewsByIdApi = createAsyncThunk('getNewsByIdApi', async (id) => {
   try {
-    const response = await AxiosInstance.get(`news/getnewsById?id=${id}`);
+    const response = await AxiosInstance.get(`news/getnewsById/${id}`);
     if (response.data?.success) {
       return response.data.data;
     }
@@ -50,6 +50,8 @@ export const getNewsByIdApi = createAsyncThunk('getNewsByIdApi', async (id) => {
     throw error;
   }
 });
+
+// to delete news
 export const deleteNewsByIdApi = createAsyncThunk(
   'deleteNewsByIdApi',
   async (id) => {
@@ -57,7 +59,7 @@ export const deleteNewsByIdApi = createAsyncThunk(
       const response = await AxiosInstance.delete(`news/delete/${id}`);
       if (response.data?.success) {
         toast.success(response.data?.message);
-        return response.data.data;
+        return { id };
       }
     } catch (error) {
       toast.error(error?.response.data.message);
@@ -69,12 +71,15 @@ export const deleteNewsByIdApi = createAsyncThunk(
 
 export const updateNewsApi = createAsyncThunk(
   'updateNewsApi',
-  async (formData) => {
+  async ({ formData, id }) => {
     try {
-      const response = await AxiosInstance.post('news/updateNews', formData);
+      const response = await AxiosInstance.put(
+        `news/updateNews/${id}`,
+        formData,
+      );
       if (response.data?.success) {
         toast.success(response?.data.message);
-        return response.data.data;
+        return response.data;
       }
     } catch (error) {
       toast.error(error?.response.data.message);
@@ -126,7 +131,7 @@ const newSlice = createSlice({
     });
     builder.addCase(getNewsByIdApi.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.singlenewData = action.payload;
+      state.singleData = action.payload;
     });
     builder.addCase(getNewsByIdApi.rejected, (state) => {
       state.isLoading = false;

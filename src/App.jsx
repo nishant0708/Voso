@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -39,12 +34,11 @@ import ServiceView from './components/BlogsAndServices/ServiceView';
 import BlogEdit from './components/BlogsAndServices/BlogEdit';
 import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
 import ProductEdit from './components/product_table/ProductEdit';
-import NewsPage from './pages/news_page/NewsPage';
-import NewsPageTable from './pages/news_page/NewsPageTable';
+import NewsPage from './pages/news_page/News_page';
+import NewsPageTable from './pages/news_page/News_page_table';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
 import SignInMobile from './pages/Authentication/SignInMobile';
-
 
 function App() {
   const navigate = useNavigate();
@@ -54,8 +48,12 @@ function App() {
 
   // Mock function to check if the user has an access token
   const checkAccessToken = useCallback(() => {
-    if (!accessToken || accessToken === undefined || accessToken === null || isTokenExpired(accessToken)) {
-  
+    if (
+      !accessToken ||
+      accessToken === undefined ||
+      accessToken === null ||
+      isTokenExpired(accessToken)
+    ) {
       localStorage.clear();
       navigate('/auth/signin');
       return;
@@ -88,7 +86,6 @@ function App() {
         <Loader />
       ) : accessToken ? (
         <Routes>
-           
           <Route
             index
             element={
@@ -242,14 +239,14 @@ function App() {
             }
           />
           <Route
-          path="/products/Galleryedit/:productId"
-          element={
-            <>
-              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <GalleryEdit />
-            </>
-          }
-        />
+            path="/products/Galleryedit/:productId"
+            element={
+              <>
+                <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <GalleryEdit />
+              </>
+            }
+          />
 
           <Route
             path="/user/settings"
@@ -289,7 +286,7 @@ function App() {
             }
           />
           <Route
-            path="/page"
+            path="/create-news"
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -298,7 +295,16 @@ function App() {
             }
           />
           <Route
-            path="/page_table"
+            path="/update-news/:id"
+            element={
+              <>
+                <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <NewsPage />
+              </>
+            }
+          />
+          <Route
+            path="/all-news"
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -306,7 +312,7 @@ function App() {
               </>
             }
           />
-           <Route path="*" element={<Error/>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       ) : (
         <Routes>
@@ -331,7 +337,7 @@ function App() {
             path="/auth/sign_in_with_mobile"
             element={
               <>
-               <SignInMobile/>
+                <SignInMobile />
               </>
             }
           />
@@ -344,7 +350,7 @@ function App() {
           }
         /> */}
           {/* <Route path="*" element={<Navigate to="/auth/signin" />} /> */}
-          <Route path="*" element={<Error/>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       )}
     </div>

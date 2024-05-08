@@ -1,15 +1,22 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import QuillEditor from '../../utils/QuillEditor';
-import { createNewsApi } from '../../Redux/slicer/newsSlice';
+import {
+  createNewsApi,
+  getNewsByIdApi,
+  updateNewsApi,
+} from '../../Redux/slicer/newsSlice';
 import TagInput from './TagInput';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import { BACKEND_URL } from '../../url/url';
 const News_page = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { singleData } = useSelector((state) => state.news);
   const [tags, setTags] = useState([]);
   const [links, setLinks] = useState([]); // State to hold the list of links
   const [linkUrl, setLinkUrl] = useState(''); // State for the link URL input
@@ -18,29 +25,40 @@ const News_page = () => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('news');
   const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image file
+  const [previewImage, setPreviewImage] = useState(null); // State to hold the selected image file
   const [content, setContent] = useState(''); // State to hold the QuillEditor content
-
   const [loading, setLoading] = useState(false); // State to manage loading
-  const [error, setError] = useState(null); // State to manage errors
-  const [success, setSuccess] = useState(false); // State for success message
 
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    if (id) {
+      dispatch(getNewsByIdApi(id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (id) {
+      setTitle(singleData?.title);
+      setTags(singleData?.keywords);
+      if (singleData?.category === 'news') {
+        setContent(singleData?.content);
+        setLinks(singleData?.socialLinks);
+      }
+      setPreviewImage(`${BACKEND_URL}news/${singleData?.Image}`);
+      setType(singleData?.category);
+    }
+  }, [singleData, id]);
   const handleTypeChange = (event) => {
     const selectedType = event.target.value;
     setType(selectedType);
-
-    // Set custom behavior based on selected type
-    if (selectedType === 'article') {
-      setTitle('Add Article'); // Update title input placeholder
-    } else {
-      setTitle('Add Title'); // Reset title input placeholder
-    }
   };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; // Get the first file from the input
     if (file) {
+      const image = URL.createObjectURL(file);
+      setPreviewImage(image);
       setSelectedImage(file);
     }
   };
@@ -80,21 +98,40 @@ const News_page = () => {
   };
 
   const handleSave = async () => {
-    setLoading(true); // Start loading
-    setError(null); // Clear previous error
-    setSuccess(false); // Clear previous success
+    if (!title) {
+      toast.error('please Enter Title');
+      return;
+    }
+    if (!type) {
+      toast.error('please select category');
+      return;
+    }
+    if (type === 'news' && !content) {
+      toast.error('please add content');
+      return;
+    }
+    if (type === 'news' && links.length === 0) {
+      toast.error('Please add at least one social URL');
+      return;
+    }
+    if (!id && !selectedImage) {
+      toast.error('please select Image');
+      return;
+    }
     const slugString = title
-      .trim()
+      ?.trim()
       .toLowerCase()
       .replace(/[^\w\s]/g, '_') // Replace special characters with underscores
       .replace(/\s+/g, '_'); // Replace spaces with underscores
 
     // Remove duplicate underscores caused by consecutive special characters or spaces
-    const cleanSlugString = slugString.replace(/_+/g, '_');
+    const cleanSlugString = slugString?.replace(/_+/g, '_');
     if (!cleanSlugString) {
       toast.error('Somthing gone wrong! Please Enter Title again!');
       return;
     }
+    setLoading(true); // Start loading
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('category', type);
@@ -108,16 +145,40 @@ const News_page = () => {
       formData.append('socialLinks', JSON.stringify(links)); // Convert links array to a JSON string
     }
     try {
-      dispatch(createNewsApi(formData)).then((res) => {
-        res.payload?.success && navigate('/page_table');
-      });
+      if (id) {
+        dispatch(updateNewsApi({ formData, id })).then((res) => {
+          if (res.payload?.success) {
+            setTitle(null);
+            setTags(null);
+            setContent(null);
+            setLinks(null);
+            setPreviewImage(null);
+            setType(null);
+            navigate('/all-news');
+          }
+        });
+      } else {
+        dispatch(createNewsApi(formData)).then((res) => {
+          if (res.payload?.success) {
+            setTitle(null);
+            setTags(null);
+            setContent(null);
+            setLinks(null);
+            setPreviewImage(null);
+            setType(null);
+            navigate('/all-news');
+          }
+        });
+      }
+
       // If successful, reset states and set success to true
       setLoading(false);
-      setSuccess(true); // Set success message
     } catch (error) {
-      setError(error.message || 'An error occurred'); // Set error message
       setLoading(false);
     }
+  };
+  const removeTag = (index) => {
+    setLinks(links?.filter((_, i) => i !== index));
   };
 
   return (
@@ -126,7 +187,7 @@ const News_page = () => {
         <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
           News Create
         </h4>
-        <Link to={'/page_table'}>
+        <Link to={'/all-news'}>
           <button className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
             <FaCircleArrowLeft size={14} />
             Back
@@ -219,10 +280,10 @@ const News_page = () => {
             >
               Select Image
             </button>
-            {selectedImage && (
+            {previewImage && (
               <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Selected Image"
+                src={previewImage}
+                alt="Selected Img"
                 className="max-w-full h-auto mb-2"
               />
             )}
@@ -238,7 +299,7 @@ const News_page = () => {
                   Links:
                 </p>
                 <ul className="mb-4 text-md text-black dark:text-white">
-                  {links.map((link, index) => (
+                  {links?.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.url}
@@ -248,6 +309,18 @@ const News_page = () => {
                         {link.name}
                       </a>
                       <span>:</span> {link.url}
+                      <button
+                        style={{
+                          background: '#444',
+                          color: '#fff',
+                          borderRadius: '99rem',
+                          padding: '0px 10px 2px',
+                          scale: '0.6',
+                        }}
+                        onClick={() => removeTag(index)}
+                      >
+                        x
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -306,22 +379,13 @@ const News_page = () => {
               </div>
             )}
           </div>
-          {error && (
-            <div className="text-red-500 mb-4">{`Error: ${error}`}</div>
-          )}
-          {/* Display error message */}
-          {success && (
-            <div className="text-green-500 mb-4">
-              News created successfully!
-            </div>
-          )}
           {/* Display success message */}
           <button
             onClick={handleSave} // On click, call the function to send the API request
             className="mt-6 w-full bg-primary text-white px-2 py-1"
             disabled={loading} // Disable button while loading
           >
-            {loading ? 'Saving...' : 'Save Changes'} // Show loading indicator
+            {loading ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </div>

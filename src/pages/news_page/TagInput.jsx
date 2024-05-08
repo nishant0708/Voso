@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TagInput = ({ tags, setTags }) => {
+const TagInput = ({ tags = [], setTags }) => {
   const addTag = (event) => {
     if (event.key === 'Enter' && event.target.value.trim() !== '') {
       setTags([...tags, event.target.value.trim()]);
@@ -9,7 +9,7 @@ const TagInput = ({ tags, setTags }) => {
   };
 
   const removeTag = (index) => {
-    setTags(tags.filter((_, i) => i !== index));
+    setTags(tags?.filter((_, i) => i !== index));
   };
 
   return (
@@ -28,7 +28,7 @@ const TagInput = ({ tags, setTags }) => {
       />
       <div>
         <ul className="flex flex-wrap">
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <li
               style={{
                 backgroundColor: 'black',

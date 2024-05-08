@@ -25,6 +25,7 @@ const UserSocial = () => {
     Zomato: '',
   });
 
+  // calling api to fetch user social details
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
   }, [dispatch, userId]);
@@ -71,6 +72,7 @@ const UserSocial = () => {
     }));
   }, []);
 
+  // calling api to update user social details
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();

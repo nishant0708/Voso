@@ -1,14 +1,14 @@
-import { React, useCallback, useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import './toggle.css';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import { toggleProductFeature } from '../../Redux/slicer/productFeatureSlice';
 import formatDate from '../../utils/formatDate';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import Loader from '../../common/Loader';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import renderImage from '../../common/renderImage';
 
 const ProductTable = () => {
   const dispatch = useDispatch();
@@ -21,14 +21,6 @@ const ProductTable = () => {
   useEffect(() => {
     dispatch(fetchProducts({ userId }));
   }, [dispatch, userId]);
-
-  const renderImage = useCallback((imageUrl) => {
-    if (imageUrl.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  }, []);
 
   if (status === 'loading') {
     return <Loader/>;

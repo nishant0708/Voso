@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+import renderImage from '../../common/renderImage';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
@@ -48,14 +48,6 @@ const BlogEdit = () => {
     }));
   }, []);
 
-  const renderImage = useCallback((imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  }, []);
-
   //updating details
   const handleUpdateBlog = useCallback(() => {
     const data = {
@@ -73,7 +65,7 @@ const BlogEdit = () => {
       .catch((error) => {
         toast(`Error updating product: ${error.message}`);
       });
-  }, [dispatch, blog, formData, imgcrop, navigate, renderImage]);
+  }, [dispatch, blog, formData, imgcrop, navigate]);
 
   return (
     <DefaultLayout>

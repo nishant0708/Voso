@@ -12,6 +12,7 @@ const UserView = () => {
   const { userId } = useParams();
   const { user } = useSelector((state) => state.userDetails);
 
+  // date formatter
   const format = (dateString) => {
     const date = new Date(dateString);
     // Extract year, month, and day from the date object
@@ -23,6 +24,7 @@ const UserView = () => {
     return `${year}-${month}-${day}`;
   };
 
+  // calling api to fetch user details
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
   }, [dispatch, userId]);

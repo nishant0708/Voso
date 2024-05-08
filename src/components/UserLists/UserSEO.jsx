@@ -21,6 +21,7 @@ const UserSEO = () => {
     description: '',
   });
 
+  // calling api to fetch user seo details
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
   }, [dispatch, userId]);
@@ -42,6 +43,7 @@ const UserSEO = () => {
     }));
   }, []);
 
+  // calling api to update user seo details
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();

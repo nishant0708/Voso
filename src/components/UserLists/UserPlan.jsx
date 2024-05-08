@@ -16,6 +16,7 @@ const UserPlan = () => {
   const { isLoading } = useSelector((state) => state.updateDetails);
   const [plan, setPlan] = useState('');
 
+  // calling api to fetch user details
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
   }, [dispatch, userId]);
@@ -24,6 +25,7 @@ const UserPlan = () => {
     setPlan(e.target.value);
   }, []);
 
+  // calling api to update user plan
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -32,6 +34,7 @@ const UserPlan = () => {
     [dispatch, plan, user],
   );
 
+  // reset form data
   const resetForm = useCallback(() => {
     setPlan('');
   }, []);

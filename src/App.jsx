@@ -1,15 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
-
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -19,7 +13,6 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Forgot from './pages/Authentication/Forgot';
-
 import UserEdit from './components/UserLists/UserEdit';
 import UserPlan from './components/UserLists/UserPlan';
 import UserSocial from './components/UserLists/UserSocial';
@@ -45,7 +38,6 @@ import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
 import SignInMobile from './pages/Authentication/SignInMobile';
 
-
 function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -54,8 +46,12 @@ function App() {
 
   // Mock function to check if the user has an access token
   const checkAccessToken = useCallback(() => {
-    if (!accessToken || accessToken === undefined || accessToken === null || isTokenExpired(accessToken)) {
-  
+    if (
+      !accessToken ||
+      accessToken === undefined ||
+      accessToken === null ||
+      isTokenExpired(accessToken)
+    ) {
       localStorage.clear();
       navigate('/auth/signin');
       return;
@@ -88,7 +84,6 @@ function App() {
         <Loader />
       ) : accessToken ? (
         <Routes>
-           
           <Route
             index
             element={
@@ -98,7 +93,6 @@ function App() {
               </>
             }
           />
-
 
           <Route
             path="/profile"
@@ -118,7 +112,7 @@ function App() {
               </>
             }
           />
- 
+
           <Route
             path="/users"
             element={
@@ -216,14 +210,14 @@ function App() {
             }
           />
           <Route
-          path="/products/Galleryedit/:productId"
-          element={
-            <>
-              <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <GalleryEdit />
-            </>
-          }
-        />
+            path="/products/Galleryedit/:productId"
+            element={
+              <>
+                <PageTitle title="Gallery| TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <GalleryEdit />
+              </>
+            }
+          />
 
           <Route
             path="/user/settings"
@@ -280,7 +274,7 @@ function App() {
               </>
             }
           />
-           <Route path="*" element={<Error/>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       ) : (
         <Routes>
@@ -305,7 +299,7 @@ function App() {
             path="/auth/sign_in_with_mobile"
             element={
               <>
-               <SignInMobile/>
+                <SignInMobile />
               </>
             }
           />
@@ -318,7 +312,7 @@ function App() {
           }
         /> */}
           {/* <Route path="*" element={<Navigate to="/auth/signin" />} /> */}
-          <Route path="*" element={<Error/>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       )}
     </div>

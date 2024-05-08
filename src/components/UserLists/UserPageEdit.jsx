@@ -10,6 +10,7 @@ const UserPageEdit = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
 
+  // calling api to fetch user seo details
   useEffect(() => {
     dispatch(fetchUserSEODetails({ userId }));
   }, [dispatch, userId]);

@@ -122,16 +122,16 @@ const BlogsTable = () => {
                   {active === user?._id && (
                     <div
                       ref={ref}
-                      className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                      className="w-[130px] sm:w-[140px] flex flex-col  absolute top-[25%] right-[75%] sm:right-[65%]  shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg  dark:text-white bg-white dark:bg-meta-4"
                     >
                       <Link to={`/blogs/blogView/${user._id}`}>
-                        <div className="flex gap-3 cursor-pointer items-center">
+                        <div className=" flex gap-3 cursor-pointer pl-4 pr-3 pt-4 pb-3 items-center hover:bg-slate-200 dark:hover:bg-primary">
                           <FaCircleUser className="text-sm sm:text-md" />
                           <span className="text-xs sm:text-sm">Blogs List</span>
                         </div>
                       </Link>
                       <Link to={`/blogs/serviceView/${user._id}`}>
-                        <div className="flex gap-3 cursor-pointer items-center">
+                        <div className="flex gap-3 pl-4 pr-3 pt-3 pb-4 cursor-pointer items-center  hover:bg-slate-200 dark:hover:bg-primary">
                           <FaRupeeSign className="text-sm sm:text-md" />
                           <span className="text-xs sm:text-sm">
                             Services List

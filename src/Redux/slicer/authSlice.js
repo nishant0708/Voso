@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
 import toast from 'react-hot-toast';
+
+
+// Define the asynchronous thunk for logIn via email and password
+
 export const loginViaPassword = createAsyncThunk(
   'auth/loginViaPassword',
   async ({ email, password }) => {
@@ -25,7 +29,6 @@ export const authSlice = createSlice({
     isLoading: false,
   },
   reducers: {
-    // Other reducers here if needed
   },
   extraReducers: (builder) => {
     builder

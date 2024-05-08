@@ -7,7 +7,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import { toggleProductFeature } from '../../Redux/slicer/productFeatureSlice';
 import formatDate from '../../utils/formatDate';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
+import Loader from '../../common/Loader';
 
 const ProductTable = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const ProductTable = () => {
   }, []);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (status === 'failed') {
@@ -41,7 +41,7 @@ const ProductTable = () => {
       <DefaultLayout>
         <div className="overflow-auto w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex justify-between items-center">
-            <h1 className=" text-3xl font-medium text-black dark:text-white">
+            <h1 className="mb-3 text-3xl font-medium text-black dark:text-white">
               Products {products.length}
             </h1>
             <button

@@ -7,7 +7,7 @@ import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
 import formatDate from '../../utils/formatDate';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
+import Loader from '../../common/Loader';
 
 const GalleryTable = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const GalleryTable = () => {
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (status === 'failed') {

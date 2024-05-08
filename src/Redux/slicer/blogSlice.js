@@ -11,7 +11,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching blog details
 export const fetchBlogs = createAsyncThunk('fetchBlogs', async ({ userId }) => {
   try {
     const response = await AxiosInstance.post(`blog/getBlog`, {
@@ -19,14 +19,14 @@ export const fetchBlogs = createAsyncThunk('fetchBlogs', async ({ userId }) => {
         id: userId,
       },
     });
-    // //console.log('USER BLOG API Response:', response.data);
+   
     return response.data.data;
   } catch (error) {
-    //console.error('Error fetching in USER API:', error);
+    
     throw error;
   }
 });
-
+// Define the asynchronous thunk for fetching Services
 export const fetchServices = createAsyncThunk(
   'fetchServices',
   async ({ userId }) => {
@@ -36,15 +36,16 @@ export const fetchServices = createAsyncThunk(
           id: userId,
         },
       });
-      // //console.log('USER SERVICE API Response:', response.data);
+      
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+    
       throw error;
     }
   },
 );
 
+// Define the asynchronous thunk for fetching service by ID
 export const fetchServiceById = createAsyncThunk(
   'fetchServiceById',
   async ({ serviceId }) => {
@@ -54,14 +55,16 @@ export const fetchServiceById = createAsyncThunk(
           id: serviceId,
         },
       });
-      // //console.log('USER SERVICE ID API Response:', response.data);
+    
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+      
       throw error;
     }
   },
 );
+
+// Define the asynchronous thunk for fetching blog by ID
 
 export const fetchBlogById = createAsyncThunk(
   'fetchBlogById',
@@ -72,14 +75,16 @@ export const fetchBlogById = createAsyncThunk(
           id: blogId,
         },
       });
-      // //console.log('USER BLOG ID API Response:', response.data);
+
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },
 );
+
+// Define the asynchronous thunk for Updating Service BY id 
 
 export const updateServiceById = createAsyncThunk(
   'updateServiceById',
@@ -102,14 +107,16 @@ export const updateServiceById = createAsyncThunk(
           },
         },
       );
-      // //console.log('USER SERVICE ID UPDATE API Response:', response.data);
+     
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+   
       throw error;
     }
   },
 );
+
+// Define the asynchronous thunk for updating Blog 
 
 export const updateBlogById = createAsyncThunk(
   'updateBlogById',
@@ -126,15 +133,16 @@ export const updateBlogById = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-      // //console.log('USER BLOG ID UPDATE API Response:', response.data);
+    
       return response.data.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+     
       throw error;
     }
   },
 );
 
+// Async thunk to toggle Service Feature status
 export const toggleServiceFeature = createAsyncThunk(
   'toggleServiceFeature',
   async ({ serviceId, userId, isActive }) => {

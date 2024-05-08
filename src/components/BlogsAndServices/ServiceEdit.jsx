@@ -72,11 +72,11 @@ const ServiceEdit = () => {
 
     dispatch(updateServiceById(data))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         navigate(`/blogs/serviceView/${service.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
   }, [dispatch, navigate, service, formData, showAddUrl, imgcrop]);
 

@@ -20,6 +20,7 @@ const GalleryEdit = () => {
     dispatch(fetchgalleryedit({ productId }));
   }, [dispatch, productId]);
 
+
   // Set the initial selected option once the gallery is loaded
   useEffect(() => {
     setSelectedOption(gallery.itemType);
@@ -68,11 +69,11 @@ const GalleryEdit = () => {
     // Dispatch the updateGalleryUrl action with the data payload
     dispatch(updateGalleryUrl(data))
       .then(() => {
-        alert('Operation Successful');
+       toast('Operation Successful');
         window.location.href = `/products/Gallery/${gallery.userId}`;
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+       toast(`Error updating product: ${error.message}`);
       });
   }, [dispatch, imgcrop, selectedOption, productId, gallery]);
 

@@ -63,11 +63,11 @@ const BlogEdit = () => {
 
     dispatch(updateBlogById(data))
       .then(() => {
-        alert('Operation Successful');
+        toast('Operation Successful');
         navigate(`/blogs/blogView/${blog.userId}`);
       })
       .catch((error) => {
-        alert(`Error updating product: ${error.message}`);
+        toast(`Error updating product: ${error.message}`);
       });
   }, [dispatch, blog, formData, imgcrop, navigate, renderImage]);
 

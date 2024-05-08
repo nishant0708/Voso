@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching Gallery edit page details
 export const fetchgalleryedit = createAsyncThunk(
   'gallery',
   async ({ productId }) => {

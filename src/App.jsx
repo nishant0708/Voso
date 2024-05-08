@@ -9,7 +9,7 @@ import './App.css';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
-import Calendar from './pages/Calendar';
+
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -99,25 +99,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/calendar"
-            element={
-              <>
-                <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Calendar />
-              </>
-            }
-          />
 
-          <Route
-            path="/calendar"
-            element={
-              <>
-                <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Calendar />
-              </>
-            }
-          />
           <Route
             path="/profile"
             element={
@@ -136,15 +118,7 @@ function App() {
               </>
             }
           />
-          {/* <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-               <FormLayout /> 
-            </>
-          }
-        /> */}
+ 
           <Route
             path="/users"
             element={

@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for fetching Gallery Table
 export const fetchgallery = createAsyncThunk('gallery', async ({ userId }) => {
   try {
     const response = await AxiosInstance.post(`gallery/getGallery`, {
@@ -16,10 +16,10 @@ export const fetchgallery = createAsyncThunk('gallery', async ({ userId }) => {
         id: userId,
       },
     });
-    // //console.log('USER GALLERY API Response:', response.data);
+   
     return response.data;
   } catch (error) {
-    //console.error('Error fetching in USER API:', error);
+   
     throw error;
   }
 });

@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for  Product edit page 
 export const fetchproductedit = createAsyncThunk(
   'product',
   async ({ productId }) => {
@@ -18,10 +18,10 @@ export const fetchproductedit = createAsyncThunk(
           id: productId,
         },
       });
-      //console.log('USER GALLERY API Response:', response.data);
+      
       return response.data;
     } catch (error) {
-      //console.error('Error fetching in USER API:', error);
+    
       throw error;
     }
   },

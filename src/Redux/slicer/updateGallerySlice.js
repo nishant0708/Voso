@@ -1,7 +1,8 @@
 // UpdateGallerySlicer.js
+//for updatating Gallery 
 
 import { createSlice } from '@reduxjs/toolkit';
-import { AxiosInstance } from '../../utils/intercept'; // Import your custom AxiosInstance
+import { AxiosInstance } from '../../utils/intercept';
 
 export const updateGallerySlice = createSlice({
   name: 'updateGallery',
@@ -27,6 +28,7 @@ export const updateGallerySlice = createSlice({
 
 export const { updateGalleryStart, updateGallerySuccess, updateGalleryFailure } = updateGallerySlice.actions;
 
+//for updatating Gallery 
 export const updateGalleryUrl = (data) => async (dispatch) => {
   dispatch(updateGalleryStart());
   try {

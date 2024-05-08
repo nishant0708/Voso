@@ -14,7 +14,7 @@ const Sign_in_mobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
 
-  
+  //onclick send otp to number and make enter otp field visible
   const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
       dispatch(sendOTP(mobileNo))
@@ -35,6 +35,8 @@ const Sign_in_mobile = () => {
     }
   }, [mobileNo, dispatch, setShowLabel]);
 
+
+//calling api for fetching api
   const handleVerify = useCallback(() => {
     dispatch(verifyOTP({ mobileNo, otp }))
       .then((res) => {
@@ -51,12 +53,15 @@ const Sign_in_mobile = () => {
         toast.error('Error verifying OTP: ' + error.message);
       });
   }, [dispatch, mobileNo, otp, navigate]);
+
+  //handling mobile no change
   const handleMobileNoChange = (e) => {
     const inputValue = e.target.value;
     const numericValue = inputValue.replace(/\D/g, '');
     setMobileNo(numericValue);
   };
-
+  
+//handling otp change 
   const handleOTPChange = (e) => {
     setOTP(e.target.value);
   };

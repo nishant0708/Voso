@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-// Define the asynchronous thunk for fetching todos
+// Define the asynchronous thunk for updating user details
 export const updateUserDetails = createAsyncThunk(
   'updateUserDetails',
   async ({ formData, userId }) => {
@@ -26,13 +26,13 @@ export const updateUserDetails = createAsyncThunk(
         mobile: formData.mobile,
         _id: userId,
       });
-      // //console.log('USER DETAILS UPDATE API Response:', response.data);
+     
       toast.success('User Updated Successfully');
       window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+  
       throw error;
     }
   },
@@ -47,16 +47,17 @@ export const updateUserPlan = createAsyncThunk(
         email: email,
         planId: plan === 'Yearly' ? 12 : plan === 'Half-Yearly' ? 6 : 3,
       });
-      // //console.log('USER PLAN UPDATE API Response:', response.data);
+
       toast.success('Plan Purchased Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+      
       throw error;
     }
   },
 );
+// Define the asynchronous thunk for updating user seo
 
 export const updateUserSEO = createAsyncThunk(
   'updateUserSEO',
@@ -72,17 +73,20 @@ export const updateUserSEO = createAsyncThunk(
         siteTitle: formData.siteTitle,
         _id: userId,
       });
-      // //console.log('USER SEO UPDATE API Response:', response.data);
+
       toast.success('SEO Updated Successfully');
       window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },
 );
+
+
+// Define the asynchronous thunk for updating user Buisness
 
 export const updateUserBusiness = createAsyncThunk(
   'updateUserBusiness',
@@ -120,17 +124,19 @@ export const updateUserBusiness = createAsyncThunk(
         mobile: mobile,
         _id: userId,
       });
-      // //console.log('USER BUSINESS UPDATE API Response:', response.data);
+
       toast.success('Business Updated Successfully');
       window.location.reload();
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+
       throw error;
     }
   },
 );
+
+// Define the asynchronous thunk for updating user Details
 
 export const updateUserSocial = createAsyncThunk(
   'updateUserSocial',
@@ -145,16 +151,19 @@ export const updateUserSocial = createAsyncThunk(
         mobile: mobile,
         _id: userId,
       });
-      // //console.log('USER SOCIAL UPDATE API Response:', response.data);
+    
       toast.success('Social Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+     
       throw error;
     }
   },
 );
+
+
+// Define the asynchronous thunk for updating user Password
 
 export const userChangePassword = createAsyncThunk(
   'userChangePassword',
@@ -165,12 +174,12 @@ export const userChangePassword = createAsyncThunk(
         oldPassword: oldPassword,
         password: newPassword,
       });
-      // //console.log('USER CHANGE PASSWORD API Response:', response.data);
+     
       toast.success('Password Updated Successfully');
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
-      //console.error('Error fetching in USER API:', error);
+     
       throw error;
     }
   },

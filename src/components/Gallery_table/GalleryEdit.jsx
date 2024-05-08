@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
 import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice';
 import ImageCropper from '../../utils/cropImage';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+import renderImage from '../../common/renderImage';
 
 const GalleryEdit = () => {
   const dispatch = useDispatch();
@@ -27,14 +27,6 @@ const GalleryEdit = () => {
     setSelectedOption(gallery.itemType);
     setGalleryUrl(gallery.url || '');
   }, [gallery]);
-
-  const renderImage = useCallback((imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  }, []);
 
   const setimg = useCallback((file) => {
     setimgcrop(file);

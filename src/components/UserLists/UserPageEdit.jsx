@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
+import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 
 const UserPageEdit = () => {
   const dispatch = useDispatch();

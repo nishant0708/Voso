@@ -28,13 +28,13 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         <button key={1} className="px-3 py-1 rounded cursor-pointer focus:outline-none" onClick={() => onPageChange(1)}>
           1
         </button>,
-        <span key="leftDots" className="px-3 py-1">...</span>
+        <span key="leftDots" className="px-2 py-1">...</span>
       );
     }
 
     if (rightBoundary < totalPages) {
       pageNumbers.push(
-        <span key="rightDots" className="px-3 py-1">...</span>,
+        <span key="rightDots" className="px-2 py-1">...</span>,
         <button key={totalPages} className="px-3 py-1 rounded cursor-pointer focus:outline-none" onClick={() => onPageChange(totalPages)}>
           {totalPages}
         </button>
@@ -44,7 +44,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
     return pageNumbers;
   }, [page, totalPages, onPageChange, maxVisiblePages]);
 
-  return <div className="flex gap-2">{generatePageNumbers}</div>;
+  return <div className="flex items-center">{generatePageNumbers}</div>;
 };
 
 export default Pagination;

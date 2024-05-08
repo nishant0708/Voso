@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchproductedit } from '../../Redux/slicer/productEditSlice';
-import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer'; // Import the updateProductDetails action
+import { updateProductDetails } from '../../Redux/slicer/ProductDetailsUpdatedSlicer';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
 
 const ProductEdit = () => {
   const dispatch = useDispatch();
-  const { productId } = useParams();
   const navigate = useNavigate();
+  const { productId } = useParams();
   const { product } = useSelector((state) => state.Editproduct);
   const { isLoading } = useSelector((state) => state.updateProdct);
+
   const [imageUrl, setimageUrl] = useState('');
   const [imgcrop, setimgcrop] = useState('');
   const [productName, setProductName] = useState('');
@@ -24,19 +25,7 @@ const ProductEdit = () => {
   const [productUrl, setProductUrl] = useState('');
   const [showAddUrl, setShowAddUrl] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const [isbutHovered, setbutIsHovered] = useState(false)
-
-  const setimg = (file) => {
-    setimgcrop(file);
-  };
-
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
+  const [isbutHovered, setbutIsHovered] = useState(false);
 
   useEffect(() => {
     dispatch(fetchproductedit({ productId }));
@@ -52,10 +41,20 @@ const ProductEdit = () => {
     }
   }, [product]);
 
-;
+  const setimg = useCallback((file) => {
+    setimgcrop(file);
+  }, []);
+
+  const renderImage = useCallback((imageUrl) => {
+    if (imageUrl?.startsWith('https://')) {
+      return imageUrl;
+    } else {
+      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
+    }
+  }, []);
 
   //updating details
-  const handleUpdateProduct = () => {
+  const handleUpdateProduct = useCallback(() => {
     const updatedProductData = {
       productId: product._id,
       productName: productName,
@@ -73,7 +72,18 @@ const ProductEdit = () => {
       .catch((error) => {
        toast(`Error updating product: ${error.message}`);
       });
-  };
+  }, [
+    dispatch,
+    navigate,
+    product,
+    productName,
+    productPrice,
+    productDescription,
+    showAddUrl,
+    imgcrop,
+    imageUrl,
+    productUrl,
+  ]);
 
   return (
     <DefaultLayout>

@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import '../product_table/toggle.css';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
+import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
 import formatDate from '../../utils/formatDate';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 import Loader from '../../common/Loader';
 
 const GalleryTable = () => {
-  const { userId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useParams();
+  const { gallery, status, error } = useSelector((state) => state.Gallery);
 
   // Track hover state for each button using an object
   const [hoveredButtons, setHoveredButtons] = useState({});
 
-  const renderImage = (imageUrl) => {
+  const renderImage = useCallback((imageUrl) => {
     if (imageUrl.startsWith('https://')) {
       return imageUrl;
     } else {
       return `${BACKEND_URL_PRODUCT}${imageUrl}`;
     }
-  };
+  }, []);
 
   useEffect(() => {
     dispatch(fetchgallery({ userId }));
   }, [dispatch, userId]);
-
-  const { gallery, status, error } = useSelector((state) => state.Gallery);
 
   if (status === 'loading') {
     return <Loader/>;

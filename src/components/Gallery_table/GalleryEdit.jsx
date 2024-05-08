@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL_PRODUCT } from '../../url/url';
 import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
-import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice'; // Import the updateGalleryUrl action creator
+import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice';
 import ImageCropper from '../../utils/cropImage';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
-
 const GalleryEdit = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { gallery } = useSelector((state) => state.Editgallery);
-  const [selectedOption, setSelectedOption] = useState(gallery.itemType); // Initial selected option
+  const [selectedOption, setSelectedOption] = useState(gallery.itemType);
   const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
   const [imgcrop, setimgcrop] = useState('');
 
@@ -28,28 +27,39 @@ const GalleryEdit = () => {
     setGalleryUrl(gallery.url || '');
   }, [gallery]);
 
-  const setimg = (file) => {
+  const renderImage = useCallback((imageUrl) => {
+    if (imageUrl?.startsWith('https://')) {
+      return imageUrl;
+    } else {
+      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
+    }
+  }, []);
+
+  const setimg = useCallback((file) => {
     setimgcrop(file);
-  };
+  }, []);
 
   // Function to handle option change
-  const handleOptionChange = (event) => {
+  const handleOptionChange = useCallback((event) => {
     setSelectedOption(event.target.value);
-  };
+  }, []);
 
   // Function to handle gallery URL change
-  const handleGalleryUrlChange = (event) => {
-    if (selectedOption === 'youtube') {
-      // If the selected option is 'youtube', set galleryUrl to the input value
-      setGalleryUrl(event.target.value);
-    } else {
-      // For other options, update the gallery URL state normally
-      setGalleryUrl(event.target.value);
-    }
-  };
+  const handleGalleryUrlChange = useCallback(
+    (event) => {
+      if (selectedOption === 'youtube') {
+        // If the selected option is 'youtube', set galleryUrl to the input value
+        setGalleryUrl(event.target.value);
+      } else {
+        // For other options, update the gallery URL state normally
+        setGalleryUrl(event.target.value);
+      }
+    },
+    [selectedOption],
+  );
 
   // Function to handle update button click
-  const handleUpdateClick = () => {
+  const handleUpdateClick = useCallback(() => {
     // Prepare the data payload for the updateGalleryUrl action
     const data = {
       url: imgcrop,
@@ -65,15 +75,7 @@ const GalleryEdit = () => {
       .catch((error) => {
        toast(`Error updating product: ${error.message}`);
       });
-  };
-
-  const renderImage = (imageUrl) => {
-    if (imageUrl?.startsWith('https://')) {
-      return imageUrl;
-    } else {
-      return `${BACKEND_URL_PRODUCT}${imageUrl}`;
-    }
-  };
+  }, [dispatch, imgcrop, selectedOption, productId, gallery]);
 
   return (
     <DefaultLayout>

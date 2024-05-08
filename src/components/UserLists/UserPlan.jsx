@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
+import { updateUserPlan } from '../../Redux/slicer/updateDetailsSlice';
+import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 import { FaListUl } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
-import { updateUserPlan } from '../../Redux/slicer/updateDetailsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 
 const UserPlan = () => {
   const dispatch = useDispatch();
@@ -14,24 +14,27 @@ const UserPlan = () => {
   const { userId } = useParams();
   const { user } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const [plan, setPlan] = useState('');
 
   useEffect(() => {
     dispatch(fetchUserDetails({ userId }));
   }, [dispatch, userId]);
 
-  const [plan, setPlan] = useState('');
-  const handleOnChange = (e) => {
+  const handleOnChange = useCallback((e) => {
     setPlan(e.target.value);
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(updateUserPlan({ email: user?.email, plan }));
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(updateUserPlan({ email: user?.email, plan }));
+    },
+    [dispatch, plan, user],
+  );
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setPlan('');
-  };
+  }, []);
 
   return (
     <DefaultLayout>

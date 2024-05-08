@@ -15,7 +15,7 @@ import productEditSlice from '../slicer/productEditSlice';
 import ProductDetailsUpdatedSlicer from '../slicer/ProductDetailsUpdatedSlicer';
 import productFeatureSlice from '../slicer/productFeatureSlice';
 import galleryfeatureSlice from '../slicer/galleryfeatureSlice';
-
+import newsSlice from '../slicer/newsSlice';
 const store = configureStore({
   reducer: {
     topUsers: topUsersSlice,
@@ -34,6 +34,7 @@ const store = configureStore({
     updateProdct: ProductDetailsUpdatedSlicer,
     productFeature: productFeatureSlice,
     galleryFeature: galleryfeatureSlice,
+    news: newsSlice,
   },
   // Other store configurations can go here, such as middleware setup
 });

@@ -1,34 +1,64 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
 import QuillEditor from '../../utils/QuillEditor';
+import {
+  createNewsApi,
+  getNewsByIdApi,
+  updateNewsApi,
+} from '../../Redux/slicer/newsSlice';
 import TagInput from './TagInput';
-
-const NewsPage = () => {
-  const [links, setLinks] = useState([]);
-  const [linkUrl, setLinkUrl] = useState('');
+import toast from 'react-hot-toast';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import { BACKEND_URL } from '../../url/url';
+const News_page = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { singleData } = useSelector((state) => state.news);
+  const [tags, setTags] = useState([]);
+  const [links, setLinks] = useState([]); // State to hold the list of links
+  const [linkUrl, setLinkUrl] = useState(''); // State for the link URL input
   const [show, setshow] = useState(true);
   const [selectedSource, setSelectedSource] = useState('');
-  const [, setTitle] = useState('');
+  const [title, setTitle] = useState('');
   const [type, setType] = useState('news');
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image file
+  const [previewImage, setPreviewImage] = useState(null); // State to hold the selected image file
+  const [content, setContent] = useState(''); // State to hold the QuillEditor content
+  const [loading, setLoading] = useState(false); // State to manage loading
 
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    if (id) {
+      dispatch(getNewsByIdApi(id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (id) {
+      setTitle(singleData?.title);
+      setTags(singleData?.keywords);
+      if (singleData?.category === 'news') {
+        setContent(singleData?.content);
+        setLinks(singleData?.socialLinks);
+      }
+      setPreviewImage(`${BACKEND_URL}news/${singleData?.Image}`);
+      setType(singleData?.category);
+    }
+  }, [singleData, id]);
   const handleTypeChange = (event) => {
     const selectedType = event.target.value;
     setType(selectedType);
-
-    // Set custom behavior based on selected type
-    if (selectedType === 'article') {
-      setTitle('Add Article'); // Update title input placeholder
-    } else {
-      setTitle('Add Title'); // Reset title input placeholder
-    }
   };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; // Get the first file from the input
     if (file) {
+      const image = URL.createObjectURL(file);
+      setPreviewImage(image);
       setSelectedImage(file);
     }
   };
@@ -36,21 +66,17 @@ const NewsPage = () => {
   const handleSelectImage = () => {
     fileInputRef.current.click(); // Trigger click event on file input when "Select" button is clicked
   };
-
+  // Create a new link object with the selected news source and the entered link URL
   const handleAddLink = () => {
-    // Create a new link object with the selected news source and the entered link URL
     if (!linkUrl.trim()) {
-      // If link URL is empty, prevent adding the link
-      alert('Please enter a valid URL.');
+      toast.error('Please enter a valid URL.');
       return;
     }
-
     const existingLinkIndex = links.findIndex(
       (link) => link.name === selectedSource,
     );
-
+    // If the selected source already exists in the links array, update its URL
     if (existingLinkIndex !== -1) {
-      // If the selected source already exists in the links array, update its URL
       const updatedLinks = [...links];
       updatedLinks[existingLinkIndex] = {
         ...updatedLinks[existingLinkIndex],
@@ -71,11 +97,106 @@ const NewsPage = () => {
     setshow(true);
   };
 
+  const handleSave = async () => {
+    if (!title) {
+      toast.error('please Enter Title');
+      return;
+    }
+    if (!type) {
+      toast.error('please select category');
+      return;
+    }
+    if (type === 'news' && !content) {
+      toast.error('please add content');
+      return;
+    }
+    if (type === 'news' && links.length === 0) {
+      toast.error('Please add at least one social URL');
+      return;
+    }
+    if (!id && !selectedImage) {
+      toast.error('please select Image');
+      return;
+    }
+    const slugString = title
+      ?.trim()
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '_') // Replace special characters with underscores
+      .replace(/\s+/g, '_'); // Replace spaces with underscores
+
+    // Remove duplicate underscores caused by consecutive special characters or spaces
+    const cleanSlugString = slugString?.replace(/_+/g, '_');
+    if (!cleanSlugString) {
+      toast.error('Somthing gone wrong! Please Enter Title again!');
+      return;
+    }
+    setLoading(true); // Start loading
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('category', type);
+    formData.append('slug', cleanSlugString);
+    formData.append('keywords', tags);
+    if (selectedImage) {
+      formData.append('image', selectedImage); // Add image if selected
+    }
+    if (type === 'news') {
+      formData.append('content', content); // Assume you capture content from QuillEditor
+      formData.append('socialLinks', JSON.stringify(links)); // Convert links array to a JSON string
+    }
+    try {
+      if (id) {
+        dispatch(updateNewsApi({ formData, id })).then((res) => {
+          if (res.payload?.success) {
+            setTitle(null);
+            setTags(null);
+            setContent(null);
+            setLinks(null);
+            setPreviewImage(null);
+            setType(null);
+            navigate('/all-news');
+          }
+        });
+      } else {
+        dispatch(createNewsApi(formData)).then((res) => {
+          if (res.payload?.success) {
+            setTitle(null);
+            setTags(null);
+            setContent(null);
+            setLinks(null);
+            setPreviewImage(null);
+            setType(null);
+            navigate('/all-news');
+          }
+        });
+      }
+
+      // If successful, reset states and set success to true
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const removeTag = (index) => {
+    setLinks(links?.filter((_, i) => i !== index));
+  };
+
   return (
     <DefaultLayout>
+      <div className="mb-10 flex justify-between items-center">
+        <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
+          News Create
+        </h4>
+        <Link to={'/all-news'}>
+          <button className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
+            <FaCircleArrowLeft size={14} />
+            Back
+          </button>
+        </Link>
+      </div>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-5">
         <div className="mb-8">
-          <h1 className="text-black  dark:text-white font-bold text-3xl md:lg">
+          <h1 className="text-black dark:text-white font-bold text-3xl md:lg">
             {type === 'article' ? 'Add Article' : 'Add News Letter'}
           </h1>
         </div>
@@ -89,8 +210,8 @@ const NewsPage = () => {
               <input
                 type="text"
                 name="title"
-                value=""
-                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)} // Update title
                 placeholder="Add Title"
                 className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
@@ -104,8 +225,8 @@ const NewsPage = () => {
                   name="type"
                   id="type"
                   onChange={handleTypeChange}
-                  required={true}
-                  className="relative z-20 t-[20px] h-10 mt-1.5 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  required
+                  className="relative z-20 h-10 mt-1.5 text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 >
                   <option value="news">News Letter</option>
                   <option value="article">Article</option>
@@ -132,15 +253,18 @@ const NewsPage = () => {
               </div>
             </div>
           </div>
-
           <div
             style={{ display: type === 'article' ? 'none' : 'block' }}
             className="mb-4 text-md text-black dark:text-white"
           >
             <p>ADD HTML CONTENT:</p>
-            <QuillEditor />
+            <QuillEditor
+              name="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            {/* Get content from QuillEditor */}
           </div>
-
           <div className="mb-4 text-md text-black dark:text-white">
             <p className="mb-2">Add Image:</p>
             <input
@@ -156,19 +280,18 @@ const NewsPage = () => {
             >
               Select Image
             </button>
-            {selectedImage && (
+            {previewImage && (
               <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="SelectedImage"
+                src={previewImage}
+                alt="Selected Img"
                 className="max-w-full h-auto mb-2"
               />
             )}
           </div>
-
           <div>
-            <TagInput />
+            <TagInput setTags={setTags} tags={tags} />
+            {/* Assuming this is a component that allows tagging */}
           </div>
-
           <div style={{ display: type === 'article' ? 'none' : 'block' }}>
             {show ? (
               <>
@@ -176,7 +299,7 @@ const NewsPage = () => {
                   Links:
                 </p>
                 <ul className="mb-4 text-md text-black dark:text-white">
-                  {links.map((link, index) => (
+                  {links?.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.url}
@@ -185,7 +308,19 @@ const NewsPage = () => {
                       >
                         {link.name}
                       </a>
-                      <span>{':'}</span> {link.url}
+                      <span>:</span> {link.url}
+                      <button
+                        style={{
+                          background: '#444',
+                          color: '#fff',
+                          borderRadius: '99rem',
+                          padding: '0px 10px 2px',
+                          scale: '0.6',
+                        }}
+                        onClick={() => removeTag(index)}
+                      >
+                        x
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -232,7 +367,7 @@ const NewsPage = () => {
                     value={linkUrl}
                     onChange={(e) => setLinkUrl(e.target.value)}
                     placeholder="Enter URL"
-                    className="relative w-full md:w-1/2 z-20 h-10 mt-1.5 text-sm text-black dark:text-white appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    className="relative z-20 h-10 mt-1.5 text-sm text-black dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
                 <button
@@ -244,8 +379,13 @@ const NewsPage = () => {
               </div>
             )}
           </div>
-          <button className="mt-6 w-full bg-primary text-white px-2 py-1">
-            Save Changes
+          {/* Display success message */}
+          <button
+            onClick={handleSave} // On click, call the function to send the API request
+            className="mt-6 w-full bg-primary text-white px-2 py-1"
+            disabled={loading} // Disable button while loading
+          >
+            {loading ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </div>
@@ -253,4 +393,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default News_page;

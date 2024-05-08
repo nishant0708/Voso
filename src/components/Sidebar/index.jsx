@@ -333,22 +333,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   Settings
                 </NavLink>
               </li>
-              {/* <!-- Menu Item Settings --> */}
+            </ul>
+          </div>
+          {/* <!-- Menu Item Settings --> */}
+          <div>
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+              Website
+            </h3>
 
+            <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <NavLink
-                  to="/page"
+                  to="/all-news"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-0 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <FaFileAlt className="text-md sm:text-md" />
-                  Pages
+                  News
                 </NavLink>
               </li>
             </ul>
           </div>
-
           {/* <!-- Others Group --> */}
           <div>
             <ul className="flex flex-col gap-1.5">

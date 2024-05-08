@@ -32,8 +32,8 @@ import ServiceView from './components/BlogsAndServices/ServiceView';
 import BlogEdit from './components/BlogsAndServices/BlogEdit';
 import ServiceEdit from './components/BlogsAndServices/ServiceEdit';
 import ProductEdit from './components/product_table/ProductEdit';
-import NewsPage from './pages/news_page/NewsPage';
-import NewsPageTable from './pages/news_page/NewsPageTable';
+import NewsPage from './pages/news_page/News_page';
+import NewsPageTable from './pages/news_page/News_page_table';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
 import SignInMobile from './pages/Authentication/SignInMobile';
@@ -257,7 +257,7 @@ function App() {
             }
           />
           <Route
-            path="/page"
+            path="/create-news"
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -266,7 +266,16 @@ function App() {
             }
           />
           <Route
-            path="/page_table"
+            path="/update-news/:id"
+            element={
+              <>
+                <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <NewsPage />
+              </>
+            }
+          />
+          <Route
+            path="/all-news"
             element={
               <>
                 <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />

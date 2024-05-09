@@ -165,7 +165,7 @@ const ProductTable = () => {
 
                       fontWeight: 'bold',
                       gap: '20px',
-                      width: '500px',
+                      width: '400px',
                     }}
                   >
                     <a href={product.product_url}>

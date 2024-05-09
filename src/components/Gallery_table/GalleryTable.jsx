@@ -24,7 +24,7 @@ const GalleryTable = () => {
     dispatch(fetchgallery({ userId }));
   }, [dispatch, userId]);
 
-  if ( status === 'loading') {
+  if (status === 'loading') {
     return <GalleryviewSkeleton />;
   }
 

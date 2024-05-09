@@ -172,11 +172,11 @@ const UserTable = () => {
                   {active === user?._id && (
                     <div
                       ref={ref}
-                      className="w-[158px] sm:w-[178px] flex flex-col gap-4 absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
+                      className="w-[158px] sm:w-[178px] flex flex-col  absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg  dark:text-white bg-white dark:bg-meta-4"
                     >
                       <div
                         onClick={() => navigate(`/users/user/edit/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 cursor-pointer items-center pt-4 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2"
                       >
                         <FaCircleUser className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">User Edit</span>
@@ -185,7 +185,7 @@ const UserTable = () => {
                         onClick={() =>
                           navigate(`/users/user/plan-subscribe/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
                       >
                         <FaRupeeSign className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">
@@ -194,7 +194,7 @@ const UserTable = () => {
                       </div>
                       <div
                         onClick={() => navigate(`/users/user/seo/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 cursor-pointer  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
                       >
                         <HiSpeakerphone className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">SEO Edit</span>
@@ -203,7 +203,7 @@ const UserTable = () => {
                         onClick={() =>
                           navigate(`/users/user/business-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
                       >
                         <PiToolboxFill className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">
@@ -214,7 +214,7 @@ const UserTable = () => {
                         onClick={() =>
                           navigate(`/users/user/social-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
                       >
                         <FaShareSquare className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">Social Edit</span>
@@ -223,14 +223,14 @@ const UserTable = () => {
                         onClick={() =>
                           navigate(`/users/user/pages-edit/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
                       >
                         <FaFileAlt className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">Pages Edit</span>
                       </div>
                       <div
                         onClick={() => navigate(`/users/user/view/${user._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
                       >
                         <FaEye className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">User View</span>
@@ -239,7 +239,7 @@ const UserTable = () => {
                         onClick={() =>
                           navigate(`/users/user/contact-us/${user._id}`)
                         }
-                        className="flex gap-3 cursor-pointer items-center"
+                        className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 pb-4 cursor-pointer items-center"
                       >
                         <BsFillQuestionCircleFill className="text-sm sm:text-md" />
                         <span className="text-xs sm:text-sm">

@@ -7,9 +7,10 @@ import {
 } from '../../Redux/slicer/blogSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import formatDate from '../../utils/formatDate';
-import Loader from '../../common/Loader';
+
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import renderImage from '../../common/renderImage';
+import DisplayTable from '../Skeletons/DisplayTable';
 
 const ServiceView = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const ServiceView = () => {
 
   if (status === 'loading') {
     return (
-      <Loader/>
+     <DisplayTable/>
     );
   }
 

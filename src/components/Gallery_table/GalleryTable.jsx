@@ -6,9 +6,10 @@ import '../product_table/toggle.css';
 import { fetchgallery } from '../../Redux/slicer/gallerySlice';
 import { togglegalleryFeature } from '../../Redux/slicer/galleryfeatureSlice';
 import formatDate from '../../utils/formatDate';
-import Loader from '../../common/Loader';
+
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import renderImage from '../../common/renderImage';
+import GalleryviewSkeleton from '../Skeletons/GalleryviewSkeleton';
 
 const GalleryTable = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ const GalleryTable = () => {
     dispatch(fetchgallery({ userId }));
   }, [dispatch, userId]);
 
-  if (status === 'loading') {
-    return <Loader />;
+  if ( status === 'loading') {
+    return <GalleryviewSkeleton />;
   }
 
   if (status === 'failed') {

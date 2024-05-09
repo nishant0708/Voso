@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { BACKEND_URL } from '../../url/url';
+import { createSlug } from '../../utils/stringToSlug';
 const News_page = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,14 +119,7 @@ const News_page = () => {
       toast.error('please select Image');
       return;
     }
-    const slugString = title
-      ?.trim()
-      .toLowerCase()
-      .replace(/[^\w\s]/g, '_') // Replace special characters with underscores
-      .replace(/\s+/g, '_'); // Replace spaces with underscores
-
-    // Remove duplicate underscores caused by consecutive special characters or spaces
-    const cleanSlugString = slugString?.replace(/_+/g, '_');
+    const cleanSlugString = await createSlug(title);
     if (!cleanSlugString) {
       toast.error('Somthing gone wrong! Please Enter Title again!');
       return;

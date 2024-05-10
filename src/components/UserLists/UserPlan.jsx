@@ -7,12 +7,13 @@ import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 import { FaListUl } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
+import PlanpurchaseSkeleton from '../Skeletons/planpurchaseSkeleton';
 
 const UserPlan = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { user } = useSelector((state) => state.userDetails);
+  const { user,status } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
   const [plan, setPlan] = useState('');
 
@@ -57,7 +58,7 @@ const UserPlan = () => {
           </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <form onSubmit={handleSubmit}>
+          {status==="loading" ? <PlanpurchaseSkeleton/> :<form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
               <div className="w-full xl:w-1/2 text-sm">
                 <label
@@ -145,7 +146,7 @@ const UserPlan = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
     </DefaultLayout>

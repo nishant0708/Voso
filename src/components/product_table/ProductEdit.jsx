@@ -96,7 +96,7 @@ const ProductEdit = () => {
           Back
         </button>
       </div>
-      {status === 'loading' ? (
+      { status === 'loading' ? (
         <ProdservEdit />
       ) : (
         <div

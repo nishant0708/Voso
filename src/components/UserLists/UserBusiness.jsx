@@ -10,12 +10,13 @@ import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserBusiness } from '../../Redux/slicer/updateDetailsSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { toast } from 'react-hot-toast';
+import BuisnessEditSkeleton from '../Skeletons/BuisnessEditSkeleton';
 
 const UserBusiness = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { userSEO } = useSelector((state) => state.userDetails);
+  const { userSEO,status } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
   const [formData, setFormData] = useState({
     domainName: '',
@@ -107,7 +108,7 @@ const UserBusiness = () => {
           </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <form onSubmit={handleSubmit}>
+       { status==="loading"?<BuisnessEditSkeleton/> :   <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
               <div className="mb-3">
                 <div className="w-full">
@@ -553,7 +554,7 @@ const UserBusiness = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
     </DefaultLayout>

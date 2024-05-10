@@ -6,12 +6,13 @@ import QuillEditor from '../../utils/QuillEditor';
 import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserSEO } from '../../Redux/slicer/updateDetailsSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import SeoEditSkeleton from '../Skeletons/SeoEditSkeleton';
 
 const UserSEO = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { userSEO } = useSelector((state) => state.userDetails);
+  const { userSEO ,status} = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
   const [formData, setFormData] = useState({
     homeTitle: '',
@@ -77,6 +78,7 @@ const UserSEO = () => {
           </div>
         </div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          { status==="loading"? <SeoEditSkeleton/>:
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
               <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
@@ -173,7 +175,7 @@ const UserSEO = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
     </DefaultLayout>

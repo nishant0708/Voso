@@ -5,12 +5,15 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchUserDetails } from '../../Redux/slicer/userDetails';
 import formatDate from '../../utils/formatDate';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import PersonalInfo from '../Skeletons/PersonalInfo';
+import CountSkeleton from '../Skeletons/CountSkeleton';
+import SubscriptionPlanSkeleton from '../Skeletons/SubscriptionPlanSkeleton';
 
 const UserView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { user } = useSelector((state) => state.userDetails);
+  const { user,status } = useSelector((state) => state.userDetails);
 
   // date formatter
   const format = (dateString) => {
@@ -54,6 +57,7 @@ const UserView = () => {
                 </h3>
               </div>
               <div className="p-7">
+                { status==="loading" ? <PersonalInfo/>:
                 <form action="#">
                   <div className="mb-5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
@@ -207,7 +211,7 @@ const UserView = () => {
                       />
                     </div>
                   </div>
-                </form>
+                </form>}
               </div>
             </div>
             <div className="mt-5 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -216,7 +220,7 @@ const UserView = () => {
                   Subscription Plan
                 </h3>
               </div>
-              <div className="p-7">
+             { status==="loading" ?<SubscriptionPlanSkeleton/>: <div className="p-7">
                 <form action="#">
                   <div className="mb-5 flex flex-col gap-5.5">
                     <div className="w-full">
@@ -269,7 +273,7 @@ const UserView = () => {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div>}
             </div>
           </div>
           <div className="flex gap-5 flex-col md:flex-row">
@@ -279,6 +283,7 @@ const UserView = () => {
                   Featured Count
                 </h3>
               </div>
+              { status==="loading" ? <CountSkeleton/> : 
               <div className="p-7">
                 <form action="#">
                   <div className="mb-5 flex flex-col gap-5.5 sm:flex-row">
@@ -370,7 +375,7 @@ const UserView = () => {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div>}
             </div>
             <div className="mt-5 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
@@ -378,7 +383,7 @@ const UserView = () => {
                   Listing Count
                 </h3>
               </div>
-              <div className="p-7">
+              {status==="loading" ? <CountSkeleton/> :  <div className="p-7">
                 <form action="#">
                   <div className="mb-5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
@@ -469,7 +474,7 @@ const UserView = () => {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

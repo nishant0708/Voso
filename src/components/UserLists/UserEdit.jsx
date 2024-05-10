@@ -7,12 +7,14 @@ import { updateUserDetails } from '../../Redux/slicer/updateDetailsSlice';
 import { FaListUl } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaStopCircle } from 'react-icons/fa';
+import UserEditSKeleton from '../Skeletons/UserEditSKeleton';
+
 
 const UserEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { user } = useSelector((state) => state.userDetails);
+  const { user, status } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -90,6 +92,7 @@ const UserEdit = () => {
 
   return (
     <DefaultLayout>
+      
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-black dark:text-white">
@@ -107,6 +110,7 @@ const UserEdit = () => {
         </div>
         {/* <!-- Contact Form --> */}
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          { status==="loading" ? <UserEditSKeleton/> :
           <form onSubmit={handleSubmit}>
             <div className="p-5.5 pb-5">
               <div className="mb-3 flex flex-col gap-2.5 md:gap-6 md:flex-row">
@@ -534,7 +538,7 @@ const UserEdit = () => {
                 </button>
               </div>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
     </DefaultLayout>

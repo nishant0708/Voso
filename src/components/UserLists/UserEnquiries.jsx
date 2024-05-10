@@ -5,12 +5,13 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchEnquiriesList } from '../../Redux/slicer/userList';
 import formatDate from '../../utils/formatDate';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+import UserlistSkeleton from '../Skeletons/UserlistSkeleton';
 
 const UserEnquiries = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { users } = useSelector((state) => state.usersList);
+  const { users, status } = useSelector((state) => state.usersList);
   const limit = 10;
   const page = 1;
 //calling api to fetch user enquiry
@@ -42,6 +43,7 @@ const UserEnquiries = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
+          {status==="loading" ? <UserlistSkeleton/>:
           <table className="w-full text-sm">
             <thead className="font-extrabold text-center">
               <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
@@ -80,7 +82,7 @@ const UserEnquiries = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table>}
         </div>
       </div>
     </DefaultLayout>

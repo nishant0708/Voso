@@ -128,41 +128,49 @@ const News_page_table = () => {
                   {news?.title}
                 </td>
 
-                <td className="p-2.5 lg:p-4 !pl-13">{news?.category}</td>
-                <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">
-                  {formatDate(news?.createdAt)}
-                </td>
-                <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
-                  <p className="cursor-pointer">
-                    <TbDotsVertical
-                      size={22}
-                      onClick={() => handlePopup(news?._id)}
-                    />
-                  </p>
-                  {popup === news?._id && (
-                    <div
-                      ref={ref}
-                      className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
-                    >
+
+                  <td className="p-2.5 lg:p-4 !pl-13">{news?.category}</td>
+                  <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">
+                    {formatDate(news?.createdAt)}
+                  </td>
+                  <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
+                    <p className="cursor-pointer">
+                      <TbDotsVertical
+                        size={22}
+                        onClick={() => handlePopup(news?._id)}
+                      />
+                    </p>
+                    {popup === news?._id && (
                       <div
-                        onClick={() => navigate(`/update-news/${news._id}`)}
-                        className="flex gap-3 cursor-pointer items-center"
+                        ref={ref}
+                        className="w-[150px] sm:w-[160px] flex flex-col gap-4 absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg p-7 dark:text-white bg-white dark:bg-meta-4"
                       >
-                        <FaCircleUser className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Update News</span>
+                        <div
+                          onClick={() => navigate(`/update-news/${news._id}`)}
+                          className="flex gap-3 cursor-pointer items-center"
+                        >
+                          <FaCircleUser className="text-sm sm:text-md" />
+                          <span className="text-xs sm:text-sm">
+                            Update News
+                          </span>
+                        </div>
+                        <div
+                          onClick={() => handleDeleteNews(news._id)}
+                          className="flex gap-3 cursor-pointer items-center"
+                        >
+                          <FaRupeeSign className="text-sm sm:text-md" />
+                          <span className="text-xs sm:text-sm">Delete</span>
+                        </div>
                       </div>
-                      <div
-                        onClick={() => handleDeleteNews(news._id)}
-                        className="flex gap-3 cursor-pointer items-center"
-                      >
-                        <FaRupeeSign className="text-sm sm:text-md" />
-                        <span className="text-xs sm:text-sm">Delete</span>
-                      </div>
-                    </div>
-                  )}
-                </td>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <div className="text-center mt-2">No data found</div>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

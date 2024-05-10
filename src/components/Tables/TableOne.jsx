@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
 import formatDate from '../../utils/formatDate';
 import userimg from '../../images/icon/icons8-user-40.png';
-import ProductlistSkeleton from '../Skeletons/productlistSkeleton';
+import ProductlistSkeleton from '../Skeletons/ProductlistSkeleton';
 
 const TableOne = () => {
   const dispatch = useDispatch();

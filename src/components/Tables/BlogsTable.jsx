@@ -10,7 +10,7 @@ import { FaRupeeSign } from 'react-icons/fa';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import Pagination from '../../utils/Pagination';
-import ProductlistSkeleton from '../Skeletons/productlistSkeleton';
+import ProductlistSkeleton from '../Skeletons/ProductlistSkeleton';
 
 const BlogsTable = () => {
   const dispatch = useDispatch();

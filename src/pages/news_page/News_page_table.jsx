@@ -19,6 +19,9 @@ const News_page_table = () => {
   const { data, isLoading } = useSelector((state) => state.news);
   const [page, setPage] = useState(1);
   const [popup, setPopup] = useState();
+
+
+
   useEffect(() => {
     if (page) dispatch(getNewsApi({ limit, page }));
   }, [page, limit, dispatch]);
@@ -74,16 +77,16 @@ const News_page_table = () => {
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="font-extrabold text-center">
+          <thead className="font-extrabold ">
             <tr className="font-extrabold whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
-              <th className="p-2.5 lg:p-4 sm:!pl-14 pl-3">Image</th>
+              <th className="p-2.5 text-left lg:p-4 sm:!pl-14 pl-3">Image</th>
               <th className="p-3.5 lg:p-4 !pl-13">Title</th>
               <th className="p-3.5 lg:p-4 !pl-13">Category</th>
               <th className="p-3.5 lg:p-4 !pl-13">Date</th>
               <th className="p-3.5 lg:p-4 !pl-13">Action</th>
             </tr>
           </thead>
-          <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+          <tbody className="text-black  dark:text-white text-center whitespace-nowrap">
             {data?.map((news, index) => (
               <tr key={index}>
                 <td
@@ -109,7 +112,16 @@ const News_page_table = () => {
                     />
                   </span>
                 </td>
-                <td className="p-2.5 lg:p-4 sm:!pl-14 pl-3 font-extrabold">
+                <td
+                  className="p-2.5 text-left lg:p-4 sm:!pl-14 pl-3 font-extrabold"
+                  style={{
+                    maxWidth: '400px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                  title={news?.title} // Use title attribute for full title on hover
+                >
                   {news?.title}
                 </td>
 

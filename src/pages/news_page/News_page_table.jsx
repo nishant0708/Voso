@@ -29,6 +29,7 @@ const News_page_table = () => {
   const handlepop = (val) => {
     setPopup(val);
   };
+
   useOnClickOutside(ref, handlepop);
   const renderImage = (imageUrl) => {
     if (imageUrl?.startsWith('https://')) {
@@ -37,6 +38,7 @@ const News_page_table = () => {
       return `${BACKEND_URL}news/${imageUrl}`;
     }
   };
+
   const handleDeleteNews = (id) => {
     const value = window.confirm('Are you sure you want to delete this?');
     if (value) {
@@ -46,6 +48,7 @@ const News_page_table = () => {
       dispatch(deleteNewsByIdApi(id));
     }
   };
+  
   const formatDate = (dateString) => {
     const options = {
       year: 'numeric',

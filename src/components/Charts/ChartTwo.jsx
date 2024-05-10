@@ -59,6 +59,7 @@ const options = {
 };
 
 const ChartTwo = () => {
+  const [isLoading] = useState(false);
   const [state] = useState({
     series: [
       {
@@ -71,7 +72,13 @@ const ChartTwo = () => {
       },
     ],
   });
-
+if(isLoading){
+  return(
+    <div className="col-span-12 h-[200px] rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
+    <div className="h-full bg-[#CBCBD2] dark:bg-[#374151] rounded-lg shadow-md p-5 animate-pulse "></div>
+ </div>
+  );
+}
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">

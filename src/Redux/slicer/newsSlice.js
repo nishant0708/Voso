@@ -28,7 +28,7 @@ export const getNewsApi = createAsyncThunk(
         `news/getAllNews?page=${page}&limit=${limit}`,
       );
       if (response.data?.success) {
-        return response.data.data;
+        return response.data;
       }
     } catch (error) {
       toast.error(error?.response.data.message);

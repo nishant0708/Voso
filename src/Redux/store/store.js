@@ -16,6 +16,7 @@ import ProductDetailsUpdatedSlicer from '../slicer/ProductDetailsUpdatedSlicer';
 import productFeatureSlice from '../slicer/productFeatureSlice';
 import galleryfeatureSlice from '../slicer/galleryfeatureSlice';
 import newsSlice from '../slicer/newsSlice';
+
 const store = configureStore({
   reducer: {
     topUsers: topUsersSlice,

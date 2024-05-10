@@ -1,5 +1,5 @@
 import React from 'react';
-import CardDataSkeleton from "../components/Skeletons/CardDataSkeleton"
+import CardDataSkeleton from '../components/Skeletons/CardDataSkeleton';
 
 const CardDataStats = ({
   title,
@@ -9,14 +9,11 @@ const CardDataStats = ({
   levelDown,
   children,
   loading,
-   // Add loading prop to indicate whether to show skeleton
+  link,
+  // Add loading prop to indicate whether to show skeleton
 }) => {
   if (loading) {
-    return (
-
-    <CardDataSkeleton/>
-    )
-    
+    return <CardDataSkeleton />;
   }
 
   return (
@@ -26,9 +23,16 @@ const CardDataStats = ({
       </div>
       <div className="mt-4 flex items-end justify-between">
         <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
-            {total}
-          </h4>
+          {link ? (
+            <a href={total} target="_blank" rel="noreferrer">
+              <p className="text-md font-medium">{total}</p>
+            </a>
+          ) : (
+            <h4 className="text-title-md font-bold text-black dark:text-white">
+              {total}
+            </h4>
+          )}
+
           <span className="text-sm font-medium">{title}</span>
         </div>
 

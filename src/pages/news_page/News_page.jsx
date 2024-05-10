@@ -125,8 +125,6 @@ const News_page = () => {
     } else {
       cleanSlugString = await createEnglishSlug(title);
     }
-
-    console.log('ee', cleanSlugString);
     if (!cleanSlugString) {
       toast.error('Somthing gone wrong! Please Enter Title again!');
       return;

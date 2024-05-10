@@ -24,10 +24,10 @@ const TableOne = () => {
 
       <div className="w-full flex flex-col gap-5.5 text-center">
         {loading ? (
-          <ProductlistSkeleton/>
+          <ProductlistSkeleton />
         ) : error ? (
           <div>Error: {error.message}</div>
-        ) : topUsers.length > 0 ? (
+        ) : topUsers?.data?.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="font-extrabold text-center whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
@@ -40,7 +40,7 @@ const TableOne = () => {
                 </tr>
               </thead>
               <tbody className="text-center text-black dark:text-white whitespace-nowrap">
-                {topUsers.map((user, index) => (
+                {topUsers?.data?.map((user, index) => (
                   <tr
                     className={`${
                       index === topUsers.length - 1

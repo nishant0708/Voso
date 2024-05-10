@@ -20,10 +20,9 @@ export const fetchTopUsers = createAsyncThunk(
           page: page,
         },
       });
-     
-      return response.data.data;
+
+      return response.data;
     } catch (error) {
-    
       throw error;
     }
   },

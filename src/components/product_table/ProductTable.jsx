@@ -6,9 +6,10 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchProducts } from '../../Redux/slicer/productSlice';
 import { toggleProductFeature } from '../../Redux/slicer/productFeatureSlice';
 import formatDate from '../../utils/formatDate';
-import Loader from '../../common/Loader';
+// import Loader from '../../common/Loader';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import renderImage from '../../common/renderImage';
+import DisplayTable from '../Skeletons/DisplayTable';
 
 const ProductTable = () => {
   const dispatch = useDispatch();
@@ -19,11 +20,12 @@ const ProductTable = () => {
 
   //fetching product list
   useEffect(() => {
-    dispatch(fetchProducts({ userId }));
+    dispatch(fetchProducts({ userId }))
+
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return <Loader/>;
+    return <DisplayTable/>;
   }
 
   if (status === 'failed') {
@@ -165,7 +167,7 @@ const ProductTable = () => {
 
                       fontWeight: 'bold',
                       gap: '20px',
-                      width: '500px',
+                      width: '400px',
                     }}
                   >
                     <a href={product.product_url}>

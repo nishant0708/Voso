@@ -15,13 +15,14 @@ const ChangePassword = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const { isLoading } = useSelector((state) => state.updateDetails);
-
+ // function to edit password
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
   };
+  //function to submit password
 
   const handleSubmit = useCallback(
     (e) => {

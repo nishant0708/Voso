@@ -8,12 +8,13 @@ import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
 import renderImage from '../../common/renderImage';
+import BlogEditSkeleton from '../Skeletons/BlogEditSkeleton';
 
 const BlogEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogId } = useParams();
-  const { blog } = useSelector((state) => state.blogs);
+  const { blog, status } = useSelector((state) => state.blogs);
   const [imgcrop, setimgcrop] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -81,59 +82,63 @@ const BlogEdit = () => {
           Back
         </button>
       </div>
-      <div className="overflow-x-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-5">
-        <div className="flex flex-col sm:flex-row justify-between gap-5 sm:gap-2 mb-5">
-          <div className="w-full">
-            <label className="text-black dark:text-white">Title</label>
-            <input
-              type="text"
-              name="title"
-              onChange={handleOnChange}
-              value={formData.title}
-              id="title"
-              className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-            />
-          </div>
-          <div className="w-full">
-            <label className="text-black dark:text-white md:whitespace-nowrap">
-              Banner Image (200 X 200 px){' '}
-              <span>
-                <a
-                  href="https://www.remove.bg/"
-                  target="blank"
-                  className="text-meta-5 text-sm cursor-pointer hover:underline"
-                >
-                  Click here to remove background
-                </a>
-              </span>
-            </label>
-            <div className="relative mt-[6px]">
-              <ImageCropper
-                setimg={setimg}
-                src={renderImage(blog?.bannerImage)}
-                maxHeight={300}
-                maxWidth={300}
-                minHeight={50}
-                minWidth={50}
+      {status === 'loading' ? (
+        <BlogEditSkeleton />
+      ) : (
+        <div className="overflow-x-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-5">
+          <div className="flex flex-col sm:flex-row justify-between gap-5 sm:gap-2 mb-5">
+            <div className="w-full">
+              <label className="text-black dark:text-white">Title</label>
+              <input
+                type="text"
+                name="title"
+                onChange={handleOnChange}
+                value={formData.title}
+                id="title"
+                className="relative z-20 h-10 mt-1.5 text-sm  dark:text-white w-full appearance-none rounded border border-stroke bg-transparent py-0.5 px-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
+            <div className="w-full">
+              <label className="text-black dark:text-white md:whitespace-nowrap">
+                Banner Image (200 X 200 px){' '}
+                <span>
+                  <a
+                    href="https://www.remove.bg/"
+                    target="blank"
+                    className="text-meta-5 text-sm cursor-pointer hover:underline"
+                  >
+                    Click here to remove background
+                  </a>
+                </span>
+              </label>
+              <div className="relative mt-[6px]">
+                <ImageCropper
+                  setimg={setimg}
+                  src={renderImage(blog?.bannerImage)}
+                  maxHeight={300}
+                  maxWidth={300}
+                  minHeight={50}
+                  minWidth={50}
+                />
+              </div>
+            </div>
           </div>
+          <div className="w-full mb-5">
+            <QuillEditor
+              label="Content"
+              name="content"
+              value={formData.content}
+              onChange={handleOnChange}
+            />
+          </div>
+          <button
+            onClick={handleUpdateBlog}
+            className="relative mt-[20px] w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
+            Update
+          </button>
         </div>
-        <div className="w-full mb-5">
-          <QuillEditor
-            label="Content"
-            name="content"
-            value={formData.content}
-            onChange={handleOnChange}
-          />
-        </div>
-        <button
-          onClick={handleUpdateBlog}
-          className="relative mt-[20px] w-[100%] text-white justify-center items-center gap-1 bg-[#727cf5] py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200"
-        >
-          Update
-        </button>
-      </div>
+      )}
     </DefaultLayout>
   );
 };

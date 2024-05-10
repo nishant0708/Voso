@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopUsers } from '../../Redux/slicer/topUsersSlice';
 import formatDate from '../../utils/formatDate';
 import userimg from '../../images/icon/icons8-user-40.png';
+import ProductlistSkeleton from '../Skeletons/productlistSkeleton';
 
 const TableOne = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const TableOne = () => {
 
       <div className="w-full flex flex-col gap-5.5 text-center">
         {loading ? (
-          <div>Loading...</div>
+          <ProductlistSkeleton/>
         ) : error ? (
           <div>Error: {error.message}</div>
         ) : topUsers.length > 0 ? (

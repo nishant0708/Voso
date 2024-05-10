@@ -5,8 +5,9 @@ import { fetchBlogs } from '../../Redux/slicer/blogSlice';
 import DefaultLayout from '../../layout/DefaultLayout';
 import formatDate from '../../utils/formatDate';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import Loader from '../../common/Loader';
+
 import renderImage from '../../common/renderImage';
+import Blogviewskeleton from '../Skeletons/Blogviewskeleton';
 
 const ProductTable = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const ProductTable = () => {
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return <Loader />;
+    return <Blogviewskeleton/>
   }
 
   if (status === 'failed') {

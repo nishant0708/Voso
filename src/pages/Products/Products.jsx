@@ -11,8 +11,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Pagination from '../../utils/Pagination';
 import { GrGallery } from 'react-icons/gr';
 import { FaProductHunt } from 'react-icons/fa6';
-
-import ProductlistSkeleton from '../../components/Skeletons/productlistSkeleton';
+import ProductlistSkeleton from '../../components/Skeletons/ProductlistSkeleton';
 
 const Products = () => {
   const dispatch = useDispatch();

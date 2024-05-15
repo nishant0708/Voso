@@ -13,10 +13,10 @@ const initialState = {
 export const fetchMonth = createAsyncThunk('Month', async (e) => {
   try {
     const response = await AxiosInstance.post(`user/eachMonthUsersCount`, e);
-   
-    return response.data.data;
+    if (response.data?.success) {
+      return response.data.data;
+    }
   } catch (error) {
-   
     throw error;
   }
 });

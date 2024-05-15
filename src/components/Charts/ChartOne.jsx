@@ -10,24 +10,44 @@ const ChartOne = () => {
   useEffect(() => {
     dispatch(fetchMonth());
   }, [dispatch]);
+
   const [isLoading] = useState(false);
-  const [state] = useState({
+  const [state, setState] = useState({
     series: [
       {
         name: 'Total Website',
-        data: monthData
-          ? monthData?.map((item) => item?.count)
-          : [(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)],
+        data: monthData.map((item) => item.count) || [
+          (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        ],
       },
 
       {
         name: 'year',
-        data: monthData
-          ? monthData?.map((item) => Number(item?.year))
-          : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        data: monthData.map((item) => Number(item.year)) || [
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        ],
       },
     ],
   });
+  useEffect(() => {
+    setState({
+      series: [
+        {
+          name: 'Total Website',
+          data: monthData.map((item) => item.count) || [
+            (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+          ],
+        },
+
+        {
+          name: 'year',
+          data: monthData.map((item) => Number(item.year)) || [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          ],
+        },
+      ],
+    });
+  }, [monthData]);
   const options = {
     legend: {
       show: false,
@@ -105,22 +125,20 @@ const ChartOne = () => {
     },
     xaxis: {
       type: 'category',
-      categories: monthData
-        ? monthData?.map((item) => item?.month)
-        : [
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-          ],
+      categories: monthData?.map((item) => item?.month) || [
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+      ],
       axisBorder: {
         show: false,
       },

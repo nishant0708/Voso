@@ -29,8 +29,8 @@ export const fetchUsers = createAsyncThunk(
     try {
       const response = await AxiosInstance.post(`user/getUsers/`, {
         params: {
-          limit: limit,
-          page: page,
+          limit: limit || 20,
+          page: page || 1,
         },
       });
 

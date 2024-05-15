@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { searchApi } from '../../Redux/slicer/userList';
+import { searchApi, fetchUsers } from '../../Redux/slicer/userList';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 const Header = (props) => {
@@ -35,6 +35,9 @@ const Header = (props) => {
   const handleChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+    if (!query) {
+      dispatch(fetchUsers({ page: 1, limit: 20 })); // Fetch users immediately when search query is empty
+    }
   };
   // Define the paths to check against
   const checkPaths = ['/users', '/blogs', '/products'];

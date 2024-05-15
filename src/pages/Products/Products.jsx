@@ -103,63 +103,68 @@ const Products = () => {
                   <th className="p-2.5 lg:p-4 !pl-5">ACTION</th>
                 </tr>
               </thead>
-              <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-                {users.map((user, index) => (
-                  <tr
-                    key={user._id}
-                    className={`${
-                      index === users.length - 1
-                        ? ''
-                        : 'border-b border-stroke dark:border-strokedark'
-                    }`}
-                  >
-                    <td className="p-2.5 lg:p-4 sm:!pl-14 pl-3 font-extrabold">
-                      {index + 1}
-                    </td>
-                    <td className="p-2.5 lg:p-4 !pl-13 capitalize">
-                      {user.first_name + ' ' + user.last_name}
-                    </td>
-                    <td className="p-2.5 lg:p-4 !pl-13">{user.mobile}</td>
-                    <td className="p-2.5 lg:p-4 !pl-12 text-meta-5">
-                      {user?.email}
-                    </td>
-                    <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
-                      <p className="cursor-pointer">
-                        <TbDotsVertical
-                          size={22}
-                          onClick={() => handlePopup(user?._id)}
-                        />
-                      </p>
-
-                      {active === user?._id && (
-                        <div
-                          ref={ref}
-                          className="w-[160px] items-start flex flex-col  absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg  dark:text-white bg-white dark:bg-meta-4"
-                        >
-                          <div
-                            onClick={() =>
-                              navigate(`/products/product_list/${user._id}`)
-                            } //to be added
-                            className="w-full flex gap-3 pt-4 pb-2  pr-3 pl-4 text-sm cursor-pointer hover:bg-slate-200 dark:hover:bg-primary"
-                          >
-                            <FaProductHunt size={20} />
-                            Products List
-                          </div>
-                          <div
-                            onClick={
-                              () => navigate(`/products/Gallery/${user._id}`) //to be added
-                            }
-                            className="w-full flex gap-3 pt-3 pb-3  pr-3 pl-4 cursor-pointer hover:bg-slate-200  dark:hover:bg-primary"
-                          >
-                            <GrGallery size={18} className="-scale-x-100" />
-                            <span className="text-sm">Gallery List</span>
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {users.length !== 0 ? (
+  <tbody className="text-black dark:text-white text-center whitespace-nowrap">
+    {users.map((user, index) => (
+      <tr
+        key={user._id}
+        className={`${
+          index === users.length - 1
+            ? ''
+            : 'border-b border-stroke dark:border-strokedark'
+        }`}
+      >
+        <td className="p-2.5 lg:p-4 sm:pl-14 pl-3 font-extrabold">
+          {index + 1}
+        </td>
+        <td className="p-2.5 lg:p-4 pl-13 capitalize">
+          {user.first_name + ' ' + user.last_name}
+        </td>
+        <td className="p-2.5 lg:p-4 pl-13">{user.mobile}</td>
+        <td className="p-2.5 lg:p-4 pl-12 text-meta-5">
+          {user?.email}
+        </td>
+        <td className="relative p-2.5 lg:p-4 pl-5 flex justify-center items-center">
+          <p className="cursor-pointer">
+            <TbDotsVertical
+              size={22}
+              onClick={() => handlePopup(user?._id)}
+            />
+          </p>
+          {active === user?._id && (
+            <div
+              ref={ref}
+              className="w-[160px] items-start flex flex-col absolute top-[25%] right-[75%] sm:right-[65%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg dark:text-white bg-white dark:bg-meta-4"
+            >
+              <div
+                onClick={() =>
+                  navigate(`/products/product_list/${user._id}`)
+                }
+                className="w-full flex gap-3 pt-4 pb-2 pr-3 pl-4 text-sm cursor-pointer hover:bg-slate-200 dark:hover:bg-primary"
+              >
+                <FaProductHunt size={20} />
+                Products List
+              </div>
+              <div
+                onClick={() =>
+                  navigate(`/products/Gallery/${user._id}`)
+                }
+                className="w-full flex gap-3 pt-3 pb-3 pr-3 pl-4 cursor-pointer hover:bg-slate-200 dark:hover:bg-primary"
+              >
+                <GrGallery size={18} className="-scale-x-100" />
+                <span className="text-sm">Gallery List</span>
+              </div>
+            </div>
+          )}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+) : (
+  <p className="text-center text-red-500 font-bold mt-4">
+    No User found
+  </p>
+)}
             </table>
           </div>
         )}

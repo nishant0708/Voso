@@ -1,13 +1,13 @@
 import React from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
-import ChartTwo from '../../components/Charts/ChartTwo';
+
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MonthlyUser from '../../components/Tables/MonthlyUser';
 import { useSelector } from 'react-redux';
 const ECommerce = () => {
-  const { topUsers, loading } = useSelector((state) => state.topUsers);
+  const { topUsers} = useSelector((state) => state.topUsers);
   const monthData = useSelector((state) => state.MonthCount.Month);
 
   const totalUsers = topUsers?.meta?.total;

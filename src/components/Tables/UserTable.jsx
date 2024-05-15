@@ -132,6 +132,7 @@ const UserTable = () => {
                 <th className="p-2.5 lg:p-4 !pl-5">ACTIONS</th>
               </tr>
             </thead>
+            {users.length !== 0 ? (
             <tbody className="text-black dark:text-white text-left whitespace-nowrap">
               {users.map((user, index) => (
                 <tr
@@ -257,7 +258,11 @@ const UserTable = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
+            </tbody>):(
+               <p className="text-center text-red-500 font-bold mt-4">
+               No User found
+             </p>
+            )}
           </table>
         </div>
       )}

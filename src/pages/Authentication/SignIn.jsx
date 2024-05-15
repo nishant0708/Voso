@@ -11,34 +11,36 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   // to get data from redux store
-  const {isLoading} = useSelector((state) => state.auth);
-const [show,setShow]=useState(false);
+  const { isLoading } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
   //  to handle state of sign in
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   // to handle sign in functionlaity
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-    dispatch(loginViaPassword({ email, password })).then((res) => {
-      if (res?.payload?.success) {
-        localStorage.setItem(
-          'userData',
-          JSON.stringify(res?.payload?.vosoVyaparUser),
-        );
-        localStorage.setItem('accessToken', res?.payload?.accessToken);
-        navigate('/');
-      }
-    });
-  },[dispatch,email,navigate,password])
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(loginViaPassword({ email, password })).then((res) => {
+        if (res?.payload?.success) {
+          localStorage.setItem(
+            'userData',
+            JSON.stringify(res?.payload?.vosoVyaparUser),
+          );
+          localStorage.setItem('accessToken', res?.payload?.accessToken);
+          navigate('/');
+        }
+      });
+    },
+    [dispatch, email, navigate, password],
+  );
 
   return (
     <div className="overflow-hidden">
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
-          <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
+          <div className="  w-full xl:block xl:w-1/2">
+            <div className=" px-10  py-17.5 sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
                   className="w-96 hidden dark:block"
@@ -51,7 +53,7 @@ const [show,setShow]=useState(false);
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
+                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
@@ -61,7 +63,7 @@ const [show,setShow]=useState(false);
                 Welcome! Log in to your account.
               </p>
 
-              <span className="mt-15 inline-block">
+              <span className="hidden xl:block mt-15 inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -233,7 +235,7 @@ const [show,setShow]=useState(false);
                   </label>
                   <div className="relative">
                     <input
-                      type={show ? "text": "password"}
+                      type={show ? 'text' : 'password'}
                       placeholder="Enter your Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -241,7 +243,10 @@ const [show,setShow]=useState(false);
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4"  onClick={()=>setShow(!show)}>
+                    <span
+                      className="absolute right-4 top-4"
+                      onClick={() => setShow(!show)}
+                    >
                       <svg
                         className="fill-current"
                         width="22"
@@ -287,12 +292,12 @@ const [show,setShow]=useState(false);
                       <img
                         className="hidden dark:block w-8"
                         src={mobile_logo_dark}
-                        alt=''
+                        alt=""
                       />
                       <img
                         className="dark:hidden w-8"
                         src={mobile_logo_light}
-                        alt=''
+                        alt=""
                       />
                       Sign in with Mobile
                     </span>

@@ -12,54 +12,50 @@ const SignInMobile = () => {
   const [showLabel, setShowLabel] = useState(false);
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
-
-    //onclick send otp to number and make enter otp field visible
+  const [isValid, setIsValid] = useState(true);
+  //onclick send otp to number and make enter otp field visible
   const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
-      dispatch(sendOTP(mobileNo))
-        .then((actionResult) => {
-          if (sendOTP.fulfilled.match(actionResult)) {
-            setShowLabel(true);
-          } else if (sendOTP.rejected.match(actionResult)) {
-            const errorMessage =
-              actionResult.error.message || 'Unknown error occurred.';
-            toast(errorMessage);
-          }
-        })
-        .catch((error) => {
-          toast.error('Error sending OTP: ' + error.message);
-        });
+      dispatch(sendOTP(mobileNo)).then((actionResult) => {
+        if (sendOTP.fulfilled.match(actionResult)) {
+          setShowLabel(true);
+        }
+      });
     } else {
-      alert('Please enter a valid 10-digit mobile number.');
+      toast.error('Please enter a valid 10-digit mobile number.');
     }
   }, [mobileNo, dispatch, setShowLabel]);
 
-
-//calling api for fetching api
+  //calling api for fetching api
   const handleVerify = useCallback(() => {
-    dispatch(verifyOTP({ mobileNo, otp }))
-      .then((res) => {
-        if (res.payload && res.payload.success) {
-          // Store access token and user data in localStorage
-          localStorage.setItem('userData', JSON.stringify(res.payload.vosoVyaparUser));
-          localStorage.setItem('accessToken', res.payload.accessToken);
-          navigate('/');
-        } else {
-          toast.error('Error verifying OTP');
-        }
-      })
-      .catch((error) => {
-        toast.error('Error verifying OTP: ' + error.message);
-      });
+    dispatch(verifyOTP({ mobileNo, otp })).then((res) => {
+      if (res.payload && res.payload.success) {
+        // Store access token and user data in localStorage
+        localStorage.setItem(
+          'userData',
+          JSON.stringify(res.payload.vosoVyaparUser),
+        );
+        navigate('/auth/signin');
+      } else {
+        toast.error('Error verifying OTP');
+      }
+    });
   }, [dispatch, mobileNo, otp, navigate]);
 
   //handling mobile no. change
   const handleMobileNoChange = (e) => {
     const inputValue = e.target.value;
     const numericValue = inputValue.replace(/\D/g, '');
-    setMobileNo(numericValue);
+    const truncatedValue = numericValue.slice(0, 10); // Truncate to the first 10 digits
+    setMobileNo(truncatedValue);
+    setIsValid(isValidMobile(truncatedValue));
   };
-//handle otp change
+
+  const isValidMobile = (mobileNo) => {
+    const regex = /^[0-9]{10}$/; // Matches exactly 10 digits
+    return regex.test(mobileNo);
+  };
+  //handle otp change
   const handleOTPChange = (e) => {
     setOTP(e.target.value);
   };
@@ -68,11 +64,11 @@ const SignInMobile = () => {
     <div className="overflow-hidden">
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
-          <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
+          <div className=" w-full xl:block xl:w-1/2">
+            <div className=" px-10  py-17.5 sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
-                  className="w-96 hidden dark:block"
+                  className="w-96 hidden sm:hidden dark:block"
                   src={voso_logo}
                   alt="Logo"
                 />
@@ -82,7 +78,7 @@ const SignInMobile = () => {
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[54px] translate-y-[10px]">
+                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
@@ -90,7 +86,7 @@ const SignInMobile = () => {
               <p className="2xl:px-20 text-[22px]">
                 Welcome! Log in to your account.
               </p>
-              <span className="mt-15 inline-block">
+              <span className="hidden xl:block mt-15 inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -231,7 +227,7 @@ const SignInMobile = () => {
                       value={mobileNo}
                       onChange={handleMobileNoChange}
                       readOnly={showLabel}
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className={`w-full rounded-lg border ${isValid ? 'border-stroke' : 'border-red-500'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                     />
                     <span className="absolute right-4 top-4">
                       <img
@@ -268,12 +264,10 @@ const SignInMobile = () => {
                       display: showLabel ? 'block' : 'none',
                       cursor: 'pointer',
                     }}
-                    onClick={handleClick} className="text-primary"
+                    onClick={handleClick}
+                    className="text-primary"
                   >
-                    
-                   
-                      Resend OTP
-                   
+                    Resend OTP
                   </p>
                 </div>
                 <input

@@ -12,30 +12,39 @@ export const forgotPassword = createAsyncThunk(
   'forgot/forgotPassword',
   async (email, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post('/user/forgetPassword', { email });
-      toast.success(response.data.message); // Toast success message
-      return response.data;
+      const response = await AxiosInstance.post('/user/forgetPassword', {
+        email,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message); // Toast success message
+        return response.data;
+      }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred';
       toast.error(errorMessage); // Toast error message
       return rejectWithValue(errorMessage);
     }
-  }
+  },
 );
 
 export const verifyOtpForPassword = createAsyncThunk(
   'forgot/verifyOtpForPassword',
   async ({ email, otp }, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post('/user/verifyOtpForPassword', { email, otp });
-      toast.success(response.data.message); // Toast success message
-      return response.data;
+      const response = await AxiosInstance.post('/user/verifyOtpForPassword', {
+        email,
+        otp,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message); // Toast success message
+        return response.data;
+      }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred';
       toast.error(errorMessage); // Toast error message
       return rejectWithValue(errorMessage);
     }
-  }
+  },
 );
 
 const forgotSlice = createSlice({

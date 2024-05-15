@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
-
+import toast from 'react-hot-toast';
 // Define an async thunk for sending OTP
 export const sendOTP = createAsyncThunk(
   'login_mobile/sendOTP',
@@ -9,11 +9,15 @@ export const sendOTP = createAsyncThunk(
       const response = await AxiosInstance.post('user/sendOtpMobile', {
         mobile: mobileNo,
       });
-      return response.data;
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+        return response?.data;
+      }
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       throw new Error(error.response.data.message);
     }
-  }
+  },
 );
 
 // Define an async thunk for verifying OTP
@@ -25,11 +29,15 @@ export const verifyOTP = createAsyncThunk(
         mobile: mobileNo,
         otp,
       });
-      return response.data;
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+        return response?.data;
+      }
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       throw new Error(error.response.data.message);
     }
-  }
+  },
 );
 
 // Define the initial state
@@ -71,7 +79,6 @@ const login_mobileSlice = createSlice({
         state.verifyingOTP = false;
         state.isLoading = false;
         state.error = null;
-       
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.verifyingOTP = false;

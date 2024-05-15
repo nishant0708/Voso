@@ -15,13 +15,13 @@ const ProductTable = () => {
   const { userId } = useParams();
   const { blogs, status, error } = useSelector((state) => state.blogs);
 
-  //fetching users list 
+  //fetching users list
   useEffect(() => {
     dispatch(fetchBlogs({ userId }));
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return <Blogviewskeleton/>
+    return <Blogviewskeleton />;
   }
 
   if (status === 'failed') {
@@ -65,7 +65,7 @@ const ProductTable = () => {
             Back
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto min-h-96">
           <table className="w-full text-sm">
             <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
               <tr>
@@ -86,7 +86,7 @@ const ProductTable = () => {
                   }`}
                 >
                   <td className="p-2.5 w-[300px] lg:p-4 pl-5 sm:!pl-14 flex gap-5 items-center font-bold">
-                    <a href={blog.blog}>
+                    <a href={blog.slug}>
                       <span>
                         <img
                           className="w-[7vh] h-[7vh] rounded-[50%]"
@@ -95,7 +95,9 @@ const ProductTable = () => {
                         />
                       </span>
                     </a>
-                    {blog.title}
+                    <span className="w-50 text-elipsis overflow-hidden">
+                      {blog.title}
+                    </span>
                   </td>
                   <td className="p-2.5 lg:p-4 !pl-5">
                     {blog.is_active ? 'Active' : 'Inactive'}

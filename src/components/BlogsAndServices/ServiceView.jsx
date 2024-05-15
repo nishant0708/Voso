@@ -18,15 +18,13 @@ const ServiceView = () => {
   const { userId } = useParams();
   const { services, status, error } = useSelector((state) => state.blogs);
 
-  //fetching services 
+  //fetching services
   useEffect(() => {
     dispatch(fetchServices({ userId }));
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return (
-     <DisplayTable/>
-    );
+    return <DisplayTable />;
   }
 
   if (status === 'failed') {
@@ -154,7 +152,6 @@ const ToggleSwitch = ({ serviceId, isActive, userId }) => {
       dispatch(toggleServiceFeature({ serviceId, userId, isActive })).then(
         () => {
           setIsToggled(!isToggled);
-          window.location.reload(); // This will force reload the page; consider if it's necessary
         },
       );
     }

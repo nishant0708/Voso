@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../utils/intercept';
-
+import toast from 'react-hot-toast';
 const initialState = {
   blogs: [],
   services: [],
@@ -19,10 +19,9 @@ export const fetchBlogs = createAsyncThunk('fetchBlogs', async ({ userId }) => {
         id: userId,
       },
     });
-   
+
     return response.data.data;
   } catch (error) {
-    
     throw error;
   }
 });
@@ -36,10 +35,9 @@ export const fetchServices = createAsyncThunk(
           id: userId,
         },
       });
-      
+
       return response.data.data;
     } catch (error) {
-    
       throw error;
     }
   },
@@ -55,10 +53,9 @@ export const fetchServiceById = createAsyncThunk(
           id: serviceId,
         },
       });
-    
+
       return response.data.data;
     } catch (error) {
-      
       throw error;
     }
   },
@@ -78,13 +75,12 @@ export const fetchBlogById = createAsyncThunk(
 
       return response.data.data;
     } catch (error) {
-
       throw error;
     }
   },
 );
 
-// Define the asynchronous thunk for Updating Service BY id 
+// Define the asynchronous thunk for Updating Service BY id
 
 export const updateServiceById = createAsyncThunk(
   'updateServiceById',
@@ -107,16 +103,15 @@ export const updateServiceById = createAsyncThunk(
           },
         },
       );
-     
+
       return response.data.data;
     } catch (error) {
-   
       throw error;
     }
   },
 );
 
-// Define the asynchronous thunk for updating Blog 
+// Define the asynchronous thunk for updating Blog
 
 export const updateBlogById = createAsyncThunk(
   'updateBlogById',
@@ -133,10 +128,9 @@ export const updateBlogById = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-    
+
       return response.data.data;
     } catch (error) {
-     
       throw error;
     }
   },
@@ -155,7 +149,10 @@ export const toggleServiceFeature = createAsyncThunk(
           userId: userId,
         },
       );
-      return response.data; // Assuming the response contains relevant data
+      if (response?.data?.success) {
+        toast.error(response?.data?.message);
+        return response.data; // Assuming the response contains relevant data
+      }
     } catch (error) {
       throw error;
     }

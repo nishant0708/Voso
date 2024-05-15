@@ -119,7 +119,7 @@ const UserTable = () => {
       {status === 'loading' ? (
         <UserlistSkeleton />
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto min-h-96">
           <table className="w-full text-sm">
             <thead className="font-extrabold text-left whitespace-nowrap rounded-sm bg-gray-2 dark:bg-meta-4">
               <tr>
@@ -133,135 +133,142 @@ const UserTable = () => {
               </tr>
             </thead>
             {users.length !== 0 ? (
-            <tbody className="text-black dark:text-white text-left whitespace-nowrap">
-              {users.map((user, index) => (
-                <tr
-                  key={user._id}
-                  className={`${
-                    index === users.length - 1
-                      ? ''
-                      : 'border-b border-stroke dark:border-strokedark'
-                  }`}
-                >
-                  <td className="p-2.5 lg:p-4 !pl-5 font-extrabold">
-                    {index + 1}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-10 capitalize">
-                    {user.first_name + ' ' + user.last_name}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
-                  <td className="p-2.5 lg:p-4 !pl-12 text-center text-meta-3">
-                    {user?.subscription?.currentPlan
-                      ? user?.subscription?.currentPlan
-                      : 'NA'}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-8 text-center">
-                    {calculateDays(user)}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-10 text-center text-meta-5">
-                    {formatDate(user.created_at)}
-                  </td>
-                  <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
-                    <p className="cursor-pointer">
-                      <TbDotsVertical
-                        size={22}
-                        onClick={() => handlePopup(user?._id)}
-                      />
-                    </p>
-                    {active === user?._id && (
-                      <div
-                        ref={ref}
-                        className="w-[158px] sm:w-[178px] flex flex-col  absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg  dark:text-white bg-white dark:bg-meta-4"
-                      >
+              <tbody className="text-black dark:text-white text-left whitespace-nowrap">
+                {users.map((user, index) => (
+                  <tr
+                    key={user._id}
+                    className={`${
+                      index === users.length - 1
+                        ? ''
+                        : 'border-b border-stroke dark:border-strokedark'
+                    }`}
+                  >
+                    <td className="p-2.5 lg:p-4 !pl-5 font-extrabold">
+                      {index + 1}
+                    </td>
+                    <td className="p-2.5 lg:p-4 !pl-10 capitalize">
+                      {user.first_name + ' ' + user.last_name}
+                    </td>
+                    <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
+                    <td className="p-2.5 lg:p-4 !pl-12 text-center text-meta-3">
+                      {user?.subscription?.currentPlan
+                        ? user?.subscription?.currentPlan
+                        : 'NA'}
+                    </td>
+                    <td className="p-2.5 lg:p-4 !pl-8 text-center">
+                      {calculateDays(user)}
+                    </td>
+                    <td className="p-2.5 lg:p-4 !pl-10 text-center text-meta-5">
+                      {formatDate(user.created_at)}
+                    </td>
+                    <td className="relative p-2.5 lg:p-4 !pl-5 flex justify-center items-center">
+                      <p className="cursor-pointer">
+                        <TbDotsVertical
+                          size={22}
+                          onClick={() => handlePopup(user?._id)}
+                        />
+                      </p>
+                      {active === user?._id && (
                         <div
-                          onClick={() =>
-                            navigate(`/users/user/edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer items-center pt-4 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2"
+                          ref={ref}
+                          className="w-[158px] sm:w-[178px] flex flex-col  absolute top-[25%] right-[95%] sm:right-[70%] shadow-[2px_2px_24px_4px_rgba(0,0,0,0.42)] rounded-lg  dark:text-white bg-white dark:bg-meta-4"
                         >
-                          <FaCircleUser className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">User Edit</span>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/edit/${user._id}`)
+                            }
+                            className="flex gap-3 cursor-pointer items-center pt-4 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2"
+                          >
+                            <FaCircleUser className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              User Edit
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/plan-subscribe/${user._id}`)
+                            }
+                            className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
+                          >
+                            <FaRupeeSign className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              Plan Purchase
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/seo/${user._id}`)
+                            }
+                            className="flex gap-3 cursor-pointer  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
+                          >
+                            <HiSpeakerphone className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">SEO Edit</span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/business-edit/${user._id}`)
+                            }
+                            className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
+                          >
+                            <PiToolboxFill className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              Business Edit
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/social-edit/${user._id}`)
+                            }
+                            className="flex gap-3  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
+                          >
+                            <FaShareSquare className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              Social Edit
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/pages-edit/${user._id}`)
+                            }
+                            className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
+                          >
+                            <FaFileAlt className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              Pages Edit
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/view/${user._id}`)
+                            }
+                            className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
+                          >
+                            <FaEye className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              User View
+                            </span>
+                          </div>
+                          <div
+                            onClick={() =>
+                              navigate(`/users/user/contact-us/${user._id}`)
+                            }
+                            className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 pb-4 cursor-pointer items-center"
+                          >
+                            <BsFillQuestionCircleFill className="text-sm sm:text-md" />
+                            <span className="text-xs sm:text-sm">
+                              User Enquiries
+                            </span>
+                          </div>
                         </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/plan-subscribe/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
-                        >
-                          <FaRupeeSign className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Plan Purchase
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/seo/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
-                        >
-                          <HiSpeakerphone className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">SEO Edit</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/business-edit/${user._id}`)
-                          }
-                          className="flex gap-3 cursor-pointer pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 items-center"
-                        >
-                          <PiToolboxFill className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Business Edit
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/social-edit/${user._id}`)
-                          }
-                          className="flex gap-3  pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
-                        >
-                          <FaShareSquare className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            Social Edit
-                          </span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/pages-edit/${user._id}`)
-                          }
-                          className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
-                        >
-                          <FaFileAlt className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">Pages Edit</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/view/${user._id}`)
-                          }
-                          className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 cursor-pointer items-center"
-                        >
-                          <FaEye className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">User View</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            navigate(`/users/user/contact-us/${user._id}`)
-                          }
-                          className="flex gap-3 pl-4 hover:bg-slate-200  dark:hover:bg-primary py-2 pb-4 cursor-pointer items-center"
-                        >
-                          <BsFillQuestionCircleFill className="text-sm sm:text-md" />
-                          <span className="text-xs sm:text-sm">
-                            User Enquiries
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>):(
-               <p className="text-center text-red-500 font-bold mt-4">
-               No User found
-             </p>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            ) : (
+              <p className="text-center text-red-500 font-bold mt-4">
+                No User found
+              </p>
             )}
           </table>
         </div>

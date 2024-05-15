@@ -20,12 +20,11 @@ const ProductTable = () => {
 
   //fetching product list
   useEffect(() => {
-    dispatch(fetchProducts({ userId }))
-
+    dispatch(fetchProducts({ userId }));
   }, [dispatch, userId]);
 
   if (status === 'loading') {
-    return <DisplayTable/>;
+    return <DisplayTable />;
   }
 
   if (status === 'failed') {
@@ -71,7 +70,7 @@ const ProductTable = () => {
             Back
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto min-h-96">
           <table
             className="dark:text-white"
             style={{

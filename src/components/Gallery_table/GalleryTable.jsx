@@ -47,7 +47,7 @@ const GalleryTable = () => {
             Back
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto min-h-96">
           <table
             style={{
               textAlign: 'left',

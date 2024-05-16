@@ -14,6 +14,7 @@ const SignIn = () => {
 
   // to get data from redux store
   const { isLoading } = useSelector((state) => state.auth);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [show, setShow] = useState(false);
   //  to handle state of sign in
   const [email, setEmail] = useState('');
@@ -21,21 +22,27 @@ const SignIn = () => {
 
   // to handle sign in functionlaity
   const handleSubmit = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
-      dispatch(loginViaPassword({ email, password })).then((res) => {
+      setIsSubmitting(true); // Start form submission
+
+      try {
+        const res = await dispatch(loginViaPassword({ email, password }));
+
         if (res?.payload?.success) {
-          localStorage.setItem(
-            'userData',
-            JSON.stringify(res?.payload?.vosoVyaparUser),
-          );
-          localStorage.setItem('accessToken', res?.payload?.accessToken);
+          localStorage.setItem('userData', JSON.stringify(res.payload.vosoVyaparUser));
+          localStorage.setItem('accessToken', res.payload.accessToken);
           navigate('/');
         }
-      });
+      } catch (error) {
+        console.error('Login failed:', error);
+      } finally {
+        setIsSubmitting(false); // Complete form submission
+      }
     },
-    [dispatch, email, navigate, password],
+    [dispatch, email, navigate, password]
   );
+
 
   return (
     <div className="overflow-hidden">
@@ -65,8 +72,8 @@ const SignIn = () => {
                 Welcome! Log in to your account.
               </p>
 
-              <span className="hidden xl:block mt-15 inline-block">
-                <svg
+              <span className="hidden xl:block  mt-15 inline-block">
+              <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"
@@ -280,12 +287,12 @@ const SignIn = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
-                    type="submit"
-                    disabled={isLoading}
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                <input
+  type="submit"
+  value={isSubmitting || isLoading ? 'Signing In...' : 'Sign In'}
+  className={`w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition ${
+    isSubmitting || isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90'
+  }`}/>
                 </div>
 
                 <Link to="/auth/sign_in_with_mobile">

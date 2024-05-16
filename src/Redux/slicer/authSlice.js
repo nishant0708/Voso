@@ -12,7 +12,10 @@ export const loginViaPassword = createAsyncThunk(
       const response = await AxiosInstance.post(`user/loginViaPassword`,  
         { email, password }
        );
-       if(response.data?.success) { return response.data;}
+       if(response.data?.success) { 
+        toast.success(response.data.message);
+        return response.data;
+      }
      
     } catch (error) {
        toast.error(error.response.data?.message);

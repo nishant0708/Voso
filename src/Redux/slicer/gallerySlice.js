@@ -16,8 +16,10 @@ export const fetchgallery = createAsyncThunk('gallery', async ({ userId }) => {
         id: userId,
       },
     });
-   
+   if(response?.data?.success){
     return response.data;
+   }
+    
   } catch (error) {
    
     throw error;
@@ -40,7 +42,7 @@ const gallerySlice = createSlice({
       .addCase(fetchgallery.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.isLoading = false;
-        state.gallery = action.payload.data; // Set fetched data to state.todos
+        state.gallery = action.payload?.data; // Set fetched data to state.todos
         state.pageData = action.payload.meta;
       })
       .addCase(fetchgallery.rejected, (state, action) => {

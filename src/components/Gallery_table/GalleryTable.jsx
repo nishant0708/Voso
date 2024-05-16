@@ -19,7 +19,7 @@ const GalleryTable = () => {
 
   // Track hover state for each button using an object
   const [hoveredButtons, setHoveredButtons] = useState({});
-
+console.log("lof",gallery,userId);
   useEffect(() => {
     dispatch(fetchgallery({ userId }));
   }, [dispatch, userId]);

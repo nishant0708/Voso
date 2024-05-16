@@ -48,7 +48,7 @@ const Forgot = () => {
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className="w-full xl:block xl:w-1/2">
-            <div className=" px-10  py-17.5 sm:px-26 text-center">
+            <div className=" px-10  xl:py-17.5 sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
                   className="w-96 hidden dark:block"
@@ -61,12 +61,12 @@ const Forgot = () => {
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
+                  <p className="font-bold whitespace-nowrap text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
               </Link>
-              <p className="2xl:px-20 text-[22px]">
+              <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3">
                 Welcome! Reset your account password.
               </p>
               <span className="hidden xl:block mt-15 inline-block">

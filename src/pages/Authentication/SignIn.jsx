@@ -6,6 +6,8 @@ import voso_logo from '../../images/logo/vosovyapar_icon.png';
 import mobile_logo_light from '../../images/icon/icons8-smartphone-50.png';
 import mobile_logo_dark from '../../images/icon/icons8-smartphone_dark-50.png';
 
+
+
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const SignIn = () => {
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className="  w-full xl:block xl:w-1/2">
-            <div className=" px-10  py-17.5 sm:px-26 text-center">
+            <div className=" px-10  xl:py-17.5 sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
                   className="w-96 hidden dark:block"
@@ -53,13 +55,13 @@ const SignIn = () => {
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
+                  <p className="font-bold white whitespace-nowrap text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
               </Link>
 
-              <p className="2xl:px-20 text-[22px]">
+              <p className="2xl:px-20 text-[22px] mb-10 md:mb-0 sm:mb-3">
                 Welcome! Log in to your account.
               </p>
 

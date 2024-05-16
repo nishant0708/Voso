@@ -7,7 +7,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import toast from 'react-hot-toast';
+
 import renderImage from '../../common/renderImage';
 import ProdservEdit from '../Skeletons/ProdservEdit';
 
@@ -44,29 +44,27 @@ const ProductEdit = () => {
     }
   }, [product]);
 
+
   const setimg = useCallback((file) => {
     setimgcrop(file);
   }, []);
 
   //updating details of product
   const handleUpdateProduct = useCallback(() => {
-    const updatedProductData = {
-      productId: product._id,
-      productName: productName,
-      productPrice: productPrice,
-      productDescription: productDescription,
-      productImage: showAddUrl === true ? imgcrop : imageUrl,
-      productUrl: productUrl,
-    };
 
-    dispatch(updateProductDetails(updatedProductData))
+    const formData = new FormData();
+    formData.append('product_name', productName);
+    formData.append('id',  product._id);
+    formData.append('product_price', productPrice);
+    formData.append('product_description', productDescription);
+    formData.append('product_image', showAddUrl === true ? (imgcrop ? imgcrop:imageUrl) : imageUrl);
+    formData.append('product_url', productUrl);
+    dispatch(updateProductDetails(formData))
       .then(() => {
-        toast('Operation Successful');
+        
         navigate('/products');
       })
-      .catch((error) => {
-        toast(`Error updating product: ${error.message}`);
-      });
+      
   }, [
     dispatch,
     navigate,

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import { AxiosInstance } from '../../utils/intercept';
 
@@ -15,7 +15,7 @@ export const forgotPassword = createAsyncThunk(
       const response = await AxiosInstance.post('/user/forgetPassword', {
         email,
       });
-      if (response.data.success) {
+      if (response.data?.success) {
         toast.success(response.data.message); // Toast success message
         return response.data;
       }

@@ -6,17 +6,19 @@ import { fetchgalleryedit } from '../../Redux/slicer/galleryeditSlice';
 import { updateGalleryUrl } from '../../Redux/slicer/updateGallerySlice';
 import ImageCropper from '../../utils/cropImage';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import toast from 'react-hot-toast';
+
 import renderImage from '../../common/renderImage';
 import GalleryEditSkeleton from '../Skeletons/GalleryEditSkeleton';
 
 const GalleryEdit = () => {
+  
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { gallery, status } = useSelector((state) => state.Editgallery);
   const [selectedOption, setSelectedOption] = useState(gallery.itemType);
   const [galleryUrl, setGalleryUrl] = useState(gallery.url || '');
   const [imgcrop, setimgcrop] = useState('');
+
 
   //fetching id details of gallery
   useEffect(() => {
@@ -54,22 +56,22 @@ const GalleryEdit = () => {
 
   // Function to handle update button click
   const handleUpdateClick = useCallback(() => {
-    // Prepare the data payload for the updateGalleryUrl action
-    const data = {
-      url: imgcrop,
-      itemType: selectedOption,
-      id: productId,
-    };
+    
+    const formData = new FormData();
+    formData.append('url', (imgcrop? imgcrop :galleryUrl));
+    formData.append('itemType', selectedOption);
+    formData.append('id',  productId);
     // Dispatch the updateGalleryUrl action with the data payload
-    dispatch(updateGalleryUrl(data))
-      .then(() => {
-        toast('Operation Successful');
-        window.location.href = `/products/Gallery/${gallery.userId}`;
+    dispatch(updateGalleryUrl(formData))
+      .then((res) => {
+      if(res.payload.success){
+        console.log(res);
+       window.location.href=`/products/Gallery/${gallery.userId}`;
+      }  
+     
       })
-      .catch((error) => {
-        toast(`Error updating product: ${error.message}`);
-      });
-  }, [dispatch, imgcrop, selectedOption, productId, gallery]);
+      
+  }, [dispatch,galleryUrl, imgcrop, selectedOption, productId, gallery]);
 
   return (
     <DefaultLayout>

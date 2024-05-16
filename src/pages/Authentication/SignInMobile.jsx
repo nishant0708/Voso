@@ -13,13 +13,18 @@ const SignInMobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [isSendingOTP, setIsSendingOTP] = useState(false); // Track sending OTP state
+  const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
+
   //onclick send otp to number and make enter otp field visible
   const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
+      setIsSendingOTP(true);
       dispatch(sendOTP(mobileNo)).then((actionResult) => {
         if (sendOTP.fulfilled.match(actionResult)) {
           setShowLabel(true);
         }
+        setIsSendingOTP(false);
       });
     } else {
       toast.error('Please enter a valid 10-digit mobile number.');
@@ -28,6 +33,7 @@ const SignInMobile = () => {
 
   //calling api for fetching api
   const handleVerify = useCallback(() => {
+    setIsVerifyingOTP(true);
     dispatch(verifyOTP({ mobileNo, otp })).then((res) => {
       if (res.payload && res.payload.success) {
         // Store access token and user data in localStorage
@@ -36,7 +42,8 @@ const SignInMobile = () => {
           JSON.stringify(res.payload.vosoVyaparUser),
         );
         navigate('/auth/signin');
-      } 
+      }
+      setIsVerifyingOTP(false);
     });
   }, [dispatch, mobileNo, otp, navigate]);
 
@@ -81,7 +88,7 @@ const SignInMobile = () => {
                   </p>
                 </span>
               </Link>
-              <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3" >
+              <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3">
                 Welcome! Log in to your account.
               </p>
               <span className="hidden xl:block mt-15 inline-block">
@@ -271,14 +278,16 @@ const SignInMobile = () => {
                 <input
                   type="button"
                   onClick={handleClick}
-                  value="Submit"
+                  value={isSendingOTP ? 'Sending OTP...' : 'Send'}
+                  disabled={isSendingOTP}
                   className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
                   style={{ display: showLabel ? 'none' : 'block' }}
                 />
                 <input
                   type="button"
+                  value={isVerifyingOTP ? 'Verifying OTP...' : 'Verify OTP'}
+                  disabled={isVerifyingOTP}
                   onClick={handleVerify}
-                  value="Verify OTP"
                   className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
                   style={{ display: showLabel ? 'block' : 'none' }}
                 />

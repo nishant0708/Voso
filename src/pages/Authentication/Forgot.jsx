@@ -14,18 +14,26 @@ const Forgot = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const navigate = useNavigate();
+  const [isSendingOTP, setIsSendingOTP] = useState(false);
+  const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
   //handling send otp api
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!email) {
+      
       toast.error('please enter email');
       return;
     }
+    setIsSendingOTP(true);
     dispatch(forgotPassword(email))
       .unwrap() // Unwrap the result from the fulfilled action
       .then(() => {
+        setIsSendingOTP(false);
         setshow(true); // Show additional form fields or message after successful API call
+      }).catch((error) => {
+        setIsSendingOTP(false);
+        
       });
   };
 
@@ -36,10 +44,15 @@ const Forgot = () => {
       toast.error('please enter otp');
       return;
     }
+    setIsVerifyingOTP(true);
     dispatch(verifyOtpForPassword({ email, otp }))
       .unwrap()
       .then(() => {
+        setIsVerifyingOTP(false);
         navigate('/auth/signin');
+      }).catch((error) => {
+        setIsVerifyingOTP(false);
+        
       });
   };
 
@@ -70,7 +83,7 @@ const Forgot = () => {
                 Welcome! Reset your account password.
               </p>
               <span className="hidden xl:block mt-15 inline-block">
-                <svg
+              <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"
@@ -249,14 +262,17 @@ const Forgot = () => {
 
                 <input
                   type="submit"
-                  value="Submit"
+                  
+                  value={isSendingOTP ? 'Sending OTP...' : 'Send'}
+                  disabled={isSendingOTP || isVerifyingOTP}
                   className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
                   style={{ display: show ? 'none' : 'block' }}
                 />
                 <input
                   type="button"
                   onClick={handleVerifyOtp}
-                  value="Verify OTP"
+                  value={isVerifyingOTP ? 'Verifying OTP...' : 'Verify OTP'}
+                  disabled={isVerifyingOTP}
                   className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out cursor-pointer"
                   style={{ display: show ? 'block' : 'none' }}
                 />

@@ -417,7 +417,7 @@ const UserBusiness = () => {
                     name="country"
                     id="country"
                     required={true}
-                    value={formData.country}
+                    value={formData.country ? formData.country :"India"}
                     className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke py-0.5 px-3 text-black bg-[#e9ecef] outline-none transition disabled:cursor-default dark:border-form-strokedark dark:bg-form-strokedark dark:text-white"
                   />
                 </div>

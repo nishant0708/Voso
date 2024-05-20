@@ -19,6 +19,8 @@ import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 import Pagination from '../../utils/Pagination';
 import UserlistSkeleton from '../Skeletons/UserlistSkeleton';
+import { exportToExcel } from '../../utils/exportToExcel';
+import { FaFileExport } from "react-icons/fa";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -90,6 +92,13 @@ const UserTable = () => {
           <button className="flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-2.5 sm:px-3 rounded-md hover:bg-primary transition-all duration-200">
             <IoIosAddCircle />
             Create
+          </button>
+          <button
+            onClick={() => exportToExcel(users, "excelSheet.xlsx")}
+            className="flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-2.5 sm:px-3 rounded-md hover:bg-primary transition-all duration-200"
+          >
+            <FaFileExport size={14}/>  
+            Export
           </button>
           <button
             onClick={() => navigate(-1)}

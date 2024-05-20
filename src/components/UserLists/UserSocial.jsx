@@ -6,6 +6,7 @@ import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserSocial } from '../../Redux/slicer/updateDetailsSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import UserSocialSkeleton from '../Skeletons/UserSocialSkeleton';
+import toast from 'react-hot-toast';
 
 const UserSocial = () => {
   const dispatch = useDispatch();
@@ -73,18 +74,28 @@ const UserSocial = () => {
     }));
   }, []);
 
+  const areAllFieldsEmpty = () => {
+    return Object.values(formData).every(value => value === '');
+  }
+
   // calling api to update user social details
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(
-        updateUserSocial({
-          formData,
-          email: userSEO?.userId?.email,
-          mobile: userSEO?.userId?.mobile,
-          userId,
-        }),
-      );
+      if (areAllFieldsEmpty()) {
+        // Show toast message if all fields are empty
+        toast.error('All fields are empty');
+      } else {
+        // Otherwise, proceed with form submission
+        dispatch(
+          updateUserSocial({
+            formData,
+            email: userSEO?.userId?.email,
+            mobile: userSEO?.userId?.mobile,
+            userId,
+          }),
+        );
+      }
     },
     [dispatch, formData, userId, userSEO],
   );

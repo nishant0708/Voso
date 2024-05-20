@@ -118,97 +118,101 @@ console.log("lof",gallery,userId);
               </tr>
             </thead>
             <tbody>
-              {gallery?.map((product) => (
-                <tr
-                  key={product.id}
-                  style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
-                >
-                  <td
-                    style={{
-                      padding: '10px',
-                      alignItems: 'center',
-                      display: 'flex',
-                      color: '#000',
-                      fontWeight: 'bold',
-                      gap: '20px',
-                      width: '400px',
-                    }}
-                  >
-                    <span>
-                      {' '}
-                      <img
-                        style={{
-                          width: '7vh',
-                          height: '7vh',
-                          borderRadius: '50%',
-                        }}
-                        className="dark:text-white"
-                        alt="Product"
-                        src={renderImage(product?.url)}
-                      />
-                    </span>
-                  </td>
+            {gallery.length > 0 ? (
+  gallery.map((product) => (
+    <tr
+      key={product.id}
+      style={{ borderBottom: '1px solid rgb(159 157 157 / 13%)' }}
+    >
+      <td
+        style={{
+          padding: '10px',
+          alignItems: 'center',
+          display: 'flex',
+          color: '#000',
+          fontWeight: 'bold',
+          gap: '20px',
+          width: '400px',
+        }}
+      >
+        <span>
+          {' '}
+          <img
+            style={{
+              width: '7vh',
+              height: '7vh',
+              borderRadius: '50%',
+            }}
+            className="dark:text-white"
+            alt="Product"
+            src={renderImage(product?.url)}
+          />
+        </span>
+      </td>
 
-                  <td
-                    className="dark:text-white"
-                    style={{ padding: '10px', width: '150px' }}
-                  >
-                    <p className="text-black dark:text-white">
-                      {product.is_featured ? 'Yes' : 'No'}
-                    </p>
-                  </td>
-                  <td
-                    className="dark:text-white"
-                    style={{ padding: '10px', width: '200px' }}
-                  >
-                    <ToggleSwitch
-                      isActive={product.is_featured}
-                      productId={product._id}
-                      userId={product.userId}
-                    />
-                  </td>
-                  <td
-                    style={{
-                      padding: '10px',
-                      width: '350px',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {formatDate(product.created_at)}
-                  </td>
-                  <td style={{ padding: '10px', width: '100px' }}>
-                    <p
-                      style={{
-                        whiteSpace: 'nowrap',
-                        padding: '5px 15px',
-                        backgroundColor: hoveredButtons[product._id]
-                          ? 'green'
-                          : 'limegreen',
-                        color: 'white',
-                        borderRadius: '999rem',
-                        cursor: 'pointer',
-                      }}
-                      onMouseEnter={() =>
-                        setHoveredButtons((prevState) => ({
-                          ...prevState,
-                          [product._id]: true,
-                        }))
-                      }
-                      onMouseLeave={() =>
-                        setHoveredButtons((prevState) => ({
-                          ...prevState,
-                          [product._id]: false,
-                        }))
-                      }
-                      onClick={
-                        () => navigate(`/products/Galleryedit/${product._id}`) //to be added
-                      }
-                    >
-                      Product Edit
-                    </p>
-                  </td>
-                </tr>
-              ))}
+      <td
+        className="dark:text-white"
+        style={{ padding: '10px', width: '150px' }}
+      >
+        <p className="text-black dark:text-white">
+          {product.is_featured ? 'Yes' : 'No'}
+        </p>
+      </td>
+      <td
+        className="dark:text-white"
+        style={{ padding: '10px', width: '200px' }}
+      >
+        <ToggleSwitch
+          isActive={product.is_featured}
+          productId={product._id}
+          userId={product.userId}
+        />
+      </td>
+      <td
+        style={{
+          padding: '10px',
+          width: '350px',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {formatDate(product.created_at)}
+      </td>
+      <td style={{ padding: '10px', width: '100px' }}>
+        <p
+          style={{
+            whiteSpace: 'nowrap',
+            padding: '5px 15px',
+            backgroundColor: hoveredButtons[product._id]
+              ? 'green'
+              : 'limegreen',
+            color: 'white',
+            borderRadius: '999rem',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={() =>
+            setHoveredButtons((prevState) => ({
+              ...prevState,
+              [product._id]: true,
+            }))
+          }
+          onMouseLeave={() =>
+            setHoveredButtons((prevState) => ({
+              ...prevState,
+              [product._id]: false,
+            }))
+          }
+          onClick={() => navigate(`/products/Galleryedit/${product._id}`)}
+        >
+          Product Edit
+        </p>
+      </td>
+    </tr>
+  ))
+) : (
+  <tr>
+    <td colSpan="5" className='pt-4 text-center text-[18px] text-red-400 font-bold'>No Products found</td>
+  </tr>
+)}
             </tbody>
           </table>
         </div>

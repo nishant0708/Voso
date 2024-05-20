@@ -82,7 +82,7 @@ const Forgot = () => {
               <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3">
                 Welcome! Reset your account password.
               </p>
-              <span className="hidden xl:block mt-15 inline-block">
+              <span className="hidden xl:inline-block mt-15 inline-block">
               <svg
                   width="350"
                   height="350"
@@ -265,7 +265,9 @@ const Forgot = () => {
                   
                   value={isSendingOTP ? 'Sending OTP...' : 'Send'}
                   disabled={isSendingOTP || isVerifyingOTP}
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isSendingOTP ||isVerifyingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: show ? 'none' : 'block' }}
                 />
                 <input
@@ -273,7 +275,9 @@ const Forgot = () => {
                   onClick={handleVerifyOtp}
                   value={isVerifyingOTP ? 'Verifying OTP...' : 'Verify OTP'}
                   disabled={isVerifyingOTP}
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out cursor-pointer"
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isSendingOTP||isVerifyingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: show ? 'block' : 'none' }}
                 />
               </form>

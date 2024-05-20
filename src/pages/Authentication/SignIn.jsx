@@ -72,7 +72,7 @@ const SignIn = () => {
                 Welcome! Log in to your account.
               </p>
 
-              <span className="hidden xl:block  mt-15 inline-block">
+              <span className="hidden xl:inline-block  mt-15 inline-block">
               <svg
                   width="350"
                   height="350"

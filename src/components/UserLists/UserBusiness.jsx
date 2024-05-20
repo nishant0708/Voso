@@ -132,6 +132,7 @@ const UserBusiness = () => {
                       onChange={handleOnChange}
                       required={true}
                       placeholder="Domain name"
+                      disabled={true}
                       className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <button

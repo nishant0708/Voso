@@ -175,7 +175,7 @@ const UserView = () => {
                         type="text"
                         name="approved"
                         id="approved"
-                        className="w-full capitalize rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        className="w-full capitalize rounded border border-stroke  py-3 px-4.5 bg-[#1C2434] text-white font-bold focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-primary dark:text-white dark:focus:border-primary"
                       />
                     </div>
                     <div className="w-full sm:w-1/2">
@@ -191,7 +191,7 @@ const UserView = () => {
                         type="text"
                         name="emailVerified"
                         id="emailVerified"
-                        className="w-full capitalize rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        className="w-full capitalize rounded border border-stroke  py-3 px-4.5 bg-[#1C2434] text-white font-bold focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-primary dark:text-white dark:focus:border-primary"
                       />
                     </div>
                     <div className="w-full sm:w-1/2">
@@ -207,7 +207,7 @@ const UserView = () => {
                         type="text"
                         name="mobileVerified"
                         id="mobileVerified"
-                        className="w-full capitalize rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        className="w-full capitalize rounded border  border-stroke bg-[#1C2434] text-white font-bold py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-primary dark:focus:border-primary"
                       />
                     </div>
                   </div>

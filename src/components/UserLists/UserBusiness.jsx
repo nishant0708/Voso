@@ -132,6 +132,7 @@ const UserBusiness = () => {
                       onChange={handleOnChange}
                       required={true}
                       placeholder="Domain name"
+                      disabled={true}
                       className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke bg-transparent py-0.5 px-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <button
@@ -417,7 +418,7 @@ const UserBusiness = () => {
                     name="country"
                     id="country"
                     required={true}
-                    value={formData.country}
+                    value={formData.country ? formData.country :"India"}
                     className="w-full mt-0.5 text-sm rounded border-[1.5px] border-stroke py-0.5 px-3 text-black bg-[#e9ecef] outline-none transition disabled:cursor-default dark:border-form-strokedark dark:bg-form-strokedark dark:text-white"
                   />
                 </div>

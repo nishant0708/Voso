@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { fetchUserSEODetails } from '../../Redux/slicer/userDetails';
+import { fetchUserDetails, fetchUserSEODetails } from '../../Redux/slicer/userDetails';
 import { updateUserSocial } from '../../Redux/slicer/updateDetailsSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import UserSocialSkeleton from '../Skeletons/UserSocialSkeleton';
@@ -13,6 +13,7 @@ const UserSocial = () => {
   const { userId } = useParams();
   const { userSEO, status } = useSelector((state) => state.userDetails);
   const { isLoading } = useSelector((state) => state.updateDetails);
+  const { user } = useSelector((state) => state.userDetails);
   const [formData, setFormData] = useState({
     Facebook: '',
     Twitter: '',
@@ -73,6 +74,14 @@ const UserSocial = () => {
     }));
   }, []);
 
+
+  //fetching user data
+  useEffect(() => {
+    dispatch(fetchUserDetails({ userId }));
+  }, [dispatch, userId]);
+
+
+  console.log(user);
   // calling api to update user social details
   const handleSubmit = useCallback(
     (e) => {
@@ -80,8 +89,8 @@ const UserSocial = () => {
       dispatch(
         updateUserSocial({
           formData,
-          email: userSEO?.userId?.email,
-          mobile: userSEO?.userId?.mobile,
+          email: user?.email,
+          mobile: user?.mobile,
           userId,
         }),
       );

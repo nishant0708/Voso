@@ -6,7 +6,7 @@ import QuillEditor from '../../utils/QuillEditor';
 import ImageCropper from '../../utils/cropImage';
 import { fetchBlogById, updateBlogById } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import toast from 'react-hot-toast';
+
 import renderImage from '../../common/renderImage';
 import BlogEditSkeleton from '../Skeletons/BlogEditSkeleton';
 
@@ -60,12 +60,10 @@ const BlogEdit = () => {
 
     dispatch(updateBlogById(data))
       .then(() => {
-        toast('Operation Successful');
+     
         navigate(`/blogs/blogView/${blog.userId}`);
       })
-      .catch((error) => {
-        toast(`Error updating product: ${error.message}`);
-      });
+     
   }, [dispatch, blog, formData, imgcrop, navigate]);
 
   return (

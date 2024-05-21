@@ -3,6 +3,7 @@ import { AxiosInstance } from '../../utils/intercept';
 
 const initialState = {
   users: [],
+  enquires:[],
   pageData: {},
   status: 'idle',
   isLoading: false,
@@ -54,7 +55,7 @@ export const fetchEnquiriesList = createAsyncThunk(
           page: page,
         },
       });
-
+      
       return response.data;
     } catch (error) {
       throw error;
@@ -106,7 +107,7 @@ const usersSlice = createSlice({
       .addCase(fetchEnquiriesList.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.isLoading = false;
-        state.users = action.payload.data;
+        state.enquires = action.payload.data;
         state.pageData = action.payload.meta;
       })
       .addCase(fetchEnquiriesList.rejected, (state, action) => {

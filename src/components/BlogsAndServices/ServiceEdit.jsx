@@ -9,7 +9,7 @@ import {
   updateServiceById,
 } from '../../Redux/slicer/blogSlice';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import toast from 'react-hot-toast';
+
 import renderImage from '../../common/renderImage';
 import ProdservEdit from '../Skeletons/ProdservEdit';
 
@@ -68,12 +68,10 @@ const ServiceEdit = () => {
 
     dispatch(updateServiceById(data))
       .then(() => {
-        toast('Operation Successful');
+       
         navigate(`/blogs/serviceView/${service.userId}`);
       })
-      .catch((error) => {
-        toast(`Error updating product: ${error.message}`);
-      });
+      
   }, [dispatch, navigate, service, formData, showAddUrl, imgcrop]);
 
   return (

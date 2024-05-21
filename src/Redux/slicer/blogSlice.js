@@ -103,9 +103,11 @@ export const updateServiceById = createAsyncThunk(
           },
         },
       );
-
+      if(response?.data?.success)
+      toast.success(response?.data?.message);
       return response.data.data;
     } catch (error) {
+      toast.error(error.response?.data?.message);
       throw error;
     }
   },
@@ -128,9 +130,13 @@ export const updateBlogById = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      return response.data.data;
+      if(response?.data?.success){
+        toast.success(response.data.message);
+        return response.data.data;
+      }
+      
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       throw error;
     }
   },

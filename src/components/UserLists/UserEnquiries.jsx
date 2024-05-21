@@ -11,14 +11,17 @@ const UserEnquiries = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { users, status } = useSelector((state) => state.usersList);
+  const { enquires, status } = useSelector((state) => state.usersList);
   const limit = 10;
   const page = 1;
+  console.log(enquires);
 //calling api to fetch user enquiry
   const callFetchUsers = useCallback(
     (limit, page, userId) => {
       dispatch(fetchEnquiriesList({ limit, page, userId }));
+      
       return;
+     
     },
     [dispatch],
   );
@@ -56,32 +59,40 @@ const UserEnquiries = () => {
               </tr>
             </thead>
             <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-              {users.map((user, index) => (
-                <tr
-                  key={user._id}
-                  className={`${
-                    index === users.length - 1
-                      ? ''
-                      : 'border-b border-stroke dark:border-strokedark'
-                  }`}
-                >
-                  <td className="p-2.5 lg:p-4 sm:pl-12 pl-5 font-extrabold">
-                    {index + 1}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-10 capitalize">
-                    {user.fullName}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
-                  <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">
-                    {user.email}
-                  </td>
-                  <td className="p-2.5 lg:p-4 !pl-5">{user.message}</td>
-                  <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
-                    {formatDate(user.created_at)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                {enquires.length > 0 ? (
+                  enquires.map((enquiry, index) => (
+                    <tr
+                      key={enquiry._id}
+                      className={`${
+                        index === enquiry.length - 1
+                          ? ''
+                          : 'border-b border-stroke dark:border-strokedark'
+                      }`}
+                    >
+                      <td className="p-2.5 lg:p-4 sm:pl-12 pl-5 font-extrabold">
+                        {index + 1}
+                      </td>
+                      <td className="p-2.5 lg:p-4 !pl-10 capitalize">
+                        {enquiry.fullName}
+                      </td>
+                      <td className="p-2.5 lg:p-4 !pl-10">{enquiry.mobile}</td>
+                      <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">
+                        {enquiry.email}
+                      </td>
+                      <td className="p-2.5 lg:p-4 !pl-5">{enquiry.message}</td>
+                      <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
+                        {formatDate(enquiry.created_at)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="p-4 text-center text-red-400 text-[18px] font-bold">
+                      No enquiries found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
           </table>}
         </div>
       </div>

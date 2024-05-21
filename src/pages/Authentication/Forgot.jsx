@@ -14,18 +14,26 @@ const Forgot = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const navigate = useNavigate();
+  const [isSendingOTP, setIsSendingOTP] = useState(false);
+  const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
   //handling send otp api
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!email) {
+      
       toast.error('please enter email');
       return;
     }
+    setIsSendingOTP(true);
     dispatch(forgotPassword(email))
       .unwrap() // Unwrap the result from the fulfilled action
       .then(() => {
+        setIsSendingOTP(false);
         setshow(true); // Show additional form fields or message after successful API call
+      }).catch((error) => {
+        setIsSendingOTP(false);
+        
       });
   };
 
@@ -36,10 +44,15 @@ const Forgot = () => {
       toast.error('please enter otp');
       return;
     }
+    setIsVerifyingOTP(true);
     dispatch(verifyOtpForPassword({ email, otp }))
       .unwrap()
       .then(() => {
+        setIsVerifyingOTP(false);
         navigate('/auth/signin');
+      }).catch((error) => {
+        setIsVerifyingOTP(false);
+        
       });
   };
 
@@ -48,7 +61,7 @@ const Forgot = () => {
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className="w-full xl:block xl:w-1/2">
-            <div className=" px-10  py-17.5 sm:px-26 text-center">
+            <div className=" px-10  xl:py-17.5 sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
                   className="w-96 hidden dark:block"
@@ -61,16 +74,16 @@ const Forgot = () => {
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
+                  <p className="font-bold whitespace-nowrap text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
               </Link>
-              <p className="2xl:px-20 text-[22px]">
+              <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3">
                 Welcome! Reset your account password.
               </p>
-              <span className="hidden xl:block mt-15 inline-block">
-                <svg
+              <span className="hidden xl:inline-block mt-15 inline-block">
+              <svg
                   width="350"
                   height="350"
                   viewBox="0 0 350 350"
@@ -209,6 +222,7 @@ const Forgot = () => {
                       type="Email"
                       placeholder="Email*"
                       value={email}
+                      readOnly={show}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -248,15 +262,22 @@ const Forgot = () => {
 
                 <input
                   type="submit"
-                  value="Submit"
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  
+                  value={isSendingOTP ? 'Sending OTP...' : 'Send'}
+                  disabled={isSendingOTP || isVerifyingOTP}
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isSendingOTP ||isVerifyingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: show ? 'none' : 'block' }}
                 />
                 <input
                   type="button"
                   onClick={handleVerifyOtp}
-                  value="Verify OTP"
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out cursor-pointer"
+                  value={isVerifyingOTP ? 'Verifying OTP...' : 'Verify OTP'}
+                  disabled={isVerifyingOTP}
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isSendingOTP||isVerifyingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: show ? 'block' : 'none' }}
                 />
               </form>

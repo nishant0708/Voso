@@ -52,6 +52,7 @@ function App() {
       accessToken === null ||
       isTokenExpired(accessToken)
     ) {
+      console.log("naskakm");
       localStorage.clear();
       navigate('/auth/signin');
       return;

@@ -1,74 +1,53 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { AxiosInstance } from '../../utils/intercept'; // Import your custom AxiosInstance
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosInstance } from '../../utils/intercept';
+import toast from 'react-hot-toast';
 
-// Define the initial state for the slice
-const initialState = {
-  isLoading: false,
-  error: null,
-};
+// Async thunk action creator to update product details
+export const updateProductDetails = createAsyncThunk(
+  'productDetailsUpdated/updateProductDetails',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post('/product/updateProduct', data);
 
-// Thunk action creator to update product details on clicking Update
-export const updateProductDetails = (data) => async (dispatch) => {
-  dispatch(updateProductDetailsStart()); // Dispatch the start action
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
 
-  try {
-    // Create FormData object and append data
-    const formData = new FormData();
-    formData.append('product_name', data.productName);
-    formData.append('id', data.productId);
-    formData.append('product_price', data.productPrice);
-    formData.append('product_description', data.productDescription);
-    formData.append('product_image', data.productImage);
-    formData.append('product_url', data.productUrl);
-
-    // Make API call using AxiosInstance
-    const response = await AxiosInstance.post(
-      '/product/updateProduct',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    );
-
-    // Dispatch success action with response data
-    dispatch(updateProductDetailsSuccess(response.data));
-  } catch (error) {
-    // Dispatch failure action with error message
-    dispatch(updateProductDetailsFailure(error.message));
+      return response.data; // Return response data on success
+    } catch (error) {
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      }
+      
+      return rejectWithValue(error.message); // Return error message on failure
+    }
   }
-};
+);
 
-// Create a Redux slice named productDetailsUpdatedSlice
 const productDetailsUpdatedSlice = createSlice({
   name: 'productDetailsUpdated',
-  initialState,
+  initialState: {
+    isLoading: false,
+    isError: false,
+  },
   reducers: {
-    // Reducer to set loading state and clear error
-    updateProductDetailsStart: (state) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    // Reducer to set loading state to false and clear error
-    updateProductDetailsSuccess: (state) => {
-      state.isLoading = false;
-      state.error = null;
-    },
-    // Reducer to set loading state to false and update error state
-    updateProductDetailsFailure: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    // You can define other reducers here if needed
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateProductDetails.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(updateProductDetails.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isError = false;
+      })
+      .addCase(updateProductDetails.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
   },
 });
 
-// Export action creators
-export const {
-  updateProductDetailsStart,
-  updateProductDetailsSuccess,
-  updateProductDetailsFailure,
-} = productDetailsUpdatedSlice.actions;
-
-// Export the reducer
 export default productDetailsUpdatedSlice.reducer;

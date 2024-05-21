@@ -13,13 +13,18 @@ const SignInMobile = () => {
   const [mobileNo, setMobileNo] = useState('');
   const [otp, setOTP] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [isSendingOTP, setIsSendingOTP] = useState(false); // Track sending OTP state
+  const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
+
   //onclick send otp to number and make enter otp field visible
   const handleClick = useCallback(() => {
     if (mobileNo.length === 10) {
+      setIsSendingOTP(true);
       dispatch(sendOTP(mobileNo)).then((actionResult) => {
         if (sendOTP.fulfilled.match(actionResult)) {
           setShowLabel(true);
         }
+        setIsSendingOTP(false);
       });
     } else {
       toast.error('Please enter a valid 10-digit mobile number.');
@@ -28,6 +33,7 @@ const SignInMobile = () => {
 
   //calling api for fetching api
   const handleVerify = useCallback(() => {
+    setIsVerifyingOTP(true);
     dispatch(verifyOTP({ mobileNo, otp })).then((res) => {
       if (res.payload && res.payload.success) {
         // Store access token and user data in localStorage
@@ -36,9 +42,8 @@ const SignInMobile = () => {
           JSON.stringify(res.payload.vosoVyaparUser),
         );
         navigate('/auth/signin');
-      } else {
-        toast.error('Error verifying OTP');
       }
+      setIsVerifyingOTP(false);
     });
   }, [dispatch, mobileNo, otp, navigate]);
 
@@ -65,7 +70,7 @@ const SignInMobile = () => {
       <div className="h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center translate-y-[5%]">
           <div className=" w-full xl:block xl:w-1/2">
-            <div className=" px-10  py-17.5 sm:px-26 text-center">
+            <div className=" px-10 py-0  xl:py-17.5  sm:px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img
                   className="w-96 hidden sm:hidden dark:block"
@@ -78,15 +83,15 @@ const SignInMobile = () => {
                     src={voso_logo}
                     alt="Logo"
                   />
-                  <p className="font-bold text-black text-[24px] sm:text-[54px] translate-y-[10px]">
+                  <p className="font-bold whitespace-nowrap text-black text-[24px] sm:text-[54px] translate-y-[10px]">
                     Voso Vyapar
                   </p>
                 </span>
               </Link>
-              <p className="2xl:px-20 text-[22px]">
+              <p className="2xl:px-20 mb-10  text-[22px] md:mb-0 sm:mb-3">
                 Welcome! Log in to your account.
               </p>
-              <span className="hidden xl:block mt-15 inline-block">
+              <span className="hidden xl:inline-block mt-15 inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -212,7 +217,7 @@ const SignInMobile = () => {
           </div>
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+              <h2 className="mb-9  text-2xl font-bold text-black dark:text-white sm:text-title-xl2  ">
                 Sign In to Voso Vyapar
               </h2>
               <form>
@@ -273,15 +278,21 @@ const SignInMobile = () => {
                 <input
                   type="button"
                   onClick={handleClick}
-                  value="Submit"
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  value={isSendingOTP ? 'Sending OTP...' : 'Send'}
+                  disabled={isSendingOTP}
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isSendingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: showLabel ? 'none' : 'block' }}
                 />
                 <input
                   type="button"
+                  value={isVerifyingOTP ? 'Verifying OTP...' : 'Verify OTP'}
+                  disabled={isVerifyingOTP}
                   onClick={handleVerify}
-                  value="Verify OTP"
-                  className="mb-6 w-full bg-primary hover:bg-primary-hover py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out"
+                  className={`mb-6 w-full bg-primary py-4 text-white font-bold rounded-lg transition duration-200 ease-in-out ${
+                    isVerifyingOTP ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-hover hover:bg-opacity-90'
+                  }`}
                   style={{ display: showLabel ? 'block' : 'none' }}
                 />
               </form>

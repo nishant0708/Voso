@@ -37,7 +37,7 @@ import NewsPageTable from './pages/news_page/News_page_table';
 import Error from './common/Loader/Error';
 import isTokenExpired from './utils/isTokenExpired';
 import SignInMobile from './pages/Authentication/SignInMobile';
-
+import WebsiteEnquiry from './pages/mainWebsite/enquiry';
 function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -123,6 +123,7 @@ function App() {
               </>
             }
           />
+          <Route path="/website/enquiry" element={<WebsiteEnquiry />} />
           <Route path="/users/user/edit/:userId" element={<UserEdit />} />
           <Route
             path="/users/user/plan-subscribe/:userId"

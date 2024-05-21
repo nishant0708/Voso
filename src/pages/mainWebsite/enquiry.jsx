@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { fetchEnquiriesList } from '../../Redux/slicer/userList';
 import formatDate from '../../utils/formatDate';
 import Pagination from '../../utils/Pagination';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import UserlistSkeleton from '../Skeletons/UserlistSkeleton';
+import UserlistSkeleton from '../../components/Skeletons/UserlistSkeleton';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
 const UserEnquiries = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId } = useParams();
+  const userDetails = JSON.parse(localStorage.getItem('userData'));
+  const userId = userDetails?.id;
   const { enquires, status, enquiryMeta } = useSelector(
     (state) => state.usersList,
   );
@@ -23,7 +24,6 @@ const UserEnquiries = () => {
   const callFetchUsers = useCallback(
     (limit, page, userId) => {
       dispatch(fetchEnquiriesList({ limit, page, userId }));
-
       return;
     },
     [dispatch],
@@ -74,12 +74,12 @@ const UserEnquiries = () => {
                 </tr>
               </thead>
               <tbody className="text-black dark:text-white text-center whitespace-nowrap">
-                {enquires.length > 0 ? (
-                  enquires.map((enquiry, index) => (
+                {enquires.length !== 0 ? (
+                  enquires.map((user, index) => (
                     <tr
-                      key={enquiry._id}
+                      key={user._id}
                       className={`${
-                        index === enquiry.length - 1
+                        index === enquires.length - 1
                           ? ''
                           : 'border-b border-stroke dark:border-strokedark'
                       }`}
@@ -88,15 +88,15 @@ const UserEnquiries = () => {
                         {index + 1}
                       </td>
                       <td className="p-2.5 lg:p-4 !pl-10 capitalize">
-                        {enquiry.fullName}
+                        {user.fullName}
                       </td>
-                      <td className="p-2.5 lg:p-4 !pl-10">{enquiry.mobile}</td>
+                      <td className="p-2.5 lg:p-4 !pl-10">{user.mobile}</td>
                       <td className="p-2.5 lg:p-4 !pl-8 text-meta-3">
-                        {enquiry.email}
+                        {user.email}
                       </td>
-                      <td className="p-2.5 lg:p-4 !pl-5">{enquiry.message}</td>
+                      <td className="p-2.5 lg:p-4 !pl-5">{user.message}</td>
                       <td className="p-2.5 lg:p-4 !pl-8 pr-5 text-meta-5">
-                        {formatDate(enquiry.created_at)}
+                        {formatDate(user.created_at)}
                       </td>
                     </tr>
                   ))

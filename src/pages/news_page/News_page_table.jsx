@@ -14,6 +14,7 @@ import formatDate from '../../utils/formatDate';
 import Pagination from '../../utils/Pagination';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
+
 const News_page_table = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ const News_page_table = () => {
             News Create
           </button>
         </Link>
+     
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">

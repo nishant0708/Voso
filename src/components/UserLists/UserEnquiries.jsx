@@ -50,6 +50,7 @@ const UserEnquiries = () => {
           <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
             Enquiries List
           </h4>
+          
           <button
             onClick={() => navigate(-1)}
             className="flex gap-1 justify-center items-center py-1 sm:py-1.5 px-3 text-white rounded-md bg-[#727cf5] hover:bg-primary transition-all duration-200"

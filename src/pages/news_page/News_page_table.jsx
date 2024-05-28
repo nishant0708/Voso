@@ -4,7 +4,6 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { getNewsApi, deleteNewsByIdApi } from '../../Redux/slicer/newsSlice';
 import { BACKEND_URL } from '../../url/url';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
-import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { TbDotsVertical } from 'react-icons/tb';
 import { FaCircleUser } from 'react-icons/fa6';
 import { FaRupeeSign } from 'react-icons/fa';
@@ -14,6 +13,7 @@ import formatDate from '../../utils/formatDate';
 import Pagination from '../../utils/Pagination';
 import { MdOutlineKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md';
+import { IoIosAddCircle } from 'react-icons/io';
 
 const News_page_table = () => {
   const dispatch = useDispatch();
@@ -68,13 +68,14 @@ const News_page_table = () => {
   }, []);
   return (
     <DefaultLayout>
+       <div className=" w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="mb-10 flex justify-between items-center">
         <h4 className="text-2xl sm:text-3xl font-medium text-black dark:text-white">
           News List
         </h4>
         <Link to={'/create-news'}>
           <button className="text-white flex justify-center items-center gap-1 bg-[#727cf5] py-1 sm:py-1.5 px-3 rounded-md hover:bg-primary transition-all duration-200">
-            <FaCircleArrowLeft size={14} />
+          <IoIosAddCircle />
             News Create
           </button>
         </Link>
@@ -190,6 +191,7 @@ const News_page_table = () => {
             <MdOutlineKeyboardDoubleArrowRight />
           </button>
         </div>
+      </div>
       </div>
     </DefaultLayout>
   );
